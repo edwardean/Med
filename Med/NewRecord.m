@@ -8,8 +8,8 @@
 
 #import "NewRecord.h"
 #import "Record.h"
+#import "InputNewRecord.h"
 #import <QuartzCore/QuartzCore.h>
-#import "GCDiscreetNotificationView.h"
 #define medNameLabelTag 1
 #define pymLabeltag 2
 #define selectContLabelTag 3
@@ -24,6 +24,7 @@
 @synthesize addBtn;
 @synthesize field;
 @synthesize navBar = _navBar;
+@synthesize delegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,6 +39,8 @@
     [super viewDidLoad];
     self.table.delegate = self;
     self.table.dataSource = self;
+    self.field.delegate = self;
+    self.field.returnKeyType = UIReturnKeyDone;
     self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addBtn setFrame:CGRectMake(450, 65, 44, 44)];
     [addBtn setBackgroundImage:[UIImage imageNamed:@"button_icon_close"] forState:UIControlStateNormal];
@@ -46,7 +49,9 @@
     [_navBar setBackImage];
     
 }
-
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -55,6 +60,9 @@
 - (IBAction)showPopover:(id)sender {
     
     if (popoverController == nil) {
+        if (inputNewRecord==nil) {
+            inputNewRecord = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
+        }
         popoverController = [[UIPopoverController alloc] initWithContentViewController:inputNewRecord];
         CGRect popoverRect =  CGRectMake(130, 330, 0, 0);
         [popoverController presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
@@ -62,8 +70,15 @@
     }
 }
 - (IBAction)hide:(id)sender {
-
-    [self dismissModalViewControllerAnimated:YES];
+    self.field.text = @"";
+    [self.data removeAllObjects];
+    [self.table reloadData];
+//    InputNewRecord *record = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
+//    self.delegate = record;
+//    [delegate clearMark];
+    //self.inputNewRecord = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
+    [self setInputNewRecord:nil];
+    [inputNewRecord release];
 }
 
 - (IBAction)showBQ:(id)sender {
@@ -121,18 +136,8 @@
                     
                     isInsertIntoDetailOK = [Record insertNewDetailsIntoDetailTable:ID Name:[recordDic objectForKey:@"Name"] PYM:[recordDic objectForKey:@"PYM"] Count:[NSString stringWithFormat:@"%@%@",[recordDic objectForKey:@"Content"],[recordDic objectForKey:@"Unit"]]];
                 }
-                GCDiscreetNotificationView *gcd = [[GCDiscreetNotificationView alloc] initWithText:@"" showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:self.view];
-                if (isInsertIntoDetailOK) {
-                    [gcd setTextLabel:@"记录创建完毕"];
-                    [gcd show:YES];
-                    [gcd hideAnimatedAfter:1.0f];
-                    [gcd release];
-                } else {
-                    [gcd setTextLabel:@"录入失败"];
-                    [gcd show:YES];
-                    [gcd hideAnimatedAfter:1.0f];
-                    [gcd release];
-                }
+                NSString *msg = isInsertIntoDetailOK ? @"记录创建完毕" : @"录入失败";
+                [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0f];
             }
             
         }
@@ -166,7 +171,7 @@
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)PopoverController {
     
     if (PopoverController == popoverController) {
-        NSLog(@"PopoverController release");
+        debugLog(@"PopoverController release");
         self.data = [inputNewRecord.contentArray retain];
         [self.table reloadData];
         [popoverController release];
@@ -174,7 +179,11 @@
     }
 }
 
-
+#pragma mark UITextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.field resignFirstResponder];
+    return YES;
+}
 #pragma mark UITableView DelegeteMethods
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;
@@ -261,11 +270,21 @@
 - (void)dealloc {
     [field release];
     [_navBar release];
+    [data release];
+    [selectBQ release];
+    [addBtn release];
+    [table release];
+    [data release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setField:nil];
     [self setNavBar:nil];
+    [self setSelectBQ:nil];
+    [self setData:nil];
+    [self setInputNewRecord:nil];
+    [self setAddBtn:nil];
+    [self setTable:nil];
     [super viewDidUnload];
 }
 @end

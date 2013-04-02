@@ -39,7 +39,7 @@
 #import <UIKit/UIKit.h>
 
 
-@class MenuViewController;
+//@class MenuViewController;
 @class MenuController;
 @class StackScrollViewController;
 
@@ -49,13 +49,13 @@
 	UIViewExt* rootView;
 	UIView* leftMenuView;
 	UIView* rightSlideView;
-	MenuViewController* menuViewController;
+	//MenuViewController* menuViewController;
     MenuController *menuController;
 	StackScrollViewController* stackScrollViewController;
 	
 }
 
-@property (nonatomic, retain) MenuViewController* menuViewController;
+//@property (nonatomic, retain) MenuViewController* menuViewController;
 @property (nonatomic, retain) MenuController *menuController;
 @property (nonatomic, retain) StackScrollViewController* stackScrollViewController;
 

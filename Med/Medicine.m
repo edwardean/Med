@@ -41,7 +41,7 @@
     return count;
 }
 
-+ (NSMutableArray *)findAllMedicineToArray {
++ (NSArray *)findAllMedicineToArray {
     debugMethod();
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     NSMutableArray *mutableArray = [NSMutableArray array];
@@ -56,9 +56,15 @@
                                        [rs stringForColumn:@"PYM"],@"PYM",nil];
             [mutableArray addObject:recordDic];
         }
+        [dataBase close];
     }
-    [dataBase close];
-    return mutableArray;
+    NSArray *resultArray = [mutableArray copy];
+     NSSortDescriptor *soter = [[NSSortDescriptor alloc] initWithKey:@"PYM" ascending:YES];
+     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&soter count:1];
+     NSArray *array = [resultArray sortedArrayUsingDescriptors:sortDescriptors];
+    [resultArray release];
+    
+    return array;
 }
 
 

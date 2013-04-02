@@ -7,7 +7,6 @@
 //
 
 #import "NewBingQu.h"
-#import "GCDiscreetNotificationView.h"
 #import "BingQu.h"
 @interface NewBingQu ()
 
@@ -44,7 +43,6 @@
 - (IBAction)Save:(id)sender {
     
     debugMethod();
-    GCDiscreetNotificationView *gcd = [[[GCDiscreetNotificationView alloc] initWithText:@"" showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:self.view] autorelease];
     if ([inputTextField.text isEqualToString:@""]) {
         return;
     } else {
@@ -57,15 +55,11 @@
             
             if ([BingQu createNewBingQu:[inputTextField.text uppercaseString]]) {
                 NSString *str = [NSString stringWithFormat:@"病区:%@创建成功",[inputTextField.text uppercaseString]];
-                [gcd setTextLabel:str];
-                [gcd show:YES];
-                [gcd hideAnimatedAfter:1.0f];
+                [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
                 [self.inputTextField setText:@""];
             } else {
                 NSString *str = [NSString stringWithFormat:@"%@创建失败",inputTextField.text];
-                [gcd setTextLabel:str];
-                [gcd show:YES];
-                [gcd hideAnimatedAfter:1.0f];
+                [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
             }
         }
     }
@@ -103,8 +97,8 @@
 - (void) viewDidUnload {
     
     [self setNavBar:nil];
+    [self setInputTextField:nil];
     [super viewDidUnload];
-    inputTextField = nil;
 }
 
 - (void)didReceiveMemoryWarning

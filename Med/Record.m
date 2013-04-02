@@ -7,40 +7,40 @@
 //
 
 #import "Record.h"
-
+#import "CHCSVWriter.h"
 @implementation Record
 @synthesize PatientName,Office,Name,Count;
 
 + (NSMutableArray *)findAllRecordsInRecordTableToArray {
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     NSMutableArray *mutableArray = [NSMutableArray array];
-    NSMutableArray *detailArray = [NSMutableArray array];
     if ([dataBase open]) {
         FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
-        NSDictionary *recordDic = [NSDictionary dictionary];
+        NSDictionary *recordDic = nil;//[NSDictionary dictionary];
         NSDictionary *detailDic = nil;
         while ([resultSet1 next]) {
             NSString *ID = [resultSet1 stringForColumn:@"id"];//第一张表的id主键
             debugLog(@"Record中找到ID = %@",ID);
             NSString *PatientName = [resultSet1 stringForColumn:@"PatientName"];//第一张表的PatientName
             NSString *Office = [resultSet1 stringForColumn:@"Office"];//第一张表的Office
-
             FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
+            NSMutableArray *detailArray = [NSMutableArray array];
             while ([resultSet2 next]) {
                 NSString *Name = [resultSet2 stringForColumn:@"Name"];
                 NSString *Count = [resultSet2 stringForColumn:@"Count"];
                 detailDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count ,@"Count",nil];
                 [detailArray addObject:detailDic];
-                //debugLog(@"Detail表中，detailArray = %@",detailArray);
             }
-            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:PatientName,@"PatientName",Office,@"Office",
+            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",
                          detailArray,@"Detail",nil];
             debugLog(@"dic =  %@",recordDic);
             [mutableArray addObject:recordDic];
-            [detailArray removeAllObjects];
+            
+            debugLog(@"detailArray = %@",[recordDic objectForKey:@"Detail"]);
         }
+        [dataBase close];
     }
-    [dataBase close];
+    
     return mutableArray;
 }
 
@@ -64,7 +64,7 @@
                 detailDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count", nil];
                 [detailArray addObject:detailDic];
             }
-        recordDic = [NSDictionary dictionaryWithObjectsAndKeys:PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
+        recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
         }
         [mutableArray addObject:recordDic];
     }
@@ -94,7 +94,7 @@
                 detailDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count", nil];
                 [detailArray addObject:detailDic];
             }
-            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
+            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
         }
         [mutableArray addObject:recordDic];
     }
@@ -185,7 +185,17 @@
     [dataBase close];
     return isOK;
 }
-
++ (BOOL)deleteDetailByPatientID:(NSInteger)ID {
+    BOOL isOK = NO;
+    NSString *PatientID = [NSString stringWithFormat:@"%d",ID];
+    FMDatabase *dataBase = [dataBaseManager createDataBase];
+    if ([dataBase open]) {
+        isOK = [dataBase executeUpdate:@"DELETE FROM Detail WHERE Number = ?",PatientID];
+        [dataBase close];
+    }
+    
+    return isOK;
+}
 + (BOOL)deleteSomeMedicineByIDInDetail:(NSString *)patientName andOffice:(NSString *)office andMedicineID:(int)ID {
     
     FMDatabase *dataBase = [dataBaseManager createDataBase];
@@ -197,8 +207,9 @@
             index = [NSNumber numberWithInt:[rs intForColumn:@"id"]];
         }
         isOK = [dataBase executeUpdate:@"DELETE FROM Detail WHERE id = ? AND Number = ?",index,[NSNumber numberWithInt:ID]];
+        [dataBase close];
     }
-    [dataBase close];
+    
     return isOK;
 }
 + (BOOL)updateInfoInRecordTablePatientName:(NSString *)patientName Office:(NSString *)office Detail:(NSArray *)nameAndCountArry {
@@ -220,5 +231,64 @@
     }
     [dataBase close];
     return isOK;
+}
+
++ (NSArray *)findPatientIDInDetailTable:(NSString *)_pym {
+    debugMethod();
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
+    __block NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:0];
+    __block NSDictionary *dic = [NSDictionary dictionary];
+    __block NSDictionary *recordDic = [NSDictionary dictionary];
+    FMDatabase *dataBase = [dataBaseManager createDataBase];
+    if ([dataBase open]) {
+        FMResultSet *rs1 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE PYM = ?",_pym];
+        while ([rs1 next]) {
+            NSInteger index = [rs1 intForColumn:@"Number"];
+            [mutableArray addObject:[NSNumber numberWithInteger:index]];
+        }
+        [mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSNumber *patientID = [mutableArray objectAtIndex:idx];
+            FMResultSet *rs2 = [dataBase executeQuery:@"SELECT * FROM Record WHERE id = ?",patientID];
+            while ([rs2 next]) {
+                NSInteger ind = [rs2 intForColumn:@"id"];
+                NSString *ID = [NSString stringWithFormat:@"%d",ind];
+                NSString *PatientName = [rs2 stringForColumn:@"PatientName"];
+                NSString *Office = [rs2 stringForColumn:@"Office"];
+//                NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office", nil];
+//                [resultArray addObject:dic];
+                FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
+                NSMutableArray *detailArray = [NSMutableArray array];
+                while ([resultSet2 next]) {
+                    NSString *Name = [resultSet2 stringForColumn:@"Name"];
+                    NSString *Count = [resultSet2 stringForColumn:@"Count"];
+                    NSString *PYM = [resultSet2 stringForColumn:@"PYM"];
+                    dic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count",PYM,@"PYM", nil];
+                    [detailArray addObject:dic];
+                }
+                recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
+                [resultArray addObject:recordDic];
+            }
+        }];
+        //debugLog(@"resultArray:%@",resultArray);
+        [dataBase close];
+    }
+    
+    return resultArray;
+}
+
++ (NSArray *)searchAllRecordsByPYM:(NSString *)pym {
+    FMDatabase *dataBase = [dataBaseManager createDataBase];
+    if ([dataBase open]) {
+        FMResultSet *rs = [dataBase executeQuery:@"SELECT Record.PatientName,Record.Office,Detail.Name,Detail.Count FROM Record,Detail WHERE Record.id = Detail.Number AND Detail.PYM = ?",[pym uppercaseString]];
+        while ([rs next]) {
+            NSString *PatientName = [rs stringForColumn:@"PatientName"];
+            NSString *Office = [rs stringForColumn:@"Office"];
+            NSString *Name = [rs stringForColumn:@"Name"];
+            NSString *Count = [rs stringForColumn:@"Count"];
+            debugLog(@"%@  %@  %@  %@ %@",Name,pym,PatientName,Office,Count);
+        }
+        [dataBase close];
+    }
+    return nil;
 }
 @end

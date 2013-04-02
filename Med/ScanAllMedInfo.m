@@ -9,13 +9,15 @@
 #import "ScanAllMedInfo.h"
 #import "UINavigationBar+CustomImage.h"
 #import "Medicine.h"
-#import "GCDiscreetNotificationView.h"
+#import "CHCSVWriter.h"
 #define markMedNameLabelTag 1
 #define markPymLabelTag 3
+#define markSpeciLabelTag 4
 @interface ScanAllMedInfo ()
 @property (nonatomic, retain) NSArray *dataArray;
-@property (nonatomic, retain) NSArray *MedNameArray;
-@property (nonatomic, retain) NSArray *MedPYMArray;
+//@property (nonatomic, retain) NSArray *MedNameArray;
+//@property (nonatomic, retain) NSArray *MedPYMArray;
+//@property (nonatomic, retain) NSArray *SpeciArray;
 @property (nonatomic, retain) NSArray *searchResultArray;
 @property (assign) BOOL isChinese;
 @end
@@ -26,7 +28,7 @@
 @synthesize dataArray = _dataArray;
 @synthesize search = _search;
 @synthesize searchResultArray = _searchResultArray;
-@synthesize deleteBtn = _deleteBtn;
+//@synthesize deleteBtn = _deleteBtn;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,27 +41,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     debugMethod();
     [super viewDidAppear:animated];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.dataArray = [Medicine findAllMedicineToArray];
-        if ([_dataArray count]==[Medicine countAllMedicine]) {
-            NSMutableArray *_medArray,*_pymArray;
-            _medArray = [NSMutableArray arrayWithCapacity:0];
-            _pymArray = [NSMutableArray arrayWithCapacity:0];
-            for (int i=0; i<[_dataArray count]; i++) {
-                NSDictionary *_dic = [_dataArray objectAtIndex:i];
-                [_medArray addObject:[_dic objectForKey:@"Name"]];
-                [_pymArray addObject:[_dic objectForKey:@"PYM"]];
-            }
-            _MedNameArray = [_medArray copy];
-            _MedPYMArray = [_pymArray copy];
-            //debugLog(@"药品获取完毕");
-            debugLog(@"Name:%@  PYM:%@",_MedNameArray,_MedPYMArray);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_table reloadData];
-            });
-        }
-    });
-
 }
 - (void)viewDidLoad
 {
@@ -69,6 +50,11 @@
     [navBar setBackImage];
     self.searchResultArray = nil;
     self.isChinese = NO;
+    
+    self.dataArray = [Medicine findAllMedicineToArray];
+
+    [self.table setContentSize:CGSizeMake(self.view.frame.size.width, [_dataArray count]*60*2)];
+        [_table reloadData];
 }
 #pragma mark -
 #pragma mark - UITableViewDelegete
@@ -95,7 +81,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSDictionary *medDic = [_dataArray objectAtIndex:[indexPath row]];
-    NSDictionary *searchDic = [_searchResultArray objectAtIndex:[indexPath row]];
     UIFont *font = [UIFont fontWithName:@"Arial" size:13.0f];
     UIFont *nameLabelFont = [UIFont fontWithName:@"Arial" size:17.0f];
     static NSString *CellID =@"LIHANG";
@@ -106,7 +91,7 @@
     if (!cell) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID] autorelease];        
         //药名
-        UILabel *medNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 40)];
+        UILabel *medNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 16, 150, 40)];
         medNameLabel.tag = markMedNameLabelTag;
         [cell.contentView addSubview:medNameLabel];
         [medNameLabel release];
@@ -117,28 +102,42 @@
         pymlabel.tag = markPymLabelTag;
         [cell.contentView addSubview:pymlabel];
         [pymlabel release];
+        
+        //含量
+        UILabel *specilabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 17, 150, 20)];
+        specilabel.tag = markSpeciLabelTag;
+        [cell.contentView addSubview:specilabel];
+        [specilabel release];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-
+        NSDictionary *searchDic = [_searchResultArray objectAtIndex:[indexPath row]];
                     UILabel *_medNameLabel = (UILabel *)[cell.contentView viewWithTag:markMedNameLabelTag];
                     UILabel *_pymLabel = (UILabel *)[cell.contentView viewWithTag:markPymLabelTag];
+                    UILabel *_speciLabel = (UILabel *)[cell.contentView viewWithTag:markSpeciLabelTag];
                     [_medNameLabel setFont:nameLabelFont];
                     [_pymLabel setFont:font];
+                    [_speciLabel setFont:font];
                     [_medNameLabel setBackgroundColor:[UIColor clearColor]];
                     [_pymLabel setBackgroundColor:[UIColor clearColor]];
+                    [_speciLabel setBackgroundColor:[UIColor clearColor]];
                     [_medNameLabel setText:[NSString stringWithFormat:@"%@",[searchDic objectForKey:@"Name"]]];
                     [_pymLabel setText:[NSString stringWithFormat:@"拼音码:%@",[searchDic objectForKey:@"PYM"]]];
+                    [_speciLabel setText:[NSString stringWithFormat:@"含量:%@%@",[searchDic objectForKey:@"Specifi"],[medDic objectForKey:@"Unit"]]];
     } else {
         UILabel *_medNameLabel = (UILabel *)[cell.contentView viewWithTag:markMedNameLabelTag];
         UILabel *_pymLabel = (UILabel *)[cell.contentView viewWithTag:markPymLabelTag];
+        UILabel *_speciLabel = (UILabel *)[cell.contentView viewWithTag:markSpeciLabelTag];
         [_medNameLabel setFont:nameLabelFont];
         [_pymLabel setFont:font];
+        [_speciLabel setFont:font];
         [_medNameLabel setBackgroundColor:[UIColor clearColor]];
         [_pymLabel setBackgroundColor:[UIColor clearColor]];
+        [_speciLabel setBackgroundColor:[UIColor clearColor]];
         [_medNameLabel setText:[NSString stringWithFormat:@"%@",[medDic objectForKey:@"Name"]]];
         [_pymLabel setText:[NSString stringWithFormat:@"拼音码:%@",[medDic objectForKey:@"PYM"]]];
+        [_speciLabel setText:[NSString stringWithFormat:@"含量:%@%@",[medDic objectForKey:@"Specifi"],[medDic objectForKey:@"Unit"]]];
     }
     return cell;
 }
@@ -146,9 +145,9 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-        debugLog(@"search:%@",[_MedPYMArray objectAtIndex:indexPath.row]);
+        //debugLog(@"search:%@",[_MedPYMArray objectAtIndex:indexPath.row]);
     } else {
-        debugLog(@"Not Search:%@",[_dataArray objectAtIndex:[indexPath row]]);
+        //debugLog(@"Not Search:%@",[_dataArray objectAtIndex:[indexPath row]]);
     }
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -157,18 +156,24 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
+//禁用手势删除，只支持编辑状态下删除
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!tableView.editing)
+        return UITableViewCellEditingStyleNone;
+    else {
+        return UITableViewCellEditingStyleDelete;
+    }
+
+}
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    GCDiscreetNotificationView *gcd = [[GCDiscreetNotificationView alloc] initWithText:@"" showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:self.view];
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         UILabel *_pymLabel = (UILabel *)[cell.contentView viewWithTag:markPymLabelTag];
         NSString *pym = [[_pymLabel text] substringFromIndex:4];
         debugLog(@"pym:%@",pym);
         if ([Medicine deleteSomeMedicine:pym]) {
-            [gcd setTextLabel:[NSString stringWithFormat:@"%@已删除",pym]];
-            [gcd show:YES];
-            [gcd hideAnimatedAfter:1.0f];
-            [gcd release];
+            NSString *msg = [NSString stringWithFormat:@"%@已删除",pym];
+            [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0f];
             [self viewDidAppear:YES];
         }
         NSMutableArray *tempArray = [self.searchResultArray mutableCopy];
@@ -176,14 +181,14 @@
         self.searchResultArray = [tempArray copy];
         [tempArray release];
         [self.searchDisplayController.searchResultsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        self.dataArray = [Medicine findAllMedicineToArray];
+        [self.table reloadData];
     } else {
         NSDictionary *dic = [self.dataArray objectAtIndex:[indexPath row]];
         NSString *pym = [dic objectForKey:@"PYM"];
         if ([Medicine deleteSomeMedicine:pym]) {
-            [gcd setTextLabel:[NSString stringWithFormat:@"%@已删除",pym]];
-            [gcd show:YES];
-            [gcd hideAnimatedAfter:1.0f];
-            [gcd release];
+            NSString *msg = [NSString stringWithFormat:@"%@已删除",pym];
+            [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0f];
         }
         NSMutableArray *tempArray = [self.dataArray mutableCopy];
         [tempArray removeObjectAtIndex:[indexPath row]];
@@ -193,7 +198,6 @@
     }
 }
 #pragma mark -
-
 #pragma mark - UISearchBarDelegate
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
@@ -235,25 +239,54 @@
 - (void)dealloc {
     [navBar release];
     [UISearchBar release];
-    [_deleteBtn release];
+    [_table release];
+    //[_dataArray release];
+//    [_MedNameArray release];
+//    [_MedPYMArray release];
+    [_searchResultArray release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setNavBar:nil];
-    [self setDeleteBtn:nil];
+    self.table = nil;
+    //self.dataArray = nil;
+//    self.MedNameArray = nil;
+//    self.MedPYMArray = nil;
+    self.searchResultArray = nil;
     [super viewDidUnload];
+    debugMethod();
 }
 - (IBAction)deleteRow:(id)sender {
-   
+    UIBarButtonItem *_deleteBtn = (UIBarButtonItem *)sender;
     [self.searchDisplayController.searchResultsTableView setEditing:!self.searchDisplayController.searchResultsTableView.isEditing animated:YES];
 
     [self.table setEditing:!self.table.isEditing animated:YES];
     if (_table.isEditing) {
-        [_deleteBtn setTintColor:[UIColor redColor]];
+        [_deleteBtn setTintColor:OKColor];
         [_deleteBtn setTitle:@"完成"];
     } else {
-        [_deleteBtn setTintColor:[UIColor darkGrayColor]];
-        [_deleteBtn setTitle:@"删除"];
+        [_deleteBtn setTintColor:ModifyColor];
+        [_deleteBtn setTitle:@"编辑"];
     }
+}
+- (IBAction)exportMedTable:(id)sender {
+    CHCSVWriter *csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:@"药品.csv"] atomic:YES];
+    [_dataArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary *medDic = [_dataArray objectAtIndex:idx];
+        [csvWriter writeField:[medDic objectForKey:@"Name"]];
+        NSString *spe = [NSString stringWithFormat:@"%@%@",[medDic objectForKey:@"Specifi"],[medDic objectForKey:@"Unit"]];
+        [csvWriter writeField:spe];
+        [csvWriter writeField:[medDic objectForKey:@"PYM"]];
+        [csvWriter writeField:[medDic objectForKey:@"Content"]];
+        [csvWriter writeField:nil];
+        if ((idx+1) % 3==0) {
+            [csvWriter writeLine];
+        }
+        
+    }];
+    [csvWriter closeFile];
+    [csvWriter release];
+    NSString *msg  = @"亲,全部药品已导入到'药品.csv'文件中了^_^";
+    [Help ShowGCDMessage:msg andView:self.view andDelayTime:2.2f];
 }
 @end

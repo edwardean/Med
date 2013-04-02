@@ -11,6 +11,7 @@
 @interface SelectBQ ()
 
 @property (nonatomic, retain) NSArray *array;
+@property (nonatomic, retain) NSArray *searchArray;
 @property (nonatomic, retain) NSIndexPath *lastPath;
 @end
 
@@ -18,6 +19,8 @@
 
 @synthesize table,BQStr;
 @synthesize array;
+@synthesize search = _search;
+@synthesize searchArray = _searchArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,6 +37,7 @@
     self.lastPath = nil;
     self.BQStr = @"NULL";
     self.contentSizeForViewInPopover = CGSizeMake(375, 530);
+    self.table.contentSize = CGSizeMake(375, [self.table numberOfRowsInSection:0]*44*1.5);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.array = [BingQu findAllBingQuIntoArray];
         if ([array count] == [BingQu countAllBingQu]) {
@@ -51,31 +55,51 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 44;
+}
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [array count];
+    NSInteger rows = 0;
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        rows = [self.searchArray count];
+    } else {
+        rows = [self.array count];
+    }
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
    static NSString *CellID = @"Cell";
     UITableViewCell *cell = nil;
+    NSUserDefaults *us = [NSUserDefaults standardUserDefaults];
     if (!cell) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID]autorelease];
     }
     
-    cell.textLabel.text = [self.array objectAtIndex:indexPath.row];
     
-    NSUserDefaults *us = [NSUserDefaults standardUserDefaults];
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        cell.textLabel.text = [_searchArray objectAtIndex:[indexPath row]];
+        
+        } else {
+            cell.textLabel.text = [self.array objectAtIndex:indexPath.row];
+    }
     
     if ([self.lastPath isEqual:indexPath]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
     if ([cell.textLabel.text isEqualToString:[us objectForKey:@"BQ"]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
+
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
@@ -83,6 +107,40 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        
+        BOOL isMarked = [[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:self.lastPath] accessoryType] == UITableViewCellAccessoryCheckmark ? YES : NO;
+        if (![indexPath isEqual:self.lastPath]) {
+            
+            UITableViewCell *newCell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+            newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            NSString *str = [_searchArray objectAtIndex:indexPath.row];
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setObject:str forKey:@"BQ"];
+            
+            UITableViewCell *oldCell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:self.lastPath];
+            oldCell.accessoryType = UITableViewCellAccessoryNone;
+            self.lastPath = indexPath;
+            self.BQStr = [_searchArray objectAtIndex:indexPath.row];
+            
+        } else {
+            UITableViewCell *newCell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+            if (isMarked) {
+                self.BQStr = @"NULL";
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults removeObjectForKey:@"BQ"];
+                newCell.accessoryType = UITableViewCellAccessoryNone;
+            } else {
+                newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                self.BQStr = [_searchArray objectAtIndex:indexPath.row];
+                NSString *str = [_searchArray objectAtIndex:indexPath.row];
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:str forKey:@"BQ"];
+            }
+            
+        }
+    } else {
+    
     BOOL isMarked = [[table cellForRowAtIndexPath:self.lastPath] accessoryType] == UITableViewCellAccessoryCheckmark ? YES : NO;
     if (![indexPath isEqual:self.lastPath]) {
 
@@ -113,9 +171,33 @@
         }
         
     }
+    }
     [tableView reloadData];
     debugLog(@"点击:%@   USerDefault:%@",self.BQStr,[[NSUserDefaults standardUserDefaults] objectForKey:@"BQ"]);
 
+}
+
+#pragma mark -
+#pragma mark - UISearchBarDelegate
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+    self.searchArray = [self.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd]%@",searchText]];
+    debugLog(@"%@",_searchArray);
+}
+
+- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+   // [self filterContentForSearchText:searchText scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+}
+
+- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [table reloadData];
+}
+/**
+ Asks the delegate if the table view should be reloaded for a given search string.
+ **/
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    return YES;
 }
 #pragma mark -
 - (void)didReceiveMemoryWarning
@@ -126,13 +208,23 @@
 
 - (void) viewDidUnload {
     [super viewDidUnload];
-    table = nil;
-    BQStr = nil;
+    [self setSearch:nil];
+    
+    self.table = nil;
+    self.BQStr = nil;
+    self.array = nil;
+    self.searchArray = nil;
+    self.lastPath = nil;
+    debugMethod();
 }
 
 - (void) dealloc {
-    [super dealloc];
+    [_search release];
     [table release];
     [BQStr release];
+    [array release];
+    [_searchArray release];
+    [_lastPath release];
+    [super dealloc];
 }
 @end

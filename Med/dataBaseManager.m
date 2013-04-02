@@ -36,7 +36,7 @@ static FMDatabase *shareDataBase = nil;
     {
         // just print out what we've got in a number of formats.
         NSInteger count = [rs intForColumn:@"count"];
-        NSLog(@"%@ isOK %d", tableName,count);
+        debugLog(@"%@ isOK %d", tableName,count);
         
         if (0 == count)
         {
@@ -85,6 +85,8 @@ static FMDatabase *shareDataBase = nil;
             //Detail表:
             //id(非主键，这个值与Record中每个病人的id相同) Number主键，每个病人每种药品的id Name药品名
             //PYM 拼音码   Count药的用量
+            
+            //NSString *sql6 = @"CREATE TABLE DATE (date_column DATE)";
             
             if (![dataBaseManager isTableExist:@"Medicine"]) {
                 debugLog(@"no Medicine ");

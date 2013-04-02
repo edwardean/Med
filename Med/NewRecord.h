@@ -7,14 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "InputNewRecord.h"
+
 #import "SelectBQ.h"
-@interface NewRecord : UIViewController <UIPopoverControllerDelegate,UITableViewDataSource,UITableViewDelegate>
+@class InputNewRecord;
+@protocol ClearCellMarkDelegate <NSObject>
+@required
+- (void)clearMark;
+
+@end
+
+@interface NewRecord : UIViewController <UIPopoverControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 {
     IBOutlet InputNewRecord *inputNewRecord;
     IBOutlet SelectBQ *selectBQ;
     NSMutableArray *data;
+    id <ClearCellMarkDelegate> delegate;
 }
 @property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
 
@@ -25,6 +33,7 @@
 @property (nonatomic, retain) UIButton *addBtn;
 @property (nonatomic, retain) IBOutlet UITableView *table;
 @property (nonatomic, retain) NSMutableArray *data;
+@property (nonatomic, assign) id <ClearCellMarkDelegate> delegate;
 -(IBAction)showPopover:(id)sender;
 -(IBAction)hide:(id)sender;
 - (IBAction)showBQ:(id)sender;

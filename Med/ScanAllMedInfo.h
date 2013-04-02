@@ -16,5 +16,6 @@
 @property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) UITableView *table;
 - (IBAction)deleteRow:(id)sender;
-@property (retain, nonatomic) IBOutlet UIBarButtonItem *deleteBtn;
+//@property (retain, nonatomic) IBOutlet UIBarButtonItem *deleteBtn;
+- (IBAction)exportMedTable:(id)sender;
 @end

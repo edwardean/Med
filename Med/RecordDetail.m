@@ -1,0 +1,143 @@
+//
+//  RecordDetail.m
+//  Med
+//
+//  Created by Edward on 13-3-24.
+//  Copyright (c) 2013年 Edward. All rights reserved.
+//
+
+#import "RecordDetail.h"
+#define medNameLabelTag 1
+#define medContLabelTag 2
+@interface RecordDetail ()
+@property (nonatomic, retain) NSArray *detailArray;
+@property (nonatomic, retain) UINavigationBar *navbar;
+
+@end
+
+@implementation RecordDetail
+@synthesize table = _table;
+@synthesize detailArray = _detailArray;
+@synthesize navbar = _navbar;
+@synthesize patient;
+- (id) initWithFrame:(CGRect)frame andArray:(NSArray *)array andPatientName:(NSString *)patientname {
+    debugMethod();
+    if (self = [super init]) {
+        [self.view setFrame:frame];
+        _detailArray = [array retain];
+        _table = [[UITableView alloc] initWithFrame:CGRectMake(0,40,frame.size.width, frame.size.height) style:UITableViewStylePlain];
+        [_table setDataSource:self];
+        [_table setDelegate:self];
+        //_table.contentSize = CGSizeMake(370, [_table numberOfRowsInSection:0]*44*1.5);
+        UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+		_table.tableFooterView = footerView;
+        [footerView release];
+        [_table setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+        
+        [self.view addSubview:_table];
+        self.patient = patientname;
+    }
+    
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+        
+	
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 447, 40)];
+    [bar setBackImage];
+    self.navbar = bar;
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
+    titleLabel.text = patient;
+    titleLabel.center = _navbar.center;
+    [_navbar addSubview:titleLabel];
+    [titleLabel release];
+    [self.view addSubview:_navbar];
+
+}
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    
+}
+
+
+#pragma mark -
+#pragma mark - UITableViewDelegete
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 44;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return [_detailArray count];
+}
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1;
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellID = @"LiHang";
+    UITableViewCell *cell = nil;
+    UIFont *font = [UIFont fontWithName:@"Arial" size:15.0f];
+    NSDictionary *medDic = [_detailArray objectAtIndex:[indexPath row]];
+    cell = [tableView dequeueReusableCellWithIdentifier:CellID];
+    
+    if (!cell) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID] autorelease];
+        
+        UILabel *medLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 50)];
+        medLabel.tag = medNameLabelTag;
+        [cell.contentView addSubview:medLabel];
+        [medLabel release];
+        
+        UILabel *medContLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 6, 150, 50)];
+        medContLabel.tag = medContLabelTag;
+        [cell.contentView addSubview:medContLabel];
+        [medContLabel release];
+    }
+    
+    UILabel *_medNameLabel = (UILabel *)[cell.contentView viewWithTag:medNameLabelTag];
+    [_medNameLabel setFont:font];
+    [_medNameLabel setText:[NSString stringWithFormat:@"%@",[medDic objectForKey:@"Name"]]];
+    [_medNameLabel setBackgroundColor:[UIColor clearColor]];
+    
+    UILabel *_medContLabel = (UILabel *)[cell.contentView viewWithTag:medContLabelTag];
+    [_medContLabel setFont:font];
+    [_medContLabel setBackgroundColor:[UIColor clearColor]];
+    [_medContLabel setText:[NSString stringWithFormat:@"%@",[medDic objectForKey:@"Count"]]];;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    return cell;
+}
+
+- (void) viewDidUnload {
+
+    self.table = nil;
+    self.patient = nil;
+    self.detailArray = nil;
+    self.navbar = nil;
+    [super viewDidUnload];
+}
+
+- (void) dealloc {
+    [_table release];
+    [patient release];
+    [_detailArray release];
+    [_navbar release];
+    [super dealloc];
+}
+@end

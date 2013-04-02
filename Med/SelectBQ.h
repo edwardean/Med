@@ -12,7 +12,9 @@
     
     IBOutlet UITableView *table;
     NSString *BQStr;
+    
 }
+@property (retain, nonatomic) IBOutlet UISearchBar *search;
 @property (nonatomic, copy) NSString *BQStr;
 @property (nonatomic, retain) UITableView *table;
 @end

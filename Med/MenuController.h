@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MenuController : UIViewController <UITableViewDataSource,UITableViewDelegate> {
+@class NewMedicine;
+@class NewBingQu;
+@class NewRecord;
+@class ScanAllMedInfo;
+@class ScanAllRecords;
+@class ExportTable;
+@interface MenuController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate> {
     UITableView *_table;
     NSMutableArray *_dataList;
 }

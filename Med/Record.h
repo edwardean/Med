@@ -40,6 +40,12 @@
 + (BOOL)insertNewDetailsIntoDetailTable:(int)_id Name:(NSString *)name PYM:(NSString *)pym Count:(NSString *)count;//
 
 
++ (NSArray *)findPatientIDInDetailTable:(NSString *)_pym;
+/*
+ 在Detail表中查找所有服用该种药品的病人记录
+ */
+
+
 /**
     数据库项删除操作也要在两个表中同时进行
  1.删除整条记录
@@ -48,8 +54,8 @@
  2.删除一条记录中某些药品记录
  **/
 + (BOOL)deleteSomeRecordByIDInTable:(NSString *)patientName andOffice:(NSString *)office;
++ (BOOL)deleteDetailByPatientID:(NSInteger)ID;//跟上个方法对应，删除指定病人的所有用药记录
 + (BOOL)deleteSomeMedicineByIDInDetail:(NSString *)patientName andOffice:(NSString *)office andMedicineID:(int)ID;
-
 /**
  更新数据也要在两个表中操作
  如果只更新病人姓名，病区等基本信息只需在第一张表中进行，
@@ -57,4 +63,6 @@
  根据这个病人所有药中的每种药的具体编号来修改信息(很复杂的样子.....)
  **/
 + (BOOL)updateInfoInRecordTablePatientName:(NSString *)patientName Office:(NSString *)office Detail:(NSArray *)nameAndCountArry;
+
++ (NSArray *)searchAllRecordsByPYM:(NSString *)pym;
 @end

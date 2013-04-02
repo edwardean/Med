@@ -12,10 +12,12 @@
  在release阶段时可关闭调试信息
  **/
 #import "UINavigationBar+CustomImage.h"
+#import "Help.h"
+#import "MBProgressHUD.h"
 #define ALPHA	@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
 #define UPPER  @"ABCDEFGHIJKLMNOPQRSTUVWXYZ "
 #define NUMBERS	@"0123456789"
-#define ALPHANUM @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+#define ALPHANUM @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789. "
 #define NUMBERSPERIOD	@"0123456789."
 
 #ifdef DEBUG
@@ -33,3 +35,7 @@
 
 #define dataBasePath [[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:dataBaseName]
 #define dataBaseName @"dataBase.sqlite"
+
+#define ModifyColor [UIColor colorWithRed:77/255.0 green:140/255.0 blue:236/255.0 alpha:1.0]
+
+#define OKColor [UIColor colorWithRed:195/255.0 green:66/255.0 blue:77/255.0 alpha:1.0]

@@ -8,7 +8,6 @@
 
 #import "NewOffice.h"
 #import "Office.h"
-#import "GCDiscreetNotificationView.h"
 @interface NewOffice ()
 
 @end
@@ -42,7 +41,6 @@
 
 - (IBAction)Save:(id)sender {
     debugMethod();
-    GCDiscreetNotificationView *gcd = [[[GCDiscreetNotificationView alloc] initWithText:@"" showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:self.view] autorelease];
     if ([textField.text isEqualToString:@""]) {
         return;
     } else {
@@ -55,15 +53,11 @@
             
             if([Office createNewOffcie:textField.text]){
             NSString *str = [NSString stringWithFormat:@"科室:%@创建成功",textField.text];
-            [gcd setTextLabel:str];
-            [gcd show:YES];
-            [gcd hideAnimatedAfter:1.0f];
+            [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
             [self.textField setText:@""];
             } else {
                 NSString *str = [NSString stringWithFormat:@"%@创建失败",textField.text];
-                [gcd setTextLabel:str];
-                [gcd show:YES];
-                [gcd hideAnimatedAfter:1.0f];
+                [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
             }
         }
     }
@@ -93,7 +87,7 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    textField = nil;
+    self.textField = nil;
 }
 
 - (void)dealloc {

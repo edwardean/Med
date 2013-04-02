@@ -20,7 +20,7 @@
 //- (id) initMedicineWithName:(NSString *)_name andSpecifi:(NSString *)_specifi andContent:(NSString *)_Content;
 
 + (int)countAllMedicine;//统计所有药品数量
-+ (NSMutableArray *)findAllMedicineToArray;//将所有药品打包进一个可变数组
++ (NSArray *)findAllMedicineToArray;//将所有药品打包进一个可变数组
 
 
 //+ (int)countSomeMedicineByName:(NSString *)_name;//由药品名称统计某种药品数量(没啥用)

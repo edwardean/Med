@@ -126,7 +126,12 @@
 
 - (IBAction)hide:(id)sender {
     debugMethod();
-    [self dismissModalViewControllerAnimated:YES];
+    //[self dismissModalViewControllerAnimated:YES];
+    self.specifiTextField.text = @"";
+    self.nameTextField.text = @"";
+    self.countTextField.text = @"";
+    self.pymTextField.text = @"";
+    [self.nameTextField becomeFirstResponder];
 }
 
 - (IBAction)Save:(id)sender {
@@ -156,23 +161,17 @@
 }
 - (void) saveDataIntoTable {
     debugMethod();
-    GCDiscreetNotificationView *gcd = [[GCDiscreetNotificationView alloc] initWithText:@"" showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:self.view];
     if ([Medicine createNewMedicine:nameTextField.text andSpecifi:specifiTextField.text andUnit:self.unitStr andContent:countTextField.text PYM:[pymTextField.text uppercaseString]]) {
         NSString *str = [NSString stringWithFormat:@"药品%@创建完毕",nameTextField.text];
-        [gcd setTextLabel:str];
-        [gcd show:YES];
-        [gcd hideAnimatedAfter:1.0f];
-        [gcd release];
+        [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
         [self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0f];
     }  else {
-        [gcd setTextLabel:@"创建失败"];
-        [gcd show:YES];
-        [gcd hideAnimatedAfter:1.0f];
-        [gcd release];
+          NSString *str = @"创建失败";
+          [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
     }
     
 
-    findAllMed();
+    //findAllMed();
 
 }
 - (void)checkDataInTable {
@@ -274,16 +273,18 @@
 }
 
 - (void)viewDidUnload {
-    [navBar release];
     navBar = nil;
     [super viewDidUnload];
-    alert = nil;
-    alert5 = nil;
-    specifiTable  = nil;
-    nameTextField = nil;
-    specifiTextField = nil;
-    countTextField = nil;
-    pymTextField = nil;
+    self.alert = nil;
+    self.alert5 = nil;
+    self.specifiTable  = nil;
+    self.nameTextField = nil;
+    self.specifiTextField = nil;
+    self.countTextField = nil;
+    self.pymTextField = nil;
+    self.specifiStr = nil;
+    self.unitStr = nil;
+    self.lastIndex = nil;
 }
 - (void) dealloc {
     [navBar release];
@@ -295,6 +296,9 @@
     [countTextField release];
     [pymTextField release];
     [navBar release];
+    [specifiStr release];
+    [unitStr release];
+    [lastIndex release];
     [super dealloc];
 }
 @end
