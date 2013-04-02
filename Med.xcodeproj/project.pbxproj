@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA0F22D617007B620020EE10 /* CHCSVWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0F22D417007B620020EE10 /* CHCSVWriter.m */; };
+		CA3D25D5170AA835003DD461 /* CHCSVWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = CA3D25D4170AA835003DD461 /* CHCSVWriter.m */; };
 		CA44943F1708196800A05F8D /* excel.png in Resources */ = {isa = PBXBuildFile; fileRef = CA44943E1708196800A05F8D /* excel.png */; };
 		CA44944117081A5600A05F8D /* export.png in Resources */ = {isa = PBXBuildFile; fileRef = CA44944017081A5600A05F8D /* export.png */; };
 		CA4494451708243A00A05F8D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4494441708243A00A05F8D /* MBProgressHUD.m */; };
@@ -113,8 +113,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CA0F22D317007B620020EE10 /* CHCSVWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVWriter.h; sourceTree = "<group>"; };
-		CA0F22D417007B620020EE10 /* CHCSVWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVWriter.m; sourceTree = "<group>"; };
+		CA3D25D3170AA835003DD461 /* CHCSVWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVWriter.h; sourceTree = "<group>"; };
+		CA3D25D4170AA835003DD461 /* CHCSVWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVWriter.m; sourceTree = "<group>"; };
 		CA44943E1708196800A05F8D /* excel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = excel.png; sourceTree = "<group>"; };
 		CA44944017081A5600A05F8D /* export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export.png; sourceTree = "<group>"; };
 		CA4494431708243A00A05F8D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -273,15 +273,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CA0F22D217007B620020EE10 /* CHCSVWriter */ = {
-			isa = PBXGroup;
-			children = (
-				CA0F22D317007B620020EE10 /* CHCSVWriter.h */,
-				CA0F22D417007B620020EE10 /* CHCSVWriter.m */,
-			);
-			path = CHCSVWriter;
-			sourceTree = "<group>";
-		};
 		CA4494421708242900A05F8D /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,8 +449,9 @@
 		CA981A0216FAB06D0031FD44 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				CA3D25D3170AA835003DD461 /* CHCSVWriter.h */,
+				CA3D25D4170AA835003DD461 /* CHCSVWriter.m */,
 				CA4494421708242900A05F8D /* MBProgressHUD */,
-				CA0F22D217007B620020EE10 /* CHCSVWriter */,
 				CA981A0616FAB0990031FD44 /* CustomCell */,
 				CA981A0316FAB0930031FD44 /* UIViewWithShadow.h */,
 				CA981A0416FAB0930031FD44 /* UIViewWithShadow.m */,
@@ -744,10 +736,10 @@
 				CA981A6F16FAE4410031FD44 /* UINavigationBar+CustomImage.m in Sources */,
 				CA93F95916FD81D700A1BA03 /* ScanAllRecords.m in Sources */,
 				CAB8F54516FEC83C0004FB04 /* RecordDetail.m in Sources */,
-				CA0F22D617007B620020EE10 /* CHCSVWriter.m in Sources */,
 				CABBA80717018338009BFB35 /* ExportTable.m in Sources */,
 				CAE7F3311707D18E00D731D3 /* Help.m in Sources */,
 				CA4494451708243A00A05F8D /* MBProgressHUD.m in Sources */,
+				CA3D25D5170AA835003DD461 /* CHCSVWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
