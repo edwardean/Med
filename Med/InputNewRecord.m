@@ -322,8 +322,6 @@
         }
         [contentlabel release];
         
-        
-        
         if ([self.indexArray containsObject:indexPath]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         } else {
@@ -342,7 +340,6 @@
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         
     }
-    ///////////////////////////////////////////////////////////////////////////////
     if (!self.selectIndex) {
         self.selectIndex = indexPath;
         debugLog(@"selectIndex:%@",self.selectIndex);
@@ -554,7 +551,6 @@
     
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
-    ////搜索栏中文本变化时自动调用检索方法
 }
 #pragma mark -
 - (void) viewDidUnload {

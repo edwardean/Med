@@ -70,11 +70,9 @@
         if (inputNewRecord==nil) {
             inputNewRecord = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
         }
-        UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:inputNewRecord];
-        self.popoverController = pop;
-        [pop release];
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:inputNewRecord];
         [inputNewRecord release];
-        CGRect popoverRect =  CGRectMake(130, 330, 0, 0);
+        CGRect popoverRect =  CGRectMake(130, 330, 1, 1);
         [popoverController presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         popoverController.delegate = self;
     }
@@ -89,8 +87,8 @@
 
 - (IBAction)showBQ:(id)sender {
     if (popoverController == nil) {
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:selectBQ];
-        CGRect popoverRect =  CGRectMake(130, 330, 0, 0);
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:selectBQ];
+        CGRect popoverRect =  CGRectMake(130, 330, 1, 1);
         [popoverController presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         popoverController.delegate = self;
     }
