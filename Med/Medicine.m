@@ -49,7 +49,7 @@
      NSArray *array = [resultArray sortedArrayUsingDescriptors:sortDescriptors];
     [resultArray release];
     [sortDescriptors release];
-    
+    [soter release];
     return array;
 }
 

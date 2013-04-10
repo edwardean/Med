@@ -70,7 +70,10 @@
         if (inputNewRecord==nil) {
             inputNewRecord = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
         }
-        popoverController = [[UIPopoverController alloc] initWithContentViewController:inputNewRecord];
+        UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:inputNewRecord];
+        self.popoverController = pop;
+        [pop release];
+        [inputNewRecord release];
         CGRect popoverRect =  CGRectMake(130, 330, 0, 0);
         [popoverController presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         popoverController.delegate = self;

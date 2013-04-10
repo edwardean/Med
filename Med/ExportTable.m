@@ -213,7 +213,7 @@ static CHCSVWriter *sharedWriter = nil;
     CHCSVWriter *csvWriter = nil;
     if (array) {
         if (segIndex==1) {
-        csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:file] atomic:NO];
+        csvWriter = [[[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:file] atomic:NO] autorelease];
        [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary *dic = [array objectAtIndex:idx];
         NSString *PatientName = [dic objectForKey:@"PatientName"];
@@ -239,7 +239,7 @@ static CHCSVWriter *sharedWriter = nil;
             NSString *path = [home stringByAppendingPathComponent:name];
             if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
                 //debugLog(@"%@",path);
-                csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO];
+                csvWriter = [[[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO] autorelease];
             } else {
                 debugLog(@"Error:%@",error);
             }

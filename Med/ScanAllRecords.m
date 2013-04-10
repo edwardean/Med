@@ -159,6 +159,7 @@
 {
     CGRect rect = CGRectMake(0, 0, 447, self.view.frame.size.height);
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        debugLog(@"SearchResultTableView");
         if (segmentIndex==1) {
         NSDictionary *detailDic = [_searchArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
@@ -171,7 +172,7 @@
         }
         
     } else {
-        
+        debugLog(@"NormalTableView");
         NSDictionary *detailDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
         NSString *patientname = [detailDic objectForKey:@"PatientName"];

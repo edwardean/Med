@@ -404,7 +404,7 @@
     /////////////////////////////////////////////////////////////////////////
     if ([button.superview.superview isKindOfClass:[UITableViewCell class]]) {
         UITableViewCell *cell = (UITableViewCell *)button.superview.superview;
-       NSIndexPath *indexPath = [self.table indexPathForCell:cell];
+       NSIndexPath *indexPath = [table indexPathForCell:cell];
         NSDictionary *Meddic = [medArray objectAtIndex:indexPath.row];
         UITextField *textField = (UITextField *)[cell.contentView viewWithTag:markCountField];
         if ([textField.text length]!=0 && [textField.text intValue]>0) {
