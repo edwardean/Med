@@ -14,7 +14,7 @@
 }
 
 @property (nonatomic, retain) UITableView *table;
-@property (retain, nonatomic) IBOutlet UISearchBar *search;
+@property (retain, nonatomic) UISearchBar *search;
 @property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
 - (IBAction)export:(id)sender;
 - (IBAction)deleteRow:(id)sender;

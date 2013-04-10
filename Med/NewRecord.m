@@ -273,24 +273,19 @@
 #pragma mark -
 - (void)dealloc {
     [field release];
-    [_navBar release];
     [data release];
-    [selectBQ release];
     [addBtn release];
-    [table release];
     [data release];
-    //[selectedBQLabel release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setField:nil];
     [self setNavBar:nil];
     [self setSelectBQ:nil];
-    [self setData:nil];
-    [self setInputNewRecord:nil];
     [self setAddBtn:nil];
     [self setTable:nil];
     [self setSelectedBQLabel:nil];
+    [self setData:nil];
     [super viewDidUnload];
 }
 @end

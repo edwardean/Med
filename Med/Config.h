@@ -41,6 +41,10 @@
 
 #define OKColor [UIColor colorWithRed:195/255.0 green:66/255.0 blue:77/255.0 alpha:1.0]
 
+#define EnableColor [UIColor colorWithRed:221/255.0 green:223/255.0 blue:226/255.0 alpha:1.0]
+
+#define AbleBackgroundColor [UIColor colorWithRed:109/255.0 green:109/255.0 blue:118/255.0 alpha:1.0]
+
 #define ImageNamed(imageName) [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imageName ofType:@"png"]]
 
 #define US [NSUserDefaults standardUserDefaults]

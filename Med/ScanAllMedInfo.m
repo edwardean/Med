@@ -15,9 +15,6 @@
 #define markSpeciLabelTag 4
 @interface ScanAllMedInfo ()
 @property (nonatomic, retain) NSArray *dataArray;
-//@property (nonatomic, retain) NSArray *MedNameArray;
-//@property (nonatomic, retain) NSArray *MedPYMArray;
-//@property (nonatomic, retain) NSArray *SpeciArray;
 @property (nonatomic, retain) NSArray *searchResultArray;
 @property (assign) BOOL isChinese;
 @end
@@ -28,7 +25,6 @@
 @synthesize dataArray = _dataArray;
 @synthesize search = _search;
 @synthesize searchResultArray = _searchResultArray;
-//@synthesize deleteBtn = _deleteBtn;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -178,7 +174,7 @@
         }
         NSMutableArray *tempArray = [self.searchResultArray mutableCopy];
         [tempArray removeObjectAtIndex:[indexPath row]];
-        self.searchResultArray = [tempArray copy];
+        self.searchResultArray = tempArray;
         [tempArray release];
         [self.searchDisplayController.searchResultsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         self.dataArray = [Medicine findAllMedicineToArray];
@@ -192,7 +188,7 @@
         }
         NSMutableArray *tempArray = [self.dataArray mutableCopy];
         [tempArray removeObjectAtIndex:[indexPath row]];
-        self.dataArray = [tempArray copy];
+        self.dataArray = tempArray;
         [tempArray release];
         [self.table deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
@@ -237,17 +233,16 @@
 }
 
 - (void)dealloc {
-    [navBar release];
-    [UISearchBar release];
-    [_table release];
     [_searchResultArray release];
+    [_dataArray release];
     [super dealloc];
 }
 - (void)viewDidUnload {
+    [super viewDidUnload];
     [self setNavBar:nil];
     self.table = nil;
-    self.searchResultArray = nil;
-    [super viewDidUnload];
+    self.search = nil;
+    
     debugMethod();
 }
 - (IBAction)deleteRow:(id)sender {

@@ -57,4 +57,7 @@
         self.CountLabel.text = CountStr;
     }
 }
+- (void) dealloc {
+    [super dealloc];
+}
 @end

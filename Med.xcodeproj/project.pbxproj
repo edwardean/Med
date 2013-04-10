@@ -99,8 +99,6 @@
 		CA981A2516FAB0E60031FD44 /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A2016FAB0E60031FD44 /* Record.m */; };
 		CA981A2B16FAB1200031FD44 /* NewMedicine.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A2916FAB1200031FD44 /* NewMedicine.m */; };
 		CA981A2C16FAB1200031FD44 /* NewMedicine.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA981A2A16FAB1200031FD44 /* NewMedicine.xib */; };
-		CA981A3116FAB1350031FD44 /* NewOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A2F16FAB1350031FD44 /* NewOffice.m */; };
-		CA981A3216FAB1350031FD44 /* NewOffice.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA981A3016FAB1350031FD44 /* NewOffice.xib */; };
 		CA981A3716FAB14B0031FD44 /* NewRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A3516FAB14B0031FD44 /* NewRecord.m */; };
 		CA981A3816FAB14B0031FD44 /* NewRecord.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA981A3616FAB14B0031FD44 /* NewRecord.xib */; };
 		CA981A3C16FAB15C0031FD44 /* SelectBQ.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A3A16FAB15C0031FD44 /* SelectBQ.m */; };
@@ -121,6 +119,7 @@
 		CA981A6B16FAE3DC0031FD44 /* ipad_top_bg2_noshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA981A6716FAE3DC0031FD44 /* ipad_top_bg2_noshadow.png */; };
 		CA981A6C16FAE3DC0031FD44 /* ipad_top_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CA981A6816FAE3DC0031FD44 /* ipad_top_bg2.png */; };
 		CA981A6F16FAE4410031FD44 /* UINavigationBar+CustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A6E16FAE4410031FD44 /* UINavigationBar+CustomImage.m */; };
+		CAA752471715941A00EF9B56 /* WCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA752461715941A00EF9B56 /* WCAlertView.m */; };
 		CAB8F54516FEC83C0004FB04 /* RecordDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8F54416FEC83C0004FB04 /* RecordDetail.m */; };
 		CABBA80717018338009BFB35 /* ExportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CABBA80517018338009BFB35 /* ExportTable.m */; };
 		CABBA80817018338009BFB35 /* ExportTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CABBA80617018338009BFB35 /* ExportTable.xib */; };
@@ -249,9 +248,6 @@
 		CA981A2816FAB1200031FD44 /* NewMedicine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMedicine.h; sourceTree = "<group>"; };
 		CA981A2916FAB1200031FD44 /* NewMedicine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMedicine.m; sourceTree = "<group>"; };
 		CA981A2A16FAB1200031FD44 /* NewMedicine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewMedicine.xib; sourceTree = "<group>"; };
-		CA981A2E16FAB1350031FD44 /* NewOffice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewOffice.h; sourceTree = "<group>"; };
-		CA981A2F16FAB1350031FD44 /* NewOffice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewOffice.m; sourceTree = "<group>"; };
-		CA981A3016FAB1350031FD44 /* NewOffice.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewOffice.xib; sourceTree = "<group>"; };
 		CA981A3416FAB14B0031FD44 /* NewRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRecord.h; sourceTree = "<group>"; };
 		CA981A3516FAB14B0031FD44 /* NewRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewRecord.m; sourceTree = "<group>"; };
 		CA981A3616FAB14B0031FD44 /* NewRecord.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewRecord.xib; sourceTree = "<group>"; };
@@ -280,6 +276,8 @@
 		CA981A6D16FAE4410031FD44 /* UINavigationBar+CustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+CustomImage.h"; sourceTree = "<group>"; };
 		CA981A6E16FAE4410031FD44 /* UINavigationBar+CustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+CustomImage.m"; sourceTree = "<group>"; };
 		CA981A7016FAFB410031FD44 /* JCAutocompletingSearchViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAutocompletingSearchViewControllerDelegate.h; sourceTree = "<group>"; };
+		CAA752451715941A00EF9B56 /* WCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCAlertView.h; sourceTree = "<group>"; };
+		CAA752461715941A00EF9B56 /* WCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCAlertView.m; sourceTree = "<group>"; };
 		CAB8F54316FEC83C0004FB04 /* RecordDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordDetail.h; sourceTree = "<group>"; };
 		CAB8F54416FEC83C0004FB04 /* RecordDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordDetail.m; sourceTree = "<group>"; };
 		CABBA80417018338009BFB35 /* ExportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportTable.h; sourceTree = "<group>"; };
@@ -522,6 +520,7 @@
 		CA981A0216FAB06D0031FD44 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				CAA752441715941A00EF9B56 /* WCAlertView */,
 				CA90FA4517144139003F34E8 /* CMActionSheet */,
 				CA90F9D617143891003F34E8 /* CHCSVWriter */,
 				CA4494421708242900A05F8D /* MBProgressHUD */,
@@ -600,9 +599,6 @@
 		CA981A2D16FAB1240031FD44 /* NewBQ */ = {
 			isa = PBXGroup;
 			children = (
-				CA981A2E16FAB1350031FD44 /* NewOffice.h */,
-				CA981A2F16FAB1350031FD44 /* NewOffice.m */,
-				CA981A3016FAB1350031FD44 /* NewOffice.xib */,
 				CA981A5016FACEA70031FD44 /* NewBingQu.h */,
 				CA981A5116FACEA70031FD44 /* NewBingQu.m */,
 				CA981A5216FACEA70031FD44 /* NewBingQu.xib */,
@@ -642,6 +638,15 @@
 				CAB8F54416FEC83C0004FB04 /* RecordDetail.m */,
 			);
 			name = ScanInfo;
+			sourceTree = "<group>";
+		};
+		CAA752441715941A00EF9B56 /* WCAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				CAA752451715941A00EF9B56 /* WCAlertView.h */,
+				CAA752461715941A00EF9B56 /* WCAlertView.m */,
+			);
+			path = WCAlertView;
 			sourceTree = "<group>";
 		};
 		CABBA80317018317009BFB35 /* ExportData */ = {
@@ -738,7 +743,6 @@
 				CA981A0E16FAB0AA0031FD44 /* Cell1.xib in Resources */,
 				CA981A1016FAB0AA0031FD44 /* Cell2.xib in Resources */,
 				CA981A2C16FAB1200031FD44 /* NewMedicine.xib in Resources */,
-				CA981A3216FAB1350031FD44 /* NewOffice.xib in Resources */,
 				CA981A3816FAB14B0031FD44 /* NewRecord.xib in Resources */,
 				CA981A3D16FAB15C0031FD44 /* SelectBQ.xib in Resources */,
 				CA981A4516FAB1710031FD44 /* InputNewRecord.xib in Resources */,
@@ -812,7 +816,6 @@
 				CA981A2416FAB0E60031FD44 /* Office.m in Sources */,
 				CA981A2516FAB0E60031FD44 /* Record.m in Sources */,
 				CA981A2B16FAB1200031FD44 /* NewMedicine.m in Sources */,
-				CA981A3116FAB1350031FD44 /* NewOffice.m in Sources */,
 				CA981A3716FAB14B0031FD44 /* NewRecord.m in Sources */,
 				CA981A3C16FAB15C0031FD44 /* SelectBQ.m in Sources */,
 				CA981A4416FAB1710031FD44 /* InputNewRecord.m in Sources */,
@@ -828,6 +831,7 @@
 				CA3D25D5170AA835003DD461 /* CHCSVWriter.m in Sources */,
 				CA90FA5B17144139003F34E8 /* CMActionSheet.m in Sources */,
 				CA90FA5C17144139003F34E8 /* CMRotatableModalViewController.m in Sources */,
+				CAA752471715941A00EF9B56 /* WCAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

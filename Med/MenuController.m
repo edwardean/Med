@@ -14,7 +14,6 @@
 #import "Cell1.h"
 #import "Cell2.h"
 #import "NewMedicine.h"
-#import "NewOffice.h"
 #import "NewBingQu.h"
 #import "NewRecord.h"
 #import "ScanAllMedInfo.h"
@@ -22,22 +21,17 @@
 #import "ExportTable.h"
 #import "FMDatabase.h"
 #import "dataBaseManager.h"
-#import "CMActionSheet/CMActionSheet.h"
+#import "CMActionSheet.h"
+#import "WCAlertView.h"
 @interface MenuController ()
 @property (assign) BOOL isOpen;
 @property (nonatomic, retain) NSIndexPath *selectIndex;
+@property (nonatomic, retain) UIViewController *controller;
 @end
 @implementation MenuController
 @synthesize table = _table;
 @synthesize isOpen,selectIndex;
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//        
-//    }
-//    return self;
-//}
+@synthesize controller = _controller;
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super init]) {
 		[self.view setFrame:frame];
@@ -72,12 +66,12 @@
     self.table.sectionFooterHeight = 0;
     self.table.sectionHeaderHeight = 0;
     self.isOpen = NO;
+   // self.controller = [[UIViewController alloc] init];
 }
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //NSLog(@"_dataListCount:%d",[_dataList count]);
     return [_dataList count];
 
 }
@@ -127,16 +121,7 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NewMedicine *newMedicine = [[NewMedicine alloc] initWithNibName:@"NewMedicine" bundle:nil];
-    
-    //NewOffice *newOffice = [[NewOffice alloc] initWithNibName:@"NewOffice" bundle:nil];
-    NewBingQu *newBQ = [[NewBingQu alloc] initWithNibName:@"NewBingQu" bundle:nil];
-    
-    NewRecord *newRecord = [[NewRecord alloc] initWithNibName:@"NewRecord" bundle:nil];
-    ScanAllMedInfo *scanMedInfo = [[ScanAllMedInfo alloc] initWithNibName:@"ScanAllMedInfo" bundle:nil];
-    ScanAllRecords *scanAllRecord = [[ScanAllRecords alloc] initWithNibName:@"ScanAllRecords" bundle:nil];
-    ExportTable *exp  =[[ExportTable alloc] initWithNibName:@"ExportTable" bundle:nil];
-    
+    self.controller = nil;
     if (indexPath.row == 0) {
         if ([indexPath isEqual:self.selectIndex]) {
             self.isOpen = NO;
@@ -158,29 +143,54 @@
         
     }else
     {
-        UIViewController *controller = nil;
-        
-        
         NSDictionary *dic = [_dataList objectAtIndex:indexPath.section];
         NSArray *list = [dic objectForKey:@"list"];
         NSString *item = [list objectAtIndex:indexPath.row-1];
         if ([item isEqualToString:@"新增药品"]) {
-            controller = [newMedicine retain];
+            NewMedicine *newMed = [[NewMedicine alloc] initWithNibName:@"NewMedicine" bundle:nil];
+           self.controller = newMed;
+            [newMed release];
         } else if ([item isEqualToString:@"新增病区"]) {
-            controller = [newBQ retain];
+            NewBingQu *newBQ = [[NewBingQu alloc] initWithNibName:@"NewBingQu" bundle:nil];
+            self.controller = newBQ;
+            [newBQ release];
         } else if ([item isEqualToString:@"新增用药记录"]) {
-            controller = [newRecord retain];
+            NewRecord *newRecord = [[NewRecord alloc] initWithNibName:@"NewRecord" bundle:nil];
+            self.controller = newRecord;
+            [newRecord release];
         } else if ([item isEqualToString:@"查看所有药品信息"])
         {
-            controller = [scanMedInfo retain];
+            ScanAllMedInfo *scanAllMed = [[ScanAllMedInfo alloc] initWithNibName:@"ScanAllMedInfo" bundle:nil];
+            self.controller = scanAllMed;
+            [scanAllMed release];
         } else if ([item isEqualToString:@"查看各病区用药记录"]) {
-            controller = [scanAllRecord retain];
+            ScanAllRecords *scanAllRecord = [[ScanAllRecords alloc] initWithNibName:@"ScanAllRecords" bundle:nil];
+            self.controller = scanAllRecord;
+            [scanAllRecord release];
         } else if ([item isEqualToString:@"导出数据"]) {
-            controller = [exp retain];
+             ExportTable *exp = [[ExportTable alloc] initWithNibName:@"ExportTable" bundle:nil];
+            self.controller = exp;
+            [exp release];
         } else if ([item isEqualToString:@"清空所有"]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认信息" message:@"真的要删除所有记录吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            [alert show];
-            [alert release];
+            [WCAlertView showAlertWithTitle:@"确认信息" message:@"真的要清除所有记录吗??" customizationBlock:^(WCAlertView *alertView) {
+                alertView.style = WCAlertViewStyleVioletHatched;
+            } completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
+                if (buttonIndex == 1) {
+                    BOOL isOK = NO;
+                    FMDatabase *dataBase = [dataBaseManager createDataBase];
+                    if ([dataBase open]) {
+                        NSString *sql3 = @"DELETE FROM Record";
+                        NSString *sql4 = @"DELETE FROM Detail";
+                        isOK = [dataBase executeUpdate:sql3]&&[dataBase executeUpdate:sql4];
+                        [dataBase close];
+                    }
+                    NSString *msg = isOK ? @"已删除所有记录" : @"出现错误";
+                    [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0];
+                } else {
+                    debugLog(@"取消");
+                }
+            } cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            
         } else if ([item isEqualToString:@"删除所有已导出文件"]){
             CMActionSheet *sheet = [[[CMActionSheet alloc] init]autorelease];
             [sheet addButtonWithTitle:@"真的要删除吗?这会清除所有的csv文件,请确认已将文件安全地导出" type:CMActionSheetButtonTypeRed block:^{
@@ -206,34 +216,14 @@
             }];
             [sheet present];
         }
-        if (controller) {
-        [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:controller invokeByController:self isStackStartView:TRUE];
+        if (_controller){
+        
+        [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_controller invokeByController:self isStackStartView:TRUE];
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [newMedicine release];
-    [newBQ release];
-    [newRecord release];
-    [scanMedInfo release];
-    [scanAllRecord release];
-    [exp release];
 }
 
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex==1) {
-        BOOL isOK = NO;
-        FMDatabase *dataBase = [dataBaseManager createDataBase];
-        if ([dataBase open]) {
-            NSString *sql3 = @"DELETE FROM Record";
-            NSString *sql4 = @"DELETE FROM Detail";
-            isOK = [dataBase executeUpdate:sql3]&&[dataBase executeUpdate:sql4];
-            [dataBase close];
-        }
-    NSString *msg = isOK ? @"已删除所有记录" : @"出现错误";
-    [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0];
-    
-    }
-}
 - (void)didSelectCellRowFirstDo:(BOOL)firstDoInsert nextDo:(BOOL)nextDoInsert
 {
     self.isOpen = firstDoInsert;
@@ -278,20 +268,20 @@
     
 }
 - (void)viewDidUnload {
-    debugMethod();
     [super viewDidUnload];
     _dataList = nil;
     [self setTable:nil];
     [self setSelectIndex:nil];
+    [self setController:nil];
 }
 
 - (void) dealloc {
+    [_controller release];
     [_dataList release];
     _dataList = nil;
     [_table release];
     self.isOpen = NO;
     [selectIndex release];
     [super dealloc];
-    debugMethod();
 }
 @end

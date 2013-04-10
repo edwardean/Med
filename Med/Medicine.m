@@ -9,7 +9,6 @@
 #import "Medicine.h"
 
 @implementation Medicine
-@synthesize name,specifi,content,PYM;
 @synthesize stringID;
 
 + (int)countAllMedicine {
@@ -223,5 +222,9 @@
     }
     [dataBase close];
     return isOK;
+}
+- (void) dealloc {
+    [stringID release];
+    [super dealloc];
 }
 @end

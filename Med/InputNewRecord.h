@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "NewRecord.h"
 @interface InputNewRecord : UIViewController <UISearchBarDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate> {
-    IBOutlet UITableView *table;
+    UITableView *table;
 }
 
-@property (nonatomic, retain) IBOutlet UISearchBar *search;
+@property (nonatomic, retain) UISearchBar *search;
 @property (nonatomic, retain) UITableView *table;
 @property (nonatomic, retain) UITextField *field;
 @property (nonatomic, retain) NSMutableArray *contentArray;//存放所选药量和index

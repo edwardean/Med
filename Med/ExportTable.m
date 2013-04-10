@@ -81,7 +81,7 @@ static CHCSVWriter *sharedWriter = nil;
 - (void)writeDetailByID:(NSString *)_ID {
     CHCSVWriter *csvWriter = [ExportTable sharedWriter];
     FMDatabase *dataBase = [dataBaseManager createDataBase];
-    NSArray *medArray = [[self countAllMed] copy];
+    NSArray *medArray = [self countAllMed];
     if ([dataBase open]) {
         FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",_ID];
         while ([resultSet2 next]) {
@@ -259,7 +259,7 @@ static CHCSVWriter *sharedWriter = nil;
     return isOK;
 }
 - (void)dealloc {
-    [_navBar release];
+    [HUD release];
     [super dealloc];
 }
 - (void)viewDidUnload {

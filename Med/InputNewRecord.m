@@ -44,8 +44,6 @@
 @interface InputNewRecord ()
 
 @property (nonatomic, retain) NSArray *medArray;//主数据源，所有药品信息
-@property (nonatomic,retain) NSDictionary *dict;
-@property (nonatomic, retain) NSMutableArray *list;
 @property (nonatomic, retain) NSArray *searchArray;//搜索结果，searchDisplayResultTableView的数据源
 @property(retain, nonatomic) NSIndexPath *selectIndex;///////
 @property (retain,nonatomic) NSIndexPath *searchSelectIndex;////////
@@ -57,13 +55,13 @@
 @implementation InputNewRecord
 @synthesize table;
 @synthesize medArray;
-@synthesize list = _list;
 @synthesize field;
 @synthesize contentArray;
 @synthesize search = _search;
 @synthesize searchArray = _searchArray;
 @synthesize searchIndexArray = _searchIndexArray;
-@synthesize dict = _dict;
+@synthesize indexArray = _indexArray;
+@synthesize selectIndex = _selectIndex;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -491,11 +489,11 @@
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     debugMethod();
-    NSIndexPath *indexPath = nil;
+   // NSIndexPath *indexPath = nil;
     if ([textField.superview.superview isKindOfClass:[UITableViewCell class]]) {
         //因为是加在cell的contentView上的所以有两个superView
-        UITableViewCell *cell = (UITableViewCell *)textField.superview.superview;
-        indexPath = [table indexPathForCell:cell];
+        //UITableViewCell *cell = (UITableViewCell *)textField.superview.superview;
+        //indexPath = [table indexPathForCell:cell];
        // UITextField *textfield = (UITextField *)[cell.contentView viewWithTag:markCountField];
         [textField resignFirstResponder];
         [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
@@ -560,17 +558,30 @@
 }
 #pragma mark -
 - (void) viewDidUnload {
-    [super viewDidUnload];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     self.contentArray = nil;
-    self.medArray = nil;
-    debugMethod();
+    [self setTable:nil];
+    [self setSearch:nil];
+    [self setField:nil];
+    [self setSearchIndexArray:nil];
+    [self setSearchArray:nil];
+    [self setIndexArray:nil];
+    [self setSelectIndex:nil];
+    [super viewDidUnload];
 }
 
 - (void) dealloc {
     [super dealloc];
     [medArray release];
+    [_searchIndexArray release];
     [contentArray release];
+    [table release];
+    [_search release];
+    [field release];
+    [_selectIndex release];
+    
+    [_searchArray release];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
 }
 @end

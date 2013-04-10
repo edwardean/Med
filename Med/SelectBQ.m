@@ -204,17 +204,13 @@
 - (void) viewDidUnload {
     [super viewDidUnload];
     [self setSearch:nil];
-    
     self.table = nil;
     self.BQStr = nil;
-    self.array = nil;
     self.searchArray = nil;
     self.lastPath = nil;
-    debugMethod();
 }
 
 - (void) dealloc {
-    [_search release];
     [table release];
     [BQStr release];
     [array release];

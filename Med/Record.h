@@ -10,12 +10,6 @@
 #import "dataBaseManager.h"
 @interface Record : NSObject
 
-@property (nonatomic, copy) NSString *PatientName;//病人姓名
-@property (nonatomic, copy) NSString *Office;//病人所属病区
-@property (nonatomic, copy) NSString *Name;//为病人所开药品名
-@property (nonatomic, copy) NSString *Count;//药的用量
-
-
 /**
     数据库查找
  **/

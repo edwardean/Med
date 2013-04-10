@@ -269,7 +269,6 @@
     [specifiTextField release];
     [countTextField release];
     [pymTextField release];
-    [navBar release];
     [specifiStr release];
     [unitStr release];
     [lastIndex release];

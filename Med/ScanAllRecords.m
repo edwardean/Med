@@ -33,6 +33,7 @@
 @synthesize medArray = _medArray;
 @synthesize isOpen;
 @synthesize segmentIndex;
+@synthesize searchController = _searchController;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -78,6 +79,14 @@
     }
     self.searchDisplayController.searchBar.placeholder = _searchBarPlaceholder;
     [self.searchDisplayController.searchResultsTableView setRowHeight:60];
+    UISegmentedControl *scopeBar = nil;
+    for (id subView in self.searchDisplayController.searchBar.subviews){
+        if ([subView isMemberOfClass:[UISegmentedControl class]]) {
+            scopeBar = (UISegmentedControl *)subView;
+            scopeBar.userInteractionEnabled = YES;
+            scopeBar.tintColor = AbleBackgroundColor;
+        }
+    }
 }
 #pragma mark -
 #pragma mark - UITableViewDataSource
@@ -257,6 +266,14 @@
 }
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.isOpen = NO;
+    UISegmentedControl *scopeBar = nil;
+    for (id subView in self.searchDisplayController.searchBar.subviews){
+        if ([subView isMemberOfClass:[UISegmentedControl class]]) {
+            scopeBar = (UISegmentedControl *)subView;
+            scopeBar.userInteractionEnabled = YES;
+            scopeBar.tintColor = AbleBackgroundColor;
+        }
+    }
 }
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     
@@ -275,11 +292,23 @@
      self.searchDisplayController.searchBar.placeholder = _searchBarPlaceholder;
 }
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-
+    
 }
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    //[self filterContentForSearchText:searchText scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    UISegmentedControl *scopeBar = nil;
+    for (id subView in self.searchDisplayController.searchBar.subviews){
+        if ([subView isMemberOfClass:[UISegmentedControl class]]) {
+            scopeBar = (UISegmentedControl *)subView;
+            }
+    }
+    if ([searchText length]>0) {
+        scopeBar.userInteractionEnabled = NO;
+        scopeBar.tintColor = EnableColor;
+    } else{
+       scopeBar.userInteractionEnabled = YES;
+       scopeBar.tintColor = AbleBackgroundColor;
+    }
     self.isOpen = YES;
     
     self.searchName = searchText;    
@@ -303,18 +332,22 @@
 }
 
 - (void)dealloc {
-    [_table release];
     [_patientAndBQArray release];
     [_searchArray release];
     [_medArray release];
+    [_searchController release];
+    [_search release];
     [super dealloc];
 }
 - (void)viewDidUnload {
-    self.table = nil;
-    self.patientAndBQArray = nil;
-    self.searchArray= nil;
-    self.medArray = nil;
     [super viewDidUnload];
+    self.table = nil;
+    self.search = nil;
+    self.navBar = nil;
+    self.searchController = nil;
+    self.searchBarPlaceholder = nil;
+    self.searchName = nil;
+    
 }
 - (IBAction)export:(id)sender {
     if (!isOpen) {

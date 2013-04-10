@@ -14,7 +14,6 @@
 
 @implementation NewBingQu
 @synthesize inputTextField;
-@synthesize navBar = _navBar;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,7 +32,7 @@
     inputTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     inputTextField.keyboardType = UIKeyboardTypeDefault;
     inputTextField.delegate = self;
-    [_navBar setBackImage];
+    [navBar setBackImage];
 }
 - (IBAction)hide:(id)sender {
     debugMethod();
@@ -87,8 +86,8 @@
 #pragma mark -
 - (void) viewDidUnload {
     
-    [self setNavBar:nil];
     [self setInputTextField:nil];
+    navBar = nil;
     [super viewDidUnload];
 }
 
@@ -100,7 +99,6 @@
 
 - (void) dealloc {
     
-    [_navBar release];
     [inputTextField release];
     [super dealloc];
 }

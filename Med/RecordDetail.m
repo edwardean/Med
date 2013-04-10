@@ -128,7 +128,6 @@
 
     self.table = nil;
     self.patient = nil;
-    self.detailArray = nil;
     self.navbar = nil;
     [super viewDidUnload];
 }
@@ -136,8 +135,6 @@
 - (void) dealloc {
     [_table release];
     [patient release];
-    [_detailArray release];
-    [_navbar release];
     [super dealloc];
 }
 @end

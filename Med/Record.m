@@ -9,7 +9,6 @@
 #import "Record.h"
 #import "CHCSVWriter.h"
 @implementation Record
-@synthesize PatientName,Office,Name,Count;
 
 + (NSArray *)findAllRecordsInRecordTableToArray {
     FMDatabase *dataBase = [dataBaseManager createDataBase];

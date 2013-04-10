@@ -10,8 +10,8 @@
 #import "dataBaseManager.h"
 @interface NewBingQu : UIViewController <UITextFieldDelegate> {
     IBOutlet UITextField *inputTextField;
+    IBOutlet UINavigationBar *navBar;
 }
-@property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) UITextField *inputTextField;
 - (IBAction)hide:(id)sender;
 - (IBAction)Save:(id)sender;

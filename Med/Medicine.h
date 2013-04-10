@@ -10,11 +10,6 @@
 #import "dataBaseManager.h"
 @interface Medicine : NSObject
 
-@property (nonatomic, copy) NSString *name;//药品名称
-@property (nonatomic, copy) NSString *specifi;//规格
-@property (nonatomic, copy) NSString *content;//产地
-@property (nonatomic, copy) NSString *PYM;//药品拼音码
-@property (nonatomic, copy) NSString *Unit;//药品单位mg/ml
 
 @property (nonatomic, copy) NSString *stringID;//药品主键ID
 //- (id) initMedicineWithName:(NSString *)_name andSpecifi:(NSString *)_specifi andContent:(NSString *)_Content;
