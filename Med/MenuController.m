@@ -22,6 +22,7 @@
 #import "ExportTable.h"
 #import "FMDatabase.h"
 #import "dataBaseManager.h"
+#import "CMActionSheet/CMActionSheet.h"
 @interface MenuController ()
 @property (assign) BOOL isOpen;
 @property (nonatomic, retain) NSIndexPath *selectIndex;
@@ -68,8 +69,6 @@
     [super viewDidLoad];
 	NSString *path  = [[NSBundle mainBundle] pathForResource:@"menu" ofType:@"plist"];
     _dataList = [[NSMutableArray alloc] initWithContentsOfFile:path];
-    //NSLog(@"%@",path);
-    
     self.table.sectionFooterHeight = 0;
     self.table.sectionHeaderHeight = 0;
     self.isOpen = NO;
@@ -179,9 +178,33 @@
         } else if ([item isEqualToString:@"导出数据"]) {
             controller = [exp retain];
         } else if ([item isEqualToString:@"清空所有"]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认信息" message:@"真的要删除所有数据吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认信息" message:@"真的要删除所有记录吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert show];
             [alert release];
+        } else if ([item isEqualToString:@"删除所有已导出文件"]){
+            CMActionSheet *sheet = [[[CMActionSheet alloc] init]autorelease];
+            [sheet addButtonWithTitle:@"真的要删除吗?这会清除所有的csv文件,请确认已将文件安全地导出" type:CMActionSheetButtonTypeRed block:^{
+                NSString *extension = @"csv";
+                NSFileManager *manager = [NSFileManager defaultManager];
+                NSString *path = DOCUMENT;
+                NSString *dir = [DOCUMENT stringByAppendingPathComponent:DirectoryName];
+                NSArray *contents = [manager contentsOfDirectoryAtPath:path error:NULL];
+                NSEnumerator *e = [contents objectEnumerator] ;
+                NSString *fileName;
+                while ((fileName = [e nextObject])) {
+                    if ([[fileName pathExtension] isEqualToString:extension]) {
+                           [manager removeItemAtPath:[path stringByAppendingPathComponent:fileName] error:NULL]; 
+                    }
+                }
+                BOOL isDir = YES;
+             if ([manager fileExistsAtPath:dir isDirectory:&isDir]){
+                 [manager removeItemAtPath:dir error:nil];
+             }
+            }];
+            [sheet addButtonWithTitle:@"好吧,我反悔了" type:CMActionSheetButtonTypeWhite block:^{
+                
+            }];
+            [sheet present];
         }
         if (controller) {
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:controller invokeByController:self isStackStartView:TRUE];
@@ -201,14 +224,10 @@
         BOOL isOK = NO;
         FMDatabase *dataBase = [dataBaseManager createDataBase];
         if ([dataBase open]) {
-//            NSString *sql1 = @"DELETE FROM Medicine";
-//            NSString *sql2 = @"DELETE FROM BingQu";
             NSString *sql3 = @"DELETE FROM Record";
             NSString *sql4 = @"DELETE FROM Detail";
             isOK = [dataBase executeUpdate:sql3]&&[dataBase executeUpdate:sql4];
             [dataBase close];
-            //NSUserDefaults *us = [NSUserDefaults standardUserDefaults];
-            //[us setObject:@"NULL" forKey:@"BQ"];
         }
     NSString *msg = isOK ? @"已删除所有记录" : @"出现错误";
     [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0];

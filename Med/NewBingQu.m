@@ -68,6 +68,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)_textField {
     
     [_textField resignFirstResponder];
+    [self performSelector:@selector(Save:)];
     return YES;
 }
 
@@ -80,17 +81,7 @@
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-//    NSCharacterSet *cs = nil;
-//    if ([textField isEqual:inputTextField]) {
-//        cs = [[NSCharacterSet characterSetWithCharactersInString:ALPHANUM]invertedSet];
-//    }
-//    else
-//        return YES;
-//    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-//	BOOL basicTest = [string isEqualToString:filtered];
-//	
-//	
-//	return basicTest;
+
     return YES;
 }
 #pragma mark -

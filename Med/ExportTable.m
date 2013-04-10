@@ -9,6 +9,7 @@
 #import "ExportTable.h"
 #import "dataBaseManager.h"
 #import "Medicine.h"
+#import "Record.h"
 static CHCSVWriter *sharedWriter = nil;
 @interface ExportTable ()
 
@@ -29,18 +30,32 @@ static CHCSVWriter *sharedWriter = nil;
 {
     [super viewDidLoad];
     [_navBar setBackImage];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btn setFrame:CGRectMake(0, 0, 198, 60)];
+    [btn setCenter:self.view.center];
+    [btn setBackgroundImage:ImageNamed(@"btn_normal") forState:UIControlStateNormal];
+    [btn setBackgroundImage:ImageNamed(@"btn_down") forState:UIControlStateHighlighted];
+    [self.view addSubview:btn];
+    [btn addTarget:self action:@selector(Export) forControlEvents:UIControlEventTouchUpInside];
+    
 }
-
+- (void)Export {
+    [self performSelector:@selector(ExportTable) withObject:nil afterDelay:0.005f];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+}
 + (CHCSVWriter *)sharedWriter{
     @synchronized (self) {
         if (sharedWriter == nil) {
-            sharedWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:@"所有记录.csv"] atomic:NO];
+            sharedWriter = [[CHCSVWriter alloc] initWithCSVFile:[DOCUMENT stringByAppendingPathComponent:@"所有记录.csv"] atomic:NO];
         }
         return sharedWriter;
     }
@@ -83,8 +98,6 @@ static CHCSVWriter *sharedWriter = nil;
             }
         }
         [csvWriter writeLine];
-
-        
         [dataBase close];
 }
 
@@ -97,6 +110,31 @@ static CHCSVWriter *sharedWriter = nil;
         HUD.progress = progress;
         usleep(7000);
     }
+}
+
+- (void)ExportAllRecordsByMed {
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
+    FMDatabase *dataBase = [dataBaseManager createDataBase];
+    if ([dataBase open]) {
+        FMResultSet *rs = [dataBase executeQuery:@"SELECT * FROM Medicine"];
+        while ([rs next]) {
+            NSString *pym = [rs stringForColumn:@"PYM"];
+            NSString *name = [rs stringForColumn:@"Name"];
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:pym,@"PYM",name,@"Name", nil];
+            [mutableArray addObject:dic];
+            
+        }
+        [dataBase close];
+    }
+    
+    
+        [mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary *dic = [mutableArray objectAtIndex:idx];
+        NSString *PYM = [dic objectForKey:@"PYM"];
+        NSString *Name = [dic objectForKey:@"Name"];
+        NSArray *array = [Record searchAllRecordsByPYM:PYM];
+        [self exportSearchResult:array andFileName:Name andseg:0];
+    }];
 }
 
 - (void)showHUD {
@@ -112,7 +150,7 @@ static CHCSVWriter *sharedWriter = nil;
 	// myProgressTask uses the HUD instance to update progress
     [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
 }
-- (IBAction)ExportTable:(id)sender {
+- (void)ExportTable{
     [self showHUD];
     CHCSVWriter *csvWriter = [ExportTable sharedWriter];
     FMDatabase *dataBase = [dataBaseManager createDataBase];
@@ -124,67 +162,59 @@ static CHCSVWriter *sharedWriter = nil;
         [csvWriter writeField:[medDic objectForKey:@"Name"]];
     }
     [csvWriter writeLine];
-    if ([dataBase open]) {
-        FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
-        while ([resultSet1 next]) {
-            NSString *ID = [resultSet1 stringForColumn:@"id"];//第一张表的id主键
-            NSString *PatientName = [resultSet1 stringForColumn:@"PatientName"];//第一张表的PatientName
-            NSString *Office = [resultSet1 stringForColumn:@"Office"];//第一张表的Office
-            [csvWriter writeField:Office];
-            [csvWriter writeField:PatientName];
-            NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
-            FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
-            while ([resultSet2 next]) {
-                //NSString *Name = [resultSet2 stringForColumn:@"Name"];
-                NSString *Count = [resultSet2 stringForColumn:@"Count"];
-                NSString *PYM = [resultSet2 stringForColumn:@"PYM"];
-                NSDictionary *medDic = [NSDictionary dictionaryWithObjectsAndKeys:Count,@"Count",PYM,@"PYM", nil];
-                [mutableArray addObject:medDic];
-            }
-            __block BOOL flag = NO;
-            __block int count = 0;
-            [medArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-            {
-                NSString *medPYM = [[medArray objectAtIndex:idx] objectForKey:@"PYM"];
-                [mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger _idx, BOOL *stop)
-                {
-                    NSString *_medPYM = [[mutableArray objectAtIndex:_idx]objectForKey:@"PYM"];
-                    if ([medPYM isEqualToString:_medPYM])
-                    {
-                        flag = YES;
-                        count ++;
-                        [csvWriter writeField:[[mutableArray objectAtIndex:_idx]objectForKey:@"Count"]];
-//                        
-//                        if ([mutableArray count]==count) {
-//                            debugLog(@"%d",count);
-//                            *stop = YES;
-//                             [csvWriter writeLine];
-//                        }
-                        *stop = YES;
-                    }
-                    else
-                    {
-                        flag = NO;
-                    }
-                }];
-                if (flag==NO) {
-                    [csvWriter writeField:nil];
+    NSArray *resultArray = [Record findAllRecordsInRecordTableToArray];
+    [resultArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary *dictionary = [resultArray objectAtIndex:idx];
+        NSString *PatientName = [dictionary objectForKey:@"PatientName"];
+        NSString *Office = [dictionary objectForKey:@"Office"];
+        [csvWriter writeField:Office];
+        [csvWriter writeField:PatientName];
+        NSMutableArray *_mutableArray = [NSMutableArray arrayWithCapacity:0];
+        NSArray *detailArray = [dictionary objectForKey:@"Detail"];
+        [detailArray enumerateObjectsUsingBlock:^(id _obj, NSUInteger _idx, BOOL *_stop) {
+            NSDictionary *retailDic = [detailArray objectAtIndex:_idx];
+            NSString *Name = [retailDic objectForKey:@"Name"];
+            NSString *Count = [retailDic objectForKey:@"Count"];
+            NSString *Pym = [retailDic objectForKey:@"PYM"];
+            NSDictionary *medDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count",Pym,@"PYM", nil];
+            [_mutableArray addObject:medDic];
+        }];
+        __block BOOL flag = NO;
+        __block int count = 0;
+        [medArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *medPYM = [[medArray objectAtIndex:idx] objectForKey:@"PYM"];
+            [_mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSString *_medPYM = [[_mutableArray objectAtIndex:idx]objectForKey:@"PYM"];
+                if ([medPYM isEqualToString:_medPYM]) {
+                    flag = YES;
+                    count ++;
+                    [csvWriter writeField:[[_mutableArray objectAtIndex:idx]objectForKey:@"Count"]];
+                    *stop = YES;
+                } else {
+                    flag = NO;
                 }
-                
             }];
+            if (!flag) {
+                [csvWriter writeField:nil];
+            }
+        }];
         [csvWriter writeLine];
-        
-        }
-    }
+    }];
     [dataBase close];
     [csvWriter closeFile];
+    [sharedWriter release];
+    sharedWriter = nil;
+    [self performSelector:@selector(ExportAllRecordsByMed)];
 }
 
-- (BOOL)exportSearchResult:(NSArray *)array {
+- (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex {
     BOOL isOK = NO;
-    CHCSVWriter *csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:@"搜索记录.csv"] atomic:NO];
+    NSString *file = [fileName stringByAppendingString:@".csv"];
+    CHCSVWriter *csvWriter = nil;
     if (array) {
-    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (segIndex==1) {
+        csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:file] atomic:NO];
+       [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary *dic = [array objectAtIndex:idx];
         NSString *PatientName = [dic objectForKey:@"PatientName"];
         NSString *Office = [dic objectForKey:@"Office"];
@@ -201,9 +231,31 @@ static CHCSVWriter *sharedWriter = nil;
         [csvWriter writeLine];
     }];
         isOK = YES;
+        } else if (segIndex==0) {
+            NSError *error = nil;
+            NSFileManager *manager = [NSFileManager defaultManager];
+            NSString *home = DOCUMENT;
+            NSString *name = DirectoryName;
+            NSString *path = [home stringByAppendingPathComponent:name];
+            if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+                //debugLog(@"%@",path);
+                csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO];
+            } else {
+                debugLog(@"Error:%@",error);
+            }
+            
+            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSDictionary *dic = [array objectAtIndex:idx];
+                [csvWriter writeField:[dic objectForKey:@"Office"]];
+                [csvWriter writeField:[dic objectForKey:@"PatientName"]];
+                [csvWriter writeField:[dic objectForKey:@"Name"]];
+                [csvWriter writeField:[dic objectForKey:@"Count"]];
+                [csvWriter writeLine];
+            }];
+            isOK = YES;
+        }
     }
     [csvWriter closeFile];
-    [csvWriter release];
     return isOK;
 }
 - (void)dealloc {
@@ -211,8 +263,7 @@ static CHCSVWriter *sharedWriter = nil;
     [super dealloc];
 }
 - (void)viewDidUnload {
-    [self setNavBar:nil];
     [super viewDidUnload];
-    debugMethod();
+    [self setNavBar:nil];
 }
 @end

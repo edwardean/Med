@@ -19,16 +19,20 @@
 @property (nonatomic, retain) NSArray *searchArray;
 @property (nonatomic, retain) NSArray *medArray;
 @property (assign) BOOL isOpen;
+@property (nonatomic, strong) UISearchDisplayController *searchController;
+@property (assign) NSInteger segmentIndex;
+@property (nonatomic,copy) NSString *searchBarPlaceholder;
+@property (nonatomic,copy) NSString *searchName;
 @end
 
 @implementation ScanAllRecords
 @synthesize table = _table;
-@synthesize search =_search;
 @synthesize navBar = _navBar;
 @synthesize patientAndBQArray = _patientAndBQArray;
 @synthesize searchArray = _searchArray;
 @synthesize medArray = _medArray;
 @synthesize isOpen;
+@synthesize segmentIndex;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,22 +45,39 @@
 {
     [super viewDidLoad];
     [_navBar setBackImage];
-    [super viewDidAppear:YES];
+    self.isOpen = NO;
+    self.search = [[UISearchBar alloc] initWithFrame:CGRectZero];
+    self.search.placeholder = @"搜索";
+    self.search.delegate = self;
+    [self.search sizeToFit];
+    
+    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.search contentsController:self];
+    self.searchDisplayController.searchResultsDataSource = self;
+    self.searchDisplayController.searchResultsDelegate = self;
+    self.searchDisplayController.delegate = self;
+    [self.searchController.searchBar setScopeButtonTitles:[NSArray arrayWithObjects:@"按药品拼音码检索",@"按病区或病人检索", nil]];
+    self.search.showsScopeBar = YES;
+    self.table.tableHeaderView = self.searchDisplayController.searchBar;
+    self.table.contentOffset = CGPointMake(0, CGRectGetHeight(self.search.bounds));
     self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
     [_table reloadData];
-    self.isOpen = NO;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//      self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
-//      dispatch_async(dispatch_get_main_queue(), ^{
-//          [_table reloadData];
-//      });
-//  });
     [super viewDidAppear:animated];
-    
+    self.segmentIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
+    switch (segmentIndex) {
+        case 0:
+            self.searchBarPlaceholder = @"键入药品拼音码";
+            break;
+        case 1:
+            self.searchBarPlaceholder = @"键入病区或病人名";
+            break;
+        default:
+            break;
+    }
+    self.searchDisplayController.searchBar.placeholder = _searchBarPlaceholder;
+    [self.searchDisplayController.searchResultsTableView setRowHeight:60];
 }
 #pragma mark -
 #pragma mark - UITableViewDataSource
@@ -84,24 +105,52 @@
     static NSString *CellID = @"LiHang";
     UITableViewCell *cell = nil;
     
-    NSDictionary *mainDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
+   
     cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     if (!cell) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID] autorelease];
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            if (segmentIndex==0) {
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 150, 20)];
+                nameLabel.tag = 1;
+                [cell.contentView addSubview:nameLabel];
+                [nameLabel release];
+                
+                UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 20, 150, 20)];
+                countLabel.tag = 2;
+                [cell.contentView addSubview:countLabel];
+                [countLabel release];
+            }
+        }
     }
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         NSDictionary *searchDic = [_searchArray objectAtIndex:[indexPath row]];
-        cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
-        cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
+        if (segmentIndex == 0) {
+            cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
+            cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
+            
+            UILabel *_nameLabel = (UILabel *)[cell.contentView viewWithTag:1];
+            [_nameLabel setBackgroundColor:[UIColor clearColor]];
+            [_nameLabel setText:[searchDic objectForKey:@"Name"]];
+            
+            UILabel *_countLabel = (UILabel *)[cell.contentView viewWithTag:2];
+            [_countLabel setBackgroundColor:[UIColor clearColor]];
+            [_countLabel setText:[searchDic objectForKey:@"Count"]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        } else {
+            cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
+            cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     } else {
-    cell.textLabel.text = [mainDic objectForKey:@"PatientName"];
-    cell.detailTextLabel.text = [mainDic objectForKey:@"Office"];
-        //debugLog(@"%@",[mainDic objectForKey:@"Detail"]);
+         NSDictionary *mainDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
+        cell.textLabel.text = [mainDic objectForKey:@"PatientName"];
+        cell.detailTextLabel.text = [mainDic objectForKey:@"Office"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
+    return cell;}
 
 
 #pragma mark -
@@ -110,20 +159,22 @@
 {
     CGRect rect = CGRectMake(0, 0, 447, self.view.frame.size.height);
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        if (segmentIndex==1) {
         NSDictionary *detailDic = [_searchArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
         NSString *patientName = [detailDic objectForKey:@"PatientName"];
-        //debugLog(@"%@",detailArray);
         RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientName];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
         [detail release];
+        }else {
+            return;
+        }
         
     } else {
         
         NSDictionary *detailDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
         NSString *patientname = [detailDic objectForKey:@"PatientName"];
-        //debugLog(@"%@",detailArray);
         RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientname];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
         [detail release];
@@ -146,10 +197,10 @@
 
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     UITableViewCell *cell = nil;
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         cell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+        return;
     } else {
         cell = [tableView cellForRowAtIndexPath:indexPath];
         
@@ -182,8 +233,10 @@
 #pragma mark -
 #pragma mark - UISearchBarDelegate
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
-    
-    [Record searchAllRecordsByPYM:searchText];
+    segmentIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
+    if (segmentIndex == 0) {
+        self.searchArray = [Record searchAllRecordsByPYM:searchText];
+    } else {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"PatientName contains[cd]%@",searchText];
     NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"Office contains[cd]%@",searchText];
     NSPredicate *_predicate,*_predicate1;
@@ -193,36 +246,53 @@
         self.searchArray = [Record findPatientIDInDetailTable:[searchText uppercaseString]];
     } else {
     if([[self.patientAndBQArray filteredArrayUsingPredicate:_predicate] count]>0) {
-        self.searchArray = [self.patientAndBQArray filteredArrayUsingPredicate:_predicate];
+    self.searchArray = [self.patientAndBQArray filteredArrayUsingPredicate:_predicate];
     } else {
         self.searchArray = [self.patientAndBQArray filteredArrayUsingPredicate:_predicate1];
+     }
     }
-    }
-    //debugLog(@"%@",_searchArray);
+}
+    debugLog(@"SearchArray:%@",_searchArray);
 }
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.isOpen = NO;
 }
-
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    
+    self.segmentIndex = selectedScope;
+    debugLog(@"selectedIndex:%d",segmentIndex);
+    switch (segmentIndex) {
+        case 0:
+            self.searchBarPlaceholder = @"键入药品拼音码";
+            break;
+        case 1:
+            self.searchBarPlaceholder = @"键入病区或病人名";
+            break;
+        default:
+            break;
+    }
+     self.searchDisplayController.searchBar.placeholder = _searchBarPlaceholder;
+}
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
 
 }
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [self filterContentForSearchText:searchText scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    //[self filterContentForSearchText:searchText scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     self.isOpen = YES;
     
+    self.searchName = searchText;    
 }
 
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-    //[self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+
+    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
 
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     
-   
 }
 
 - (void)didReceiveMemoryWarning
@@ -246,20 +316,33 @@
     [super viewDidUnload];
 }
 - (IBAction)export:(id)sender {
-    if ([self.searchArray count]==0) {
-        NSString *msg = @"亲,我只能导出筛选出的结果..";
-        [Help ShowGCDMessage:msg andView:self.view andDelayTime:2.2f];
+    if (!isOpen) {
+        [Help ShowGCDMessage:@"亲,请检索后再导出.." andView:self.view andDelayTime:2.2f];
         return;
     }
     
+    if ([self.searchArray count]==0) {
+        [Help ShowGCDMessage:@"没有检索结果,就不给你导出" andView:self.view andDelayTime:2.0f];
+        return;
+    }
+        
+    BOOL isOK = NO;
+    if ([_searchArray count]>0) {
     ExportTable *export = [[ExportTable alloc] init];
-   BOOL isOK = [export exportSearchResult:_searchArray];
+    if (segmentIndex == 1) {
+    isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:1];
+    } else if(segmentIndex==0) {
+        isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:0];
+    }
+    NSString *_fileName = [_searchName stringByAppendingString:@".csv"];
+    NSString *fileName = [NSString stringWithFormat:@"检索结果已存至'%@'文件,请及时导出.",_fileName];
     [export release];
-    NSString *resultStr = isOK ? @"检索结果已存至'搜索结果.csv'文件,请及时导出.":@"抱歉,导入出了点问题,请重试";
+    NSString *resultStr = isOK ? fileName:@"抱歉,导入出了点问题,请重试";
     [Help ShowGCDMessage:resultStr andView:self.view andDelayTime:2.2f];
     if (!self.isOpen) {
         self.searchArray = nil;
         [_searchArray release];
+    }
     }
 }
 - (IBAction)deleteRow:(id)sender {

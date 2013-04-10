@@ -13,8 +13,8 @@
 }
 
 + (CHCSVWriter *)sharedWriter;
-- (IBAction)ExportTable:(id)sender;
-- (BOOL)exportSearchResult:(NSArray *)array;
+//- (IBAction)ExportTable
+- (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex;
 - (void)myProgressTask;
 @property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
 @end

@@ -32,6 +32,7 @@
 #define findAllMed()
 
 #endif
+#define DOCUMENT [(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]
 
 #define dataBasePath [[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:dataBaseName]
 #define dataBaseName @"dataBase.sqlite"
@@ -39,3 +40,9 @@
 #define ModifyColor [UIColor colorWithRed:77/255.0 green:140/255.0 blue:236/255.0 alpha:1.0]
 
 #define OKColor [UIColor colorWithRed:195/255.0 green:66/255.0 blue:77/255.0 alpha:1.0]
+
+#define ImageNamed(imageName) [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imageName ofType:@"png"]]
+
+#define US [NSUserDefaults standardUserDefaults]
+
+#define DirectoryName @"每种药品的筛选记录"

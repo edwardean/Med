@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NewRecord.h"
-@interface InputNewRecord : UIViewController <UISearchBarDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,ClearCellMarkDelegate> {
+@interface InputNewRecord : UIViewController <UISearchBarDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate> {
     IBOutlet UITableView *table;
 }
 

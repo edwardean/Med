@@ -11,21 +11,6 @@
 @implementation Medicine
 @synthesize name,specifi,content,PYM;
 @synthesize stringID;
-//- (id) initMedicineWithName:(NSString *)_name andSpecifi:(NSString *)_specifi andContent:(NSString *)_Content {
-//    if (self = [super init]) {
-//        name = [_name retain];
-//        if (_specifi== nil || [_specifi isEqualToString:@""]) {
-//            specifi =@"";
-//        } else
-//            specifi = [_specifi retain];
-//        
-//        if (_Content == nil || [_Content isEqualToString:@""]) {
-//            content = @"";
-//        } else
-//            content = [_Content retain];
-//    }
-//    return self;
-//}
 
 + (int)countAllMedicine {
     debugMethod();
@@ -63,6 +48,7 @@
      NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&soter count:1];
      NSArray *array = [resultArray sortedArrayUsingDescriptors:sortDescriptors];
     [resultArray release];
+    [sortDescriptors release];
     
     return array;
 }

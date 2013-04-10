@@ -21,6 +21,7 @@
 @synthesize array;
 @synthesize search = _search;
 @synthesize searchArray = _searchArray;
+@synthesize delegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -73,7 +74,6 @@
 
    static NSString *CellID = @"Cell";
     UITableViewCell *cell = nil;
-    NSUserDefaults *us = [NSUserDefaults standardUserDefaults];
     if (!cell) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID]autorelease];
     }
@@ -92,7 +92,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    if ([cell.textLabel.text isEqualToString:[us objectForKey:@"BQ"]]) {
+    if ([cell.textLabel.text isEqualToString:[US objectForKey:@"BQ"]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -115,8 +115,7 @@
             UITableViewCell *newCell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
             newCell.accessoryType = UITableViewCellAccessoryCheckmark;
             NSString *str = [_searchArray objectAtIndex:indexPath.row];
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:str forKey:@"BQ"];
+            [US setObject:str forKey:@"BQ"];
             
             UITableViewCell *oldCell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:self.lastPath];
             oldCell.accessoryType = UITableViewCellAccessoryNone;
@@ -127,15 +126,13 @@
             UITableViewCell *newCell = [self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
             if (isMarked) {
                 self.BQStr = @"NULL";
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults removeObjectForKey:@"BQ"];
+                [US removeObjectForKey:@"BQ"];
                 newCell.accessoryType = UITableViewCellAccessoryNone;
             } else {
                 newCell.accessoryType = UITableViewCellAccessoryCheckmark;
                 self.BQStr = [_searchArray objectAtIndex:indexPath.row];
                 NSString *str = [_searchArray objectAtIndex:indexPath.row];
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:str forKey:@"BQ"];
+                [US setObject:str forKey:@"BQ"];
             }
             
         }
@@ -147,8 +144,7 @@
         UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
         NSString *str = [self.array objectAtIndex:indexPath.row];
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:str forKey:@"BQ"];
+        [US setObject:str forKey:@"BQ"];
         
         UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:self.lastPath];
         oldCell.accessoryType = UITableViewCellAccessoryNone;
@@ -159,21 +155,20 @@
         UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
         if (isMarked) {
         self.BQStr = @"NULL";
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults removeObjectForKey:@"BQ"];
+            [US removeObjectForKey:@"BQ"];
         newCell.accessoryType = UITableViewCellAccessoryNone;
         } else {
             newCell.accessoryType = UITableViewCellAccessoryCheckmark;
             self.BQStr = [array objectAtIndex:indexPath.row];
             NSString *str = [self.array objectAtIndex:indexPath.row];
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:str forKey:@"BQ"];
+            [US setObject:str forKey:@"BQ"];
         }
         
     }
     }
     [tableView reloadData];
-    debugLog(@"点击:%@   USerDefault:%@",self.BQStr,[[NSUserDefaults standardUserDefaults] objectForKey:@"BQ"]);
+    debugLog(@"点击:%@   USerDefault:%@",self.BQStr,[US objectForKey:@"BQ"]);
+    [delegate passSelectedBQ:[US objectForKey:@"BQ"]];
 
 }
 

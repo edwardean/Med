@@ -46,12 +46,6 @@
     nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     nameTextField.keyboardType = UIKeyboardTypeDefault;
     nameTextField.delegate = self;
-    countTextField.autocorrectionType = UITextAutocapitalizationTypeNone;
-    countTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    countTextField.returnKeyType = UIReturnKeyDone;
-    countTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    countTextField.keyboardType = UIKeyboardTypeDefault;
-    countTextField.delegate = self;
     specifiTextField.autocorrectionType = UITextAutocapitalizationTypeNone;
     specifiTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     specifiTextField.returnKeyType = UIReturnKeyNext;
@@ -64,6 +58,12 @@
     pymTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     pymTextField.keyboardType = UIKeyboardTypeDefault;
     pymTextField.delegate = self;
+    countTextField.autocorrectionType = UITextAutocapitalizationTypeNone;
+    countTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    countTextField.returnKeyType = UIReturnKeyDone;
+    countTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    countTextField.keyboardType = UIKeyboardTypeDefault;
+    countTextField.delegate = self;
     
     
 }
@@ -73,14 +73,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-//    if ([textField isEqual:specifiTextField]) {
-//        if (![self.specifiStr isEqualToString:@""]) {
-//            NSMutableString *mutableStr = [specifiTextField.text mutableCopy];
-//            [mutableStr appendString:self.specifiStr];
-//            self.specifiTextField.text = mutableStr;
-//            [mutableStr release];
-//        }
-//    }
+
     
 }
 
@@ -90,11 +83,14 @@
         [textField resignFirstResponder];
     }
     if (textField==nameTextField) {
+        [pymTextField becomeFirstResponder];
+    } else if (textField == pymTextField) {
         [specifiTextField becomeFirstResponder];
     } else if (textField == specifiTextField) {
         [countTextField becomeFirstResponder];
     } else if (textField == countTextField) {
         [countTextField resignFirstResponder];
+        [self performSelector:@selector(Save:)];
     }
     return YES;
 }
@@ -126,7 +122,6 @@
 
 - (IBAction)hide:(id)sender {
     debugMethod();
-    //[self dismissModalViewControllerAnimated:YES];
     self.specifiTextField.text = @"";
     self.nameTextField.text = @"";
     self.countTextField.text = @"";
@@ -142,8 +137,6 @@
         [alert1 release];
 
     } else {
-//        NSRange range1 = [self.specifiTextField.text rangeOfString:@"mg"];
-//        NSRange range2 = [self.specifiTextField.text rangeOfString:@"ml"];
         if ([self.unitStr isEqualToString:@""]) {
             UIAlertView *alert2 = [[UIAlertView alloc]initWithTitle:@"啊噢!" message:@"主人你忘记选药品规格了" delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles:nil, nil];
             [alert2 show];
@@ -165,14 +158,11 @@
         NSString *str = [NSString stringWithFormat:@"药品%@创建完毕",nameTextField.text];
         [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
         [self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0f];
+        [self performSelector:@selector(hide:)];
     }  else {
           NSString *str = @"创建失败";
           [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
     }
-    
-
-    //findAllMed();
-
 }
 - (void)checkDataInTable {
     debugMethod();
@@ -237,23 +227,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([[tableView cellForRowAtIndexPath:indexPath] isSelected]) {
-        
-//        if ([specifiTextField.text length]>0) {
-//            NSMutableString *str = [specifiTextField.text mutableCopy];
-//            NSRange range1 = [specifiTextField.text rangeOfString:@"mg"];
-//            NSRange range2 = [specifiTextField.text rangeOfString:@"ml"];
-//            if ((range1.location == NSNotFound)&&(range2.location == NSNotFound)) {
-//                [str appendString:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
-//                self.specifiTextField.text = str;
-//            } else if ((range1.location>0)||(range2.location>0)) {
-//                NSMutableString *mutableString = [specifiTextField.text mutableCopy];
-//                [mutableString replaceCharactersInRange:NSMakeRange([mutableString length]-2, 2) withString:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
-//                self.specifiTextField.text = mutableString;
-//                [mutableString release];
-//            }
-//            [str release];
-//        } else
-//            self.specifiStr = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+
         self.unitStr = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

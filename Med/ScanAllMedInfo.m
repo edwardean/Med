@@ -240,18 +240,12 @@
     [navBar release];
     [UISearchBar release];
     [_table release];
-    //[_dataArray release];
-//    [_MedNameArray release];
-//    [_MedPYMArray release];
     [_searchResultArray release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setNavBar:nil];
     self.table = nil;
-    //self.dataArray = nil;
-//    self.MedNameArray = nil;
-//    self.MedPYMArray = nil;
     self.searchResultArray = nil;
     [super viewDidUnload];
     debugMethod();

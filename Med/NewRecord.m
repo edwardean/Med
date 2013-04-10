@@ -24,7 +24,7 @@
 @synthesize addBtn;
 @synthesize field;
 @synthesize navBar = _navBar;
-@synthesize delegate;
+@synthesize selectedBQLabel;//////显示目前的病区
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -47,10 +47,17 @@
     [addBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     [_navBar setBackImage];
+    [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];
     
 }
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    selectBQ.delegate = self;
+    
+}
+- (void)passSelectedBQ:(NSString *)BQ {
+    self.selectedBQLabel.text = BQ;
+    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -73,10 +80,6 @@
     self.field.text = @"";
     [self.data removeAllObjects];
     [self.table reloadData];
-//    InputNewRecord *record = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
-//    self.delegate = record;
-//    [delegate clearMark];
-    //self.inputNewRecord = [[InputNewRecord alloc] initWithNibName:@"InputNewRecord" bundle:nil];
     [self setInputNewRecord:nil];
     [inputNewRecord release];
 }
@@ -96,13 +99,12 @@
 - (BOOL)checkData {
     
     BOOL isOK = NO;
-    NSUserDefaults *us = [NSUserDefaults standardUserDefaults];
     
-    if ([self.field.text length]!=0&&[us objectForKey:@"BQ"]!=nil&&[self.data count]>0) {
+    if ([self.field.text length]!=0&&[US objectForKey:@"BQ"]!=nil&&[self.data count]>0) {
         
-        isOK = [Record checkisExistSameRecordByOffice:[us objectForKey:@"BQ"] andPatientName:self.field.text];
+        isOK = [Record checkisExistSameRecordByOffice:[US objectForKey:@"BQ"] andPatientName:self.field.text];
         if (isOK) {
-            NSString *message = [NSString stringWithFormat:@"%@已经有名叫%@的记录了,请检查或修改",[us objectForKey:@"BQ"],self.field.text];
+            NSString *message = [NSString stringWithFormat:@"%@已经有名叫%@的记录了,请检查或修改",[US objectForKey:@"BQ"],self.field.text];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:message delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
             [alert show];
             [alert release];
@@ -124,20 +126,19 @@
 - (IBAction)saveBtnTapped:(id)sender {
      BOOL recordOK = [self checkData];
     if (recordOK) {
-         NSUserDefaults *us = [NSUserDefaults standardUserDefaults];
-        if ([self saveToRecordTablePatientName:self.field.text Office:[us objectForKey:@"BQ"]]) {
+        if ([self saveToRecordTablePatientName:self.field.text Office:[US objectForKey:@"BQ"]]) {
             ////////////录入病区和病人///查找刚录入的病人主键
-            NSInteger ID = [Record findDetailIDByPatientName:self.field.text Office:[us objectForKey:@"BQ"]];
-            debugLog(@"ID =====%d",ID);
+            NSInteger ID = [Record findDetailIDByPatientName:self.field.text Office:[US objectForKey:@"BQ"]];
             if (ID != -1) {
                 BOOL isInsertIntoDetailOK = NO;
                 for (int i = 0 ;i<[self.data count]; i++) {
                     NSDictionary *recordDic = [self.data objectAtIndex:i];
                     
-                    isInsertIntoDetailOK = [Record insertNewDetailsIntoDetailTable:ID Name:[recordDic objectForKey:@"Name"] PYM:[recordDic objectForKey:@"PYM"] Count:[NSString stringWithFormat:@"%@%@",[recordDic objectForKey:@"Content"],[recordDic objectForKey:@"Unit"]]];
+                    isInsertIntoDetailOK = [Record insertNewDetailsIntoDetailTable:ID Name:[recordDic objectForKey:@"Name"] PYM:[recordDic objectForKey:@"PYM"] Count:[NSString stringWithFormat:@"%@",[recordDic objectForKey:@"Content"]]];
                 }
                 NSString *msg = isInsertIntoDetailOK ? @"记录创建完毕" : @"录入失败";
                 [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0f];
+                [self performSelector:@selector(hide:)];
             }
             
         }
@@ -241,7 +242,7 @@
     
     UILabel *_contLabel = (UILabel *)[cell.contentView viewWithTag:selectContLabelTag];
     [_contLabel setBackgroundColor:[UIColor clearColor]];
-    [_contLabel setText:[NSString stringWithFormat:@"%@%@",[dic objectForKey:@"Content"],[dic objectForKey:@"Unit"]]];
+    [_contLabel setText:[NSString stringWithFormat:@"%@",[dic objectForKey:@"Content"]]];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -275,6 +276,7 @@
     [addBtn release];
     [table release];
     [data release];
+    //[selectedBQLabel release];
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -285,6 +287,7 @@
     [self setInputNewRecord:nil];
     [self setAddBtn:nil];
     [self setTable:nil];
+    [self setSelectedBQLabel:nil];
     [super viewDidUnload];
 }
 @end

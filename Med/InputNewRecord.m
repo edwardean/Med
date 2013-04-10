@@ -107,30 +107,6 @@
 - (void) viewDidAppear:(BOOL)animated {
     debugMethod();
     [super viewDidAppear:animated];
-//    __block NSMutableArray *temAyyar = [NSMutableArray arrayWithCapacity:0];
-//    [medArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        NSString *pym = [[medArray objectAtIndex:idx] objectForKey:@"PYM"];
-//        NSString *firstLetter = [pym substringWithRange:NSMakeRange(0, 1)];
-//            if (![firstLetter isEqualToString:[temAyyar lastObject]]) {
-//            [self.list addObject:firstLetter];
-//            [temAyyar addObject:firstLetter];
-//        }
-//    }];
-//    self.list = temAyyar;
-//    __block NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:0];
-//    
-//    [_list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
-//        [medArray enumerateObjectsUsingBlock:^(id _obj, NSUInteger _idx, BOOL *_stop) {
-//            if ([[_list objectAtIndex:idx] isEqualToString:[[[medArray objectAtIndex:_idx] objectForKey:@"PYM"] substringWithRange:NSMakeRange(0, 1)]]) {
-//                
-//                [array addObject:_obj];
-//            }
-//        }];
-//        [dictionary setValue:array forKey:[_list objectAtIndex:idx]];
-//    }];
-    //debugLog(@"%@",dictionary);
-    //self.dict = dictionary;
 }
 
 - (void)didReceiveMemoryWarning
@@ -147,14 +123,6 @@
 }
 #pragma mark TableView Delegate
 
-//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-//
-//    return _list;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-//    return (index+1 == 26) ? 0 : (index+1);
-//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     //因为cell有两种状态，选中时展开输入药量，未选中时关闭显示正常状态
     if (indexPath.row == self.selectIndex.row && self.selectIndex != nil) {
@@ -163,37 +131,25 @@
         return 60;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //return _list.count;
     return 1;
 }
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    return [_list objectAtIndex:section];
-//
-//}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//
-//    NSString *key = [_list objectAtIndex:section];
-//    NSArray *array = [_dict objectForKey:key];
-//    return [array count];
     return [medArray count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UIFont *font = [UIFont fontWithName:@"Arial" size:13.0f];
     
-//    NSInteger section = [indexPath section];
-//    NSString *key = [_list objectAtIndex:section];
-//    NSArray *array = [_dict objectForKey:key];
+
     NSDictionary *dic = [NSDictionary dictionary];
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         dic = [_searchArray objectAtIndex:[indexPath row]];
     } else {
         dic = [medArray objectAtIndex:[indexPath row]];
     }
-   // NSDictionary *dic = [array objectAtIndex:[indexPath row]];
     if (indexPath.row == self.selectIndex.row && self.selectIndex != nil) {
         static NSString *markCellID = @"MARKED";
         UITableViewCell *markCell = [tableView dequeueReusableCellWithIdentifier:markCellID];
-        //NSDictionary *markdic = [medArray objectAtIndex:indexPath.row];
         if (!markCell) {
             markCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:markCellID] autorelease];
             //药名
@@ -229,8 +185,9 @@
             
             //左边的删除按钮
             UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            cancelBtn.frame = CGRectMake(10, 70, 24, 24);
-            [cancelBtn setBackgroundImage:[UIImage imageNamed:@"reduce"] forState:UIControlStateNormal];
+            cancelBtn.frame = CGRectMake(10, 63, 34, 34);
+            [cancelBtn setBackgroundImage:ImageNamed(@"deleteBtn_normal") forState:UIControlStateNormal];
+            [cancelBtn setBackgroundImage:ImageNamed(@"deleteBtn") forState:UIControlStateHighlighted];
             [cancelBtn addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [markCell.contentView addSubview:cancelBtn];
             
@@ -248,7 +205,7 @@
             
             //右侧的确认按钮
             UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            okBtn.frame = CGRectMake(310, 70, 24, 24);
+            okBtn.frame = CGRectMake(310, 63, 34, 34);
             okBtn.tag = markOKBtnTag;
             [markCell.contentView addSubview:okBtn];
             
@@ -289,11 +246,14 @@
         UILabel *_danweiLabel = (UILabel *)[markCell.contentView viewWithTag:markDanweiLabel];
         [_danweiLabel setFont:font];
         [_danweiLabel setBackgroundColor:[UIColor clearColor]];
-        [_danweiLabel setText:[NSString stringWithFormat:@"%@",[dic objectForKey:@"Unit"]]];
+        [_danweiLabel setText:@"支/片"];
         
         UIButton *_okbtn = (UIButton *)[markCell.contentView viewWithTag:markOKBtnTag];
-        NSString *Imgstr = [self.indexArray containsObject:indexPath] ? @"refresh" : @"ok";
-        [_okbtn setBackgroundImage:[UIImage imageNamed:Imgstr] forState:UIControlStateNormal];
+        NSString *Imgstr = [self.indexArray containsObject:indexPath] ? @"_refresh" : @"checkBtn_normal";
+        [_okbtn setBackgroundImage:ImageNamed(Imgstr) forState:UIControlStateNormal];
+        if (![self.indexArray containsObject:indexPath]) {
+            [_okbtn setBackgroundImage:ImageNamed(@"checkBtn") forState:UIControlStateHighlighted];
+        }
         [_okbtn addTarget:self action:@selector(okBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         return markCell;
@@ -358,7 +318,7 @@
                 NSString *content = [d objectForKey:@"Content"];
                 debugLog(@"%@ %@",[d objectForKey:@"Name"],[d objectForKey:@"PYM"]);
                 if (indexPath.row == [[d objectForKey:@"IndexPath"] integerValue]) {
-                    [contentlabel setText:[NSString stringWithFormat:@"已选:%@ %@",content,[d objectForKey:@"Unit"]]];
+                    [contentlabel setText:[NSString stringWithFormat:@"已选:%@",content]];
                 }
             }
         }
@@ -465,14 +425,14 @@
                                  [NSString stringWithFormat:@"%@",[Meddic objectForKey:@"Name"]],@"Name",
                                  [NSString stringWithFormat:@"%@",[Meddic objectForKey:@"PYM"]],@"PYM",
                                  [NSString stringWithFormat:@"%@",textField.text],@"Content",
-                                 [NSNumber numberWithInteger:[indexPath row]],@"IndexPath",
-                                 [NSString stringWithFormat:@"%@",[[self.medArray objectAtIndex:indexPath.row] objectForKey:@"Unit"]],@"Unit",nil];
+                                        [NSNumber numberWithInteger:[indexPath row]],@"IndexPath",nil];
+                                // [NSString stringWithFormat:@"%@",[[self.medArray objectAtIndex:indexPath.row] objectForKey:@"Unit"]],@"Unit",nil];
             
             if (![contentArray containsObject:_dic]&&_dic!=nil) {
                 NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
                 for (NSMutableDictionary *objDic in self.contentArray) {
                     NSMutableDictionary *__objDic = [objDic mutableCopy];
-                    [__objDic removeObjectForKey:@"Unit"];
+                    //[__objDic removeObjectForKey:@"Unit"];
                     [__objDic removeObjectForKey:@"Content"];
                     if ([__objDic isEqualToDictionary:_dic]) {
                         [tempArray addObject:objDic];

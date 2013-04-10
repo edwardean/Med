@@ -17,7 +17,7 @@ static FMDatabase *shareDataBase = nil;
  
  **/
 + (FMDatabase *)createDataBase {
-    debugMethod();
+    //debugMethod();
     @synchronized (self) {
         if (shareDataBase == nil) {
             
