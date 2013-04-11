@@ -87,12 +87,17 @@
 
 - (IBAction)showBQ:(id)sender {
     if (popoverController == nil) {
+        if (selectBQ == nil) {
+            selectBQ = [[SelectBQ alloc] initWithNibName:@"SelectBQ" bundle:nil];
+        }
         UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:selectBQ];
         self.popoverController = pop;
         [pop release];
         CGRect popoverRect =  CGRectMake(130, 330, 1, 1);
         [popoverController presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         popoverController.delegate = self;
+        selectBQ = nil;
+        [self setSelectBQ:nil];
     }
 }
 
@@ -281,7 +286,6 @@
 - (void)viewDidUnload {
     [self setField:nil];
     [self setNavBar:nil];
-    [self setSelectBQ:nil];
     [self setAddBtn:nil];
     [self setTable:nil];
     [self setSelectedBQLabel:nil];
