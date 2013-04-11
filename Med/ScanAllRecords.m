@@ -66,6 +66,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
+    debugLog(@"PatientAndBQArray is:%@",_patientAndBQArray);
     [_table reloadData];
     self.segmentIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
     switch (segmentIndex) {
@@ -167,13 +168,14 @@
 #pragma mark UITableViewdelegate
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect rect = CGRectMake(0, 0, 447, self.view.frame.size.height);
+    CGRect rect = CGRectMake(0, 0, 467, self.view.frame.size.height);
+    NSString *patientName = nil;
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         debugLog(@"SearchResultTableView");
         if (segmentIndex==1) {
         NSDictionary *detailDic = [_searchArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
-        NSString *patientName = [detailDic objectForKey:@"PatientName"];
+        patientName = [detailDic objectForKey:@"PatientName"];
         RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientName];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
         [detail release];
@@ -182,11 +184,12 @@
         }
         
     } else {
-        debugLog(@"NormalTableView");
+        
         NSDictionary *detailDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
-        NSString *patientname = [detailDic objectForKey:@"PatientName"];
-        RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientname];
+        debugLog(@"NormalTableView  array is :%@",detailArray);
+        patientName = [detailDic objectForKey:@"PatientName"];
+        RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientName];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
         [detail release];
     }

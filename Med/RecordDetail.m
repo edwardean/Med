@@ -7,6 +7,9 @@
 //
 
 #import "RecordDetail.h"
+#import "StackScrollViewController.h"
+#import "AppDelegate.h"
+#import "RootViewController.h"
 #define medNameLabelTag 1
 #define medContLabelTag 2
 @interface RecordDetail ()
@@ -21,10 +24,10 @@
 @synthesize navbar = _navbar;
 @synthesize patient;
 - (id) initWithFrame:(CGRect)frame andArray:(NSArray *)array andPatientName:(NSString *)patientname {
-    debugMethod();
+    debugLog(@"array:%@",array);
     if (self = [super init]) {
         [self.view setFrame:frame];
-        _detailArray = [array retain];
+        self.detailArray = array;
         _table = [[UITableView alloc] initWithFrame:CGRectMake(0,40,frame.size.width, frame.size.height) style:UITableViewStylePlain];
         [_table setDataSource:self];
         [_table setDelegate:self];
@@ -49,16 +52,25 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 447, 40)];
+    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 468, 40)];
     [bar setBackImage];
     self.navbar = bar;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     titleLabel.text = patient;
+    [titleLabel setTextColor:[UIColor whiteColor]];
+    [titleLabel setFont:[UIFont fontWithName:@"Arial" size:20.0]];
+    [titleLabel setCenter:_navbar.center];
     titleLabel.center = _navbar.center;
     [_navbar addSubview:titleLabel];
     [titleLabel release];
     [self.view addSubview:_navbar];
+    
+    UIButton *btn  =[UIButton buttonWithType:UIButtonTypeRoundedRect];
+    btn.frame = CGRectMake(5, 3, 40, 40);
+    [btn setBackgroundImage:[UIImage imageNamed:@"button_icon_close"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(dismissSelfView) forControlEvents:UIControlEventTouchUpInside];
+    [_navbar addSubview:btn];
 
 }
 - (void)didReceiveMemoryWarning
@@ -67,7 +79,9 @@
     
 }
 
-
+- (void)dismissSelfView {
+    [self.view removeFromSuperview];
+}
 #pragma mark -
 #pragma mark - UITableViewDelegete
 

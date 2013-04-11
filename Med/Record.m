@@ -15,15 +15,15 @@
     NSMutableArray *mutableArray = [NSMutableArray array];
     if ([dataBase open]) {
         FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
-        NSDictionary *recordDic = nil;//[NSDictionary dictionary];
-        NSDictionary *detailDic = nil;
+        NSDictionary *recordDic = [NSDictionary dictionary];
+        NSDictionary *detailDic = [NSDictionary dictionary];
         while ([resultSet1 next]) {
             NSString *ID = [resultSet1 stringForColumn:@"id"];//第一张表的id主键
             debugLog(@"Record中找到ID = %@",ID);
             NSString *PatientName = [resultSet1 stringForColumn:@"PatientName"];//第一张表的PatientName
             NSString *Office = [resultSet1 stringForColumn:@"Office"];//第一张表的Office
             FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
-            NSMutableArray *detailArray = [NSMutableArray array];
+            NSMutableArray *detailArray = [NSMutableArray arrayWithCapacity:0];
             while ([resultSet2 next]) {
                 NSString *Name = [resultSet2 stringForColumn:@"Name"];
                 NSString *Count = [resultSet2 stringForColumn:@"Count"];
