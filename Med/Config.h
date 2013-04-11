@@ -32,6 +32,9 @@
 #define findAllMed()
 
 #endif
+
+#define OS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+
 #define DOCUMENT [(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]
 
 #define dataBasePath [[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:dataBaseName]

@@ -34,6 +34,7 @@
 @synthesize isOpen;
 @synthesize segmentIndex;
 @synthesize searchController = _searchController;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -265,14 +266,20 @@
     debugLog(@"SearchArray:%@",_searchArray);
 }
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.isOpen = NO;
-    UISegmentedControl *scopeBar = nil;
-    for (id subView in self.searchDisplayController.searchBar.subviews){
-        if ([subView isMemberOfClass:[UISegmentedControl class]]) {
-            scopeBar = (UISegmentedControl *)subView;
-            scopeBar.userInteractionEnabled = YES;
-            scopeBar.tintColor = AbleBackgroundColor;
+    if (OS_VERSION < 6.0) {
+      searchBar.showsScopeBar = NO;  
+    } else {
+        self.isOpen = NO;
+        UISegmentedControl *scopeBar = nil;
+        for (id subView in self.searchDisplayController.searchBar.subviews){
+            if ([subView isMemberOfClass:[UISegmentedControl class]]) {
+                scopeBar = (UISegmentedControl *)subView;
+                scopeBar.userInteractionEnabled = YES;
+                scopeBar.hidden = NO;
+                scopeBar.tintColor = AbleBackgroundColor;
+            }
         }
+
     }
 }
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
@@ -303,11 +310,22 @@
             }
     }
     if ([searchText length]>0) {
+        if (OS_VERSION < 6.0) {
+          searchBar.showsScopeBar = NO;  
+        }
+        else {
         scopeBar.userInteractionEnabled = NO;
         scopeBar.tintColor = EnableColor;
+        }
+        
     } else{
+        if (OS_VERSION < 6.0) {
+            searchBar.showsScopeBar = YES;
+        } else {
        scopeBar.userInteractionEnabled = YES;
        scopeBar.tintColor = AbleBackgroundColor;
+        }
+        
     }
     self.isOpen = YES;
     
@@ -322,6 +340,9 @@
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    if (OS_VERSION < 6.0) {
+       searchBar.showsScopeBar = YES; 
+    }
     
 }
 
