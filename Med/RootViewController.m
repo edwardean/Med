@@ -111,11 +111,6 @@
 	
 	leftMenuView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 270, self.view.frame.size.height)];
 	leftMenuView.autoresizingMask = UIViewAutoresizingFlexibleHeight;	
-//	menuViewController = [[MenuViewController alloc] initWithFrame:CGRectMake(0, 0, leftMenuView.frame.size.width, leftMenuView.frame.size.height)];
-//	[menuViewController.view setBackgroundColor:[UIColor clearColor]];
-//	[menuViewController viewWillAppear:FALSE];
-//	[menuViewController viewDidAppear:FALSE];
-//	[leftMenuView addSubview:menuViewController.view];
     menuController = [[MenuController alloc] initWithFrame:CGRectMake(0, 0, leftMenuView.frame.size.width, leftMenuView.frame.size.height)];
     [menuController.view setBackgroundColor:[UIColor clearColor]];
     [menuController viewWillAppear:FALSE];
@@ -133,8 +128,12 @@
 	
 	[rootView addSubview:leftMenuView];
 	[rootView addSubview:rightSlideView];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"ipad_bg"]]];
+    [self.view setBackgroundColor:MainBackgroundColor];
 	[self.view addSubview:rootView];
+    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 677, 130, 67)];
+    logoView.image = [UIImage imageNamed:@"logo"];
+    [self.view addSubview:logoView];
+    [logoView release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

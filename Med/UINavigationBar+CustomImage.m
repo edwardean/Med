@@ -11,6 +11,7 @@
 @implementation UINavigationBar (CustomImage)
 
 - (void)setBackImage {
+    [self setTintColor:[UIColor whiteColor]];
     [self setBackgroundImage:[UIImage imageNamed:@"ipad_top_bg2"] forBarMetrics:UIBarMetricsDefault];
 }
 @end

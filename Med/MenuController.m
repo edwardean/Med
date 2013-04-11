@@ -71,11 +71,11 @@
     self.table.sectionHeaderHeight = 0;
     self.isOpen = NO;
     self.newMed = [[NewMedicine alloc] initWithNibName:@"NewMedicine" bundle:nil];
-    self.newBQ = [[NewBingQu alloc] initWithNibName:@"NewBingQu" bundle:nil];
-    self.newRecord = [[NewRecord alloc] initWithNibName:@"NewRecord" bundle:nil];
-    self.scanAllMed = [[ScanAllMedInfo alloc] initWithNibName:@"ScanAllMedInfo" bundle:nil];
-    self.scanAllRecord = [[ScanAllRecords alloc] initWithNibName:@"ScanAllRecords" bundle:nil];
-    self.exp = [[ExportTable alloc] initWithNibName:@"ExportTable" bundle:nil];
+    _newBQ = [[NewBingQu alloc] initWithNibName:@"NewBingQu" bundle:nil];
+    _newRecord = [[NewRecord alloc] initWithNibName:@"NewRecord" bundle:nil];
+    _scanAllMed = [[ScanAllMedInfo alloc] initWithNibName:@"ScanAllMedInfo" bundle:nil];
+    _scanAllRecord = [[ScanAllRecords alloc] initWithNibName:@"ScanAllRecords" bundle:nil];
+    _exp = [[ExportTable alloc] initWithNibName:@"ExportTable" bundle:nil];
 }
 #pragma mark - Table view data source
 

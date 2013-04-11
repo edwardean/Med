@@ -52,4 +52,6 @@
 
 #define US [NSUserDefaults standardUserDefaults]
 
+#define MainBackgroundColor [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bg%d",arc4random()%19]]]
+
 #define DirectoryName @"每种药品的筛选记录"
