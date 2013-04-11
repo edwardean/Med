@@ -32,6 +32,7 @@
 @property (nonatomic, retain) ScanAllMedInfo *scanAllMed;
 @property (nonatomic, retain) ScanAllRecords *scanAllRecord;
 @property (nonatomic, retain) ExportTable *exp;
+@property (nonatomic, retain) NSArray *menuIconList;
 @end
 @implementation MenuController
 @synthesize table = _table;
@@ -67,6 +68,7 @@
     [super viewDidLoad];
 	NSString *path  = [[NSBundle mainBundle] pathForResource:@"menu" ofType:@"plist"];
     _dataList = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    _menuIconList = [NSArray arrayWithObjects:@"add",@"scan",@"setting",nil];
     self.table.sectionFooterHeight = 0;
     self.table.sectionHeaderHeight = 0;
     self.isOpen = NO;
@@ -120,7 +122,9 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil] objectAtIndex:0];
         }
         NSString *name = [[_dataList objectAtIndex:indexPath.section] objectForKey:@"name"];
-        cell.titleLabel.text = name;
+        //cell.titleLabel.text = name;
+        cell.textLabel.text = name;
+        cell.imageView.image = [UIImage imageNamed:[_menuIconList objectAtIndex:[indexPath section]]];
         [cell changeArrowWithUp:([self.selectIndex isEqual:indexPath]?YES:NO)];
         return cell;
     }

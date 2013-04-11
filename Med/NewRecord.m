@@ -47,8 +47,7 @@
     [addBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     [_navBar setBackImage];
-    [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];
-    
+    [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];    
 }
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
