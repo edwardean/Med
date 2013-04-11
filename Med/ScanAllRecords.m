@@ -60,12 +60,12 @@
     self.search.showsScopeBar = YES;
     self.table.tableHeaderView = self.searchDisplayController.searchBar;
     self.table.contentOffset = CGPointMake(0, CGRectGetHeight(self.search.bounds));
-    self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
-    [_table reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
+    [_table reloadData];
     self.segmentIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];
     switch (segmentIndex) {
         case 0:
@@ -311,7 +311,7 @@
     }
     self.isOpen = YES;
     
-    self.searchName = searchText;    
+    self.searchName = searchText;
 }
 
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -337,6 +337,7 @@
     [_medArray release];
     [_searchController release];
     [_search release];
+    [_searchName release];
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -349,7 +350,7 @@
     self.searchName = nil;
     
 }
-- (IBAction)export:(id)sender {
+- (IBAction)exportPressed:(id)sender {
     if (!isOpen) {
         [Help ShowGCDMessage:@"亲,请检索后再导出.." andView:self.view andDelayTime:2.2f];
         return;
@@ -364,12 +365,12 @@
     if ([_searchArray count]>0) {
     ExportTable *export = [[ExportTable alloc] init];
     if (segmentIndex == 1) {
-    isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:1];
+    isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:1 inMainDir:2];
     } else if(segmentIndex==0) {
-        isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:0];
+        isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:0 inMainDir:1];
     }
     NSString *_fileName = [_searchName stringByAppendingString:@".csv"];
-    NSString *fileName = [NSString stringWithFormat:@"检索结果已存至'%@'文件,请及时导出.",_fileName];
+    NSString *fileName = [NSString stringWithFormat:@"检索结果'%@'已存到'每种药品的筛选记录'文件夹中",_fileName];
     [export release];
     NSString *resultStr = isOK ? fileName:@"抱歉,导入出了点问题,请重试";
     [Help ShowGCDMessage:resultStr andView:self.view andDelayTime:2.2f];

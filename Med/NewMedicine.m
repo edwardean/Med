@@ -247,7 +247,6 @@
 }
 
 - (void)viewDidUnload {
-    navBar = nil;
     [super viewDidUnload];
     self.alert = nil;
     self.alert5 = nil;

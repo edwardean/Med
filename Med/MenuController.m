@@ -26,12 +26,16 @@
 @interface MenuController ()
 @property (assign) BOOL isOpen;
 @property (nonatomic, retain) NSIndexPath *selectIndex;
-@property (nonatomic, retain) UIViewController *controller;
+@property (nonatomic, retain) NewMedicine *newMed;
+@property (nonatomic, retain) NewBingQu *newBQ;
+@property (nonatomic, retain) NewRecord *newRecord;
+@property (nonatomic, retain) ScanAllMedInfo *scanAllMed;
+@property (nonatomic, retain) ScanAllRecords *scanAllRecord;
+@property (nonatomic, retain) ExportTable *exp;
 @end
 @implementation MenuController
 @synthesize table = _table;
 @synthesize isOpen,selectIndex;
-@synthesize controller = _controller;
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super init]) {
 		[self.view setFrame:frame];
@@ -66,7 +70,12 @@
     self.table.sectionFooterHeight = 0;
     self.table.sectionHeaderHeight = 0;
     self.isOpen = NO;
-   // self.controller = [[UIViewController alloc] init];
+    self.newMed = [[NewMedicine alloc] initWithNibName:@"NewMedicine" bundle:nil];
+    self.newBQ = [[NewBingQu alloc] initWithNibName:@"NewBingQu" bundle:nil];
+    self.newRecord = [[NewRecord alloc] initWithNibName:@"NewRecord" bundle:nil];
+    self.scanAllMed = [[ScanAllMedInfo alloc] initWithNibName:@"ScanAllMedInfo" bundle:nil];
+    self.scanAllRecord = [[ScanAllRecords alloc] initWithNibName:@"ScanAllRecords" bundle:nil];
+    self.exp = [[ExportTable alloc] initWithNibName:@"ExportTable" bundle:nil];
 }
 #pragma mark - Table view data source
 
@@ -121,7 +130,6 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.controller = nil;
     if (indexPath.row == 0) {
         if ([indexPath isEqual:self.selectIndex]) {
             self.isOpen = NO;
@@ -147,30 +155,18 @@
         NSArray *list = [dic objectForKey:@"list"];
         NSString *item = [list objectAtIndex:indexPath.row-1];
         if ([item isEqualToString:@"新增药品"]) {
-            NewMedicine *newMed = [[NewMedicine alloc] initWithNibName:@"NewMedicine" bundle:nil];
-           self.controller = newMed;
-            [newMed release];
+            [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_newMed invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"新增病区"]) {
-            NewBingQu *newBQ = [[NewBingQu alloc] initWithNibName:@"NewBingQu" bundle:nil];
-            self.controller = newBQ;
-            [newBQ release];
+            [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_newBQ invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"新增用药记录"]) {
-            NewRecord *newRecord = [[NewRecord alloc] initWithNibName:@"NewRecord" bundle:nil];
-            self.controller = newRecord;
-            [newRecord release];
+            [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_newRecord invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"查看所有药品信息"])
         {
-            ScanAllMedInfo *scanAllMed = [[ScanAllMedInfo alloc] initWithNibName:@"ScanAllMedInfo" bundle:nil];
-            self.controller = scanAllMed;
-            [scanAllMed release];
+            [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_scanAllMed invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"查看各病区用药记录"]) {
-            ScanAllRecords *scanAllRecord = [[ScanAllRecords alloc] initWithNibName:@"ScanAllRecords" bundle:nil];
-            self.controller = scanAllRecord;
-            [scanAllRecord release];
+            [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_scanAllRecord invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"导出数据"]) {
-             ExportTable *exp = [[ExportTable alloc] initWithNibName:@"ExportTable" bundle:nil];
-            self.controller = exp;
-            [exp release];
+            [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_exp invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"清空所有"]) {
             [WCAlertView showAlertWithTitle:@"确认信息" message:@"真的要清除所有记录吗??" customizationBlock:^(WCAlertView *alertView) {
                 alertView.style = WCAlertViewStyleVioletHatched;
@@ -215,10 +211,6 @@
                 
             }];
             [sheet present];
-        }
-        if (_controller){
-        
-        [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_controller invokeByController:self isStackStartView:TRUE];
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -272,16 +264,20 @@
     _dataList = nil;
     [self setTable:nil];
     [self setSelectIndex:nil];
-    [self setController:nil];
 }
 
 - (void) dealloc {
-    [_controller release];
     [_dataList release];
     _dataList = nil;
     [_table release];
     self.isOpen = NO;
     [selectIndex release];
+    [_newMed release];
+    [_newBQ release];
+    [_newRecord release];
+    [_scanAllMed release];
+    [_scanAllRecord release];
+    [_exp release];
     [super dealloc];
 }
 @end

@@ -133,7 +133,7 @@ static CHCSVWriter *sharedWriter = nil;
         NSString *PYM = [dic objectForKey:@"PYM"];
         NSString *Name = [dic objectForKey:@"Name"];
         NSArray *array = [Record searchAllRecordsByPYM:PYM];
-        [self exportSearchResult:array andFileName:Name andseg:0];
+        [self exportSearchResult:array andFileName:Name andseg:0 inMainDir:0];
     }];
 }
 
@@ -149,6 +149,7 @@ static CHCSVWriter *sharedWriter = nil;
 	
 	// myProgressTask uses the HUD instance to update progress
     [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+    [HUD release];
 }
 - (void)ExportTable{
     [self showHUD];
@@ -207,7 +208,7 @@ static CHCSVWriter *sharedWriter = nil;
     [self performSelector:@selector(ExportAllRecordsByMed)];
 }
 
-- (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex {
+- (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex inMainDir:(NSInteger)mainDir{
     BOOL isOK = NO;
     NSString *file = [fileName stringByAppendingString:@".csv"];
     CHCSVWriter *csvWriter = nil;
@@ -238,7 +239,6 @@ static CHCSVWriter *sharedWriter = nil;
             NSString *name = DirectoryName;
             NSString *path = [home stringByAppendingPathComponent:name];
             if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-                //debugLog(@"%@",path);
                 csvWriter = [[[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO] autorelease];
             } else {
                 debugLog(@"Error:%@",error);

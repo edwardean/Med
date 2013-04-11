@@ -36,6 +36,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     debugMethod();
+    self.dataArray = [Medicine findAllMedicineToArray];
+    
+    [self.table setContentSize:CGSizeMake(self.view.frame.size.width, [_dataArray count]*60*2)];
+    [_table reloadData];
     [super viewDidAppear:animated];
 }
 - (void)viewDidLoad
@@ -46,11 +50,6 @@
     [navBar setBackImage];
     self.searchResultArray = nil;
     self.isChinese = NO;
-    
-    self.dataArray = [Medicine findAllMedicineToArray];
-
-    [self.table setContentSize:CGSizeMake(self.view.frame.size.width, [_dataArray count]*60*2)];
-        [_table reloadData];
 }
 #pragma mark -
 #pragma mark - UITableViewDelegete

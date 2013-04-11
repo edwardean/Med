@@ -16,6 +16,6 @@
 @property (nonatomic, retain) UITableView *table;
 @property (retain, nonatomic) UISearchBar *search;
 @property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
-- (IBAction)export:(id)sender;
+- (IBAction)exportPressed:(id)sender;
 - (IBAction)deleteRow:(id)sender;
 @end
