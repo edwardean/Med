@@ -39,6 +39,11 @@
     self.BQStr = @"NULL";
     self.contentSizeForViewInPopover = CGSizeMake(375, 530);
     self.table.contentSize = CGSizeMake(375, [self.table numberOfRowsInSection:0]*44*1.5);
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.array = [BingQu findAllBingQuIntoArray];
         if ([array count] == [BingQu countAllBingQu]) {
@@ -48,9 +53,8 @@
         }
         
     });
+    
 }
-
-
 
 #pragma mark UITableViewDelegete 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -169,6 +173,7 @@
     [tableView reloadData];
     debugLog(@"点击:%@   USerDefault:%@",self.BQStr,[US objectForKey:@"BQ"]);
     [delegate passSelectedBQ:[US objectForKey:@"BQ"]];
+    [US synchronize];
 
 }
 

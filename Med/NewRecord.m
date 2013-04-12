@@ -47,7 +47,11 @@
     [addBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     [_navBar setBackImage];
-    [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];    
+    [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];
+    self.selectedBQLabel.adjustsFontSizeToFitWidth = YES;
+    if (OS_VERSION >= 6.0) {
+        self.selectedBQLabel.adjustsLetterSpacingToFitWidth = YES;
+    }
 }
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -56,7 +60,6 @@
 }
 - (void)passSelectedBQ:(NSString *)BQ {
     self.selectedBQLabel.text = BQ;
-    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -88,6 +91,7 @@
 - (IBAction)showBQ:(id)sender {
     if (popoverController == nil) {
         if (selectBQ == nil) {
+            NSLog(@"Alloc:%@",selectBQ);
             selectBQ = [[SelectBQ alloc] initWithNibName:@"SelectBQ" bundle:nil];
         }
         UIPopoverController *pop = [[UIPopoverController alloc] initWithContentViewController:selectBQ];
@@ -96,8 +100,6 @@
         CGRect popoverRect =  CGRectMake(130, 330, 1, 1);
         [popoverController presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         popoverController.delegate = self;
-        selectBQ = nil;
-        [self setSelectBQ:nil];
     }
 }
 
@@ -281,6 +283,7 @@
     [data release];
     [addBtn release];
     [data release];
+    [selectBQ release];
     [super dealloc];
 }
 - (void)viewDidUnload {

@@ -26,7 +26,6 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
 	rootViewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
 	[self.window setBackgroundColor:[UIColor clearColor]];
     self.window.rootViewController = rootViewController;
@@ -44,6 +43,9 @@
         });
         
     });
+    
+//    NSDictionary *defaultValues = [NSDictionary dictionaryWithObjectsAndKeys: @"", @"BQ",nil];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
     
 	return YES;
 }
