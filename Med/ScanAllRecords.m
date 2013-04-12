@@ -65,7 +65,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
+    NSArray *array = [Record findAllRecordsInRecordTableToArray];
+    self.patientAndBQArray = array;
     debugLog(@"PatientAndBQArray is:%@",_patientAndBQArray);
     [_table reloadData];
     self.segmentIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];

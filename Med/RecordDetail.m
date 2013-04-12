@@ -28,16 +28,7 @@
     if (self = [super init]) {
         [self.view setFrame:frame];
         self.detailArray = array;
-        _table = [[UITableView alloc] initWithFrame:CGRectMake(0,40,frame.size.width, frame.size.height) style:UITableViewStylePlain];
-        [_table setDataSource:self];
-        [_table setDelegate:self];
-        //_table.contentSize = CGSizeMake(370, [_table numberOfRowsInSection:0]*44*1.5);
-        UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
-		_table.tableFooterView = footerView;
-        [footerView release];
-        [_table setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-        
-        [self.view addSubview:_table];
+        self.table = [[UITableView alloc] initWithFrame:CGRectMake(0,40,frame.size.width, frame.size.height) style:UITableViewStylePlain];
         self.patient = patientname;
     }
     
@@ -52,9 +43,19 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [_table setDataSource:self];
+    [_table setDelegate:self];
+    //_table.contentSize = CGSizeMake(370, [_table numberOfRowsInSection:0]*44*1.5);
+    UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+    _table.tableFooterView = footerView;
+    [footerView release];
+    [_table setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    
+    [self.view addSubview:_table];
     UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 468, 40)];
     [bar setBackImage];
     self.navbar = bar;
+    [bar release];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     titleLabel.text = patient;
