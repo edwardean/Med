@@ -46,7 +46,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //jdfhvfhvue
     [_navBar setBackImage];
     self.isOpen = NO;
     self.search = [[UISearchBar alloc] initWithFrame:CGRectZero];

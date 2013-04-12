@@ -24,7 +24,6 @@
 #define debugLog(...) NSLog(__VA_ARGS__)
 #define debugMethod() NSLog(@"%s",__func__)
 
-#define findAllMed() NSMutableArray *array = [Medicine findAllMedicineToArray]; for (int i=0; i<[array count]; i++) {NSLog(@"%@",[array objectAtIndex:i]);}
 
 #else
 #define debugLog(...)
