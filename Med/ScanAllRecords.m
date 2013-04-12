@@ -15,7 +15,7 @@
 #import "Medicine.h"
 @interface ScanAllRecords ()
 
-@property (nonatomic, retain) NSArray *patientAndBQArray;
+@property (atomic, retain) NSArray *patientAndBQArray;
 @property (nonatomic, retain) NSArray *searchArray;
 @property (nonatomic, retain) NSArray *medArray;
 @property (assign) BOOL isOpen;
@@ -65,6 +65,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//          [_table reloadData];  
+//        });  
+//    });
+    
+    
     NSArray *array = [Record findAllRecordsInRecordTableToArray];
     self.patientAndBQArray = array;
     debugLog(@"PatientAndBQArray is:%@",_patientAndBQArray);
@@ -108,7 +116,12 @@
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         rows = [_searchArray count];
     } else {
-        rows = [_patientAndBQArray count];
+        if (_patientAndBQArray) {
+            rows = [_patientAndBQArray count];
+        } else {
+            rows = 0;
+        }
+        
     }
     return rows;
 }
@@ -155,14 +168,17 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     } else {
+        if (_patientAndBQArray) {
          NSDictionary *mainDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
         cell.textLabel.text = [mainDic objectForKey:@"PatientName"];
         cell.detailTextLabel.text = [mainDic objectForKey:@"Office"];
+        }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;}
+    return cell;
+}
 
 
 #pragma mark -

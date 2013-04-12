@@ -14,28 +14,29 @@
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     NSMutableArray *mutableArray = [NSMutableArray array];
     @autoreleasepool {
+    FMResultSet *resultSet,*resultSet1;
     if ([dataBase open]) {
-        FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
+        //FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
+        resultSet = [dataBase executeQuery:@"SELECT * FROM Record"];
         NSDictionary *recordDic = [NSDictionary dictionary];
         NSString *Name,*Count,*PYM;
         
-        while ([resultSet1 next]) {
-            NSString *ID = [resultSet1 stringForColumn:@"id"];//第一张表的id主键
-            debugLog(@"Record中找到ID = %@",ID);
-            NSString *PatientName = [resultSet1 stringForColumn:@"PatientName"];//第一张表的PatientName
-            NSString *Office = [resultSet1 stringForColumn:@"Office"];//第一张表的Office
-            FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
+        while ([resultSet next]) {
+            NSString *ID = [resultSet stringForColumn:@"id"];//第一张表的id主键
+            NSString *PatientName = [resultSet stringForColumn:@"PatientName"];//第一张表的PatientName
+            NSString *Office = [resultSet stringForColumn:@"Office"];//第一张表的Office
+            //FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
+            resultSet1 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
             NSMutableArray *detailArray = [NSMutableArray array];
-            while ([resultSet2 next]) {
-                Name = [resultSet2 stringForColumn:@"Name"];
-                Count = [resultSet2 stringForColumn:@"Count"];
-                PYM  = [resultSet2 stringForColumn:@"PYM"];
-               NSDictionary *detailDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count ,@"Count",PYM,@"PYM",nil];
+            while ([resultSet1 next]) {
+//                Name = [resultSet1 stringForColumn:@"Name"];
+//                Count = [resultSet1 stringForColumn:@"Count"];
+//                PYM  = [resultSet1 stringForColumn:@"PYM"];
+               NSDictionary *detailDic = [NSDictionary dictionaryWithObjectsAndKeys:[resultSet1 stringForColumn:@"Name"],@"Name",[resultSet1 stringForColumn:@"Count"],@"Count",[resultSet1 stringForColumn:@"PYM"],@"PYM",nil];
                 [detailArray addObject:detailDic];
             }
             recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",
                          detailArray,@"Detail",nil];
-            debugLog(@"dic =  %@",recordDic);
             [mutableArray addObject:recordDic];
             debugLog(@"detailArray = %@",[recordDic objectForKey:@"Detail"]);
         }

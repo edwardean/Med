@@ -36,6 +36,15 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     debugMethod();
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        self.dataArray = [Medicine findAllMedicineToArray];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.table setContentSize:CGSizeMake(self.view.frame.size.width, [_dataArray count]*60*2)];
+//            [_table reloadData];
+//        });
+//    });
+    
     self.dataArray = [Medicine findAllMedicineToArray];
     
     [self.table setContentSize:CGSizeMake(self.view.frame.size.width, [_dataArray count]*60*2)];
