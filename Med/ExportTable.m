@@ -149,7 +149,6 @@ static CHCSVWriter *sharedWriter = nil;
 	
 	// myProgressTask uses the HUD instance to update progress
     [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
-    [HUD release];
 }
 - (void)ExportTable{
     [self showHUD];
@@ -203,7 +202,6 @@ static CHCSVWriter *sharedWriter = nil;
     }];
     [dataBase close];
     [csvWriter closeFile];
-    [sharedWriter release];
     sharedWriter = nil;
     [self performSelector:@selector(ExportAllRecordsByMed)];
 }
@@ -214,7 +212,7 @@ static CHCSVWriter *sharedWriter = nil;
     CHCSVWriter *csvWriter = nil;
     if (array) {
         if (segIndex==1) {
-        csvWriter = [[[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:file] atomic:NO] autorelease];
+        csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:file] atomic:NO];
        [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary *dic = [array objectAtIndex:idx];
         NSString *PatientName = [dic objectForKey:@"PatientName"];
@@ -239,7 +237,7 @@ static CHCSVWriter *sharedWriter = nil;
             NSString *name = DirectoryName;
             NSString *path = [home stringByAppendingPathComponent:name];
             if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-                csvWriter = [[[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO] autorelease];
+                csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO];
             } else {
                 debugLog(@"Error:%@",error);
             }
@@ -257,10 +255,6 @@ static CHCSVWriter *sharedWriter = nil;
     }
     [csvWriter closeFile];
     return isOK;
-}
-- (void)dealloc {
-    [HUD release];
-    [super dealloc];
 }
 - (void)viewDidUnload {
     [super viewDidUnload];

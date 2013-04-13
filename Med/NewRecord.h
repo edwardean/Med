@@ -18,18 +18,18 @@
     IBOutlet SelectBQ *selectBQ;
     NSMutableArray *data;
 }
-@property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
 
-@property (retain, nonatomic) IBOutlet UITextField *field;
-@property (nonatomic, retain) InputNewRecord *inputNewRecord;
-@property (nonatomic, retain) SelectBQ *selectBQ;
-@property (nonatomic, retain) UIPopoverController *popoverController;
-@property (retain, nonatomic) IBOutlet UILabel *selectedBQLabel;
-@property (nonatomic, retain) UIButton *addBtn;
-@property (nonatomic, retain) IBOutlet UITableView *table;
-@property (nonatomic, retain) NSMutableArray *data;
+@property (strong, nonatomic) IBOutlet UITextField *field;
+@property (nonatomic, strong) InputNewRecord *inputNewRecord;
+@property (nonatomic, strong) SelectBQ *selectBQ;
+@property (nonatomic, strong) UIPopoverController *popoverController;
+@property (strong, nonatomic) IBOutlet UILabel *selectedBQLabel;
+@property (nonatomic, strong) UIButton *addBtn;
+@property (nonatomic, strong) IBOutlet UITableView *table;
+@property (nonatomic, strong) NSMutableArray *data;
 -(IBAction)showPopover:(id)sender;
--(IBAction)hide:(id)sender;
+-(IBAction)Hide:(id)sender;
 - (IBAction)showBQ:(id)sender;
 - (IBAction)saveBtnTapped:(id)sender;
 - (void)deleteRow:(id)sender;

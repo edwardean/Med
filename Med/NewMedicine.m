@@ -11,11 +11,11 @@
 #import "dataBaseManager.h"
 #import "Medicine.h"
 @interface NewMedicine ()
-@property (nonatomic, retain) NSIndexPath *lastIndex;
+@property (nonatomic, strong) NSIndexPath *lastIndex;
 @property (nonatomic, copy) NSString *specifiStr;
 @property (nonatomic, copy) NSString *unitStr;
-@property (nonatomic, retain) UIAlertView *alert;
-@property (nonatomic, retain) UIAlertView *alert5;
+@property (nonatomic, strong) UIAlertView *alert;
+@property (nonatomic, strong) UIAlertView *alert5;
 @end
 
 @implementation NewMedicine
@@ -37,7 +37,7 @@
     [navBar setBackImage];
     self.specifiStr = @"";
     self.unitStr = @"";
-    self.specifiTable.backgroundView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    self.specifiTable.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     NSIndexPath *ip=[NSIndexPath indexPathForRow:0 inSection:0];
     [self.specifiTable selectRowAtIndexPath:ip animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     nameTextField.autocorrectionType = UITextAutocapitalizationTypeNone;
@@ -120,7 +120,7 @@
 }
 
 
-- (IBAction)hide:(id)sender {
+- (IBAction)Hide:(id)sender {
     debugMethod();
     self.specifiTextField.text = @"";
     self.nameTextField.text = @"";
@@ -134,13 +134,11 @@
     if ([nameTextField.text length]==0 || [specifiTextField.text length] == 0 || [countTextField.text length]==0 || [pymTextField.text length] == 0) {
         UIAlertView *alert1 = [[UIAlertView alloc]initWithTitle:@"警告" message:@"信息不完整" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
         [alert1 show];
-        [alert1 release];
 
     } else {
         if ([self.unitStr isEqualToString:@""]) {
             UIAlertView *alert2 = [[UIAlertView alloc]initWithTitle:@"啊噢!" message:@"主人你忘记选药品规格了" delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles:nil, nil];
             [alert2 show];
-            [alert2 release];
         } else {
             NSString *str  =[self.specifiTextField.text stringByAppendingString:self.unitStr];
             NSString *message = [NSString stringWithFormat:@"药品名称:%@\n拼音码:%@\n规格:%@\n产地:%@",nameTextField.text,[pymTextField.text uppercaseString],str,countTextField.text];
@@ -158,7 +156,7 @@
         NSString *str = [NSString stringWithFormat:@"药品%@创建完毕",nameTextField.text];
         [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
         [self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0f];
-        [self performSelector:@selector(hide:)];
+        [self performSelector:@selector(Hide:)];
     }  else {
           NSString *str = @"创建失败";
           [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
@@ -177,7 +175,6 @@
         [alert5 show];
     } else
         [self saveDataIntoTable];
-    [med release];
 }
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([alertView isEqual:alert]) {
@@ -202,7 +199,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     NSString *cellText = nil;
     if ([indexPath row] == 0) {
@@ -258,19 +255,5 @@
     self.specifiStr = nil;
     self.unitStr = nil;
     self.lastIndex = nil;
-}
-- (void) dealloc {
-    [navBar release];
-    [alert release];
-    [alert5 release];
-    [specifiTable release];
-    [nameTextField release];
-    [specifiTextField release];
-    [countTextField release];
-    [pymTextField release];
-    [specifiStr release];
-    [unitStr release];
-    [lastIndex release];
-    [super dealloc];
 }
 @end

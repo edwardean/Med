@@ -43,12 +43,12 @@
 #define seUnitLabelTag 25
 @interface InputNewRecord ()
 
-@property (nonatomic, retain) NSArray *medArray;//主数据源，所有药品信息
-@property (nonatomic, retain) NSArray *searchArray;//搜索结果，searchDisplayResultTableView的数据源
-@property(retain, nonatomic) NSIndexPath *selectIndex;///////
-@property (retain,nonatomic) NSIndexPath *searchSelectIndex;////////
-@property (nonatomic, retain) NSMutableArray *indexArray;//保存已经选择过的indexPath
-@property (nonatomic, retain) NSMutableArray *searchIndexArray;/////////
+@property (nonatomic, strong) NSArray *medArray;//主数据源，所有药品信息
+@property (nonatomic, strong) NSArray *searchArray;//搜索结果，searchDisplayResultTableView的数据源
+@property(strong, nonatomic) NSIndexPath *selectIndex;///////
+@property (strong,nonatomic) NSIndexPath *searchSelectIndex;////////
+@property (nonatomic, strong) NSMutableArray *indexArray;//保存已经选择过的indexPath
+@property (nonatomic, strong) NSMutableArray *searchIndexArray;/////////
 
 @end
 
@@ -86,7 +86,6 @@
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 45)];
 	footer.backgroundColor = [UIColor clearColor];
     self.table.tableFooterView = footer;
-    [footer release];
     table.delegate = self;
     table.dataSource = self;
     [self.view addSubview:table];
@@ -149,37 +148,32 @@
         static NSString *markCellID = @"MARKED";
         UITableViewCell *markCell = [tableView dequeueReusableCellWithIdentifier:markCellID];
         if (!markCell) {
-            markCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:markCellID] autorelease];
+            markCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:markCellID];
             //药名
             UILabel *medNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, -6, 150, 36)];
             medNameLabel.tag = markMedNameLabelTag;
             [markCell.contentView addSubview:medNameLabel];
-            [medNameLabel release];
             
             //产地
             UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17, 150, 20)];
             countLabel.tag = markCountLabelTag;
             [markCell.contentView addSubview:countLabel];
-            [countLabel release];
             
             //拼音码
             UILabel *pymlabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 17, 150, 20)];
             pymlabel.tag = markPymLabelTag;
             [markCell.contentView addSubview:pymlabel];
-            [pymlabel release];
             
             //规格
             UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 34, 150, 20)];
             unitLabel.tag = markUnitLabelTag;
             [markCell.contentView addSubview:unitLabel];
-            [unitLabel release];
             
             //cell展开
             //背景
             UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 53, 392, 53)];
             [imgView setImage:[UIImage imageNamed:@"arraw"]];
             [markCell.contentView addSubview:imgView];
-            [imgView release];
             
             //左边的删除按钮
             UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -193,13 +187,11 @@
             UITextField *countField = [[UITextField alloc] initWithFrame:CGRectMake(60, 65, 180, 30)];
             countField.tag  = markCountField;
             [markCell.contentView addSubview:countField];
-            [countField release];
             
             //右边一点的药品单位mg/ml
             UILabel *danweiLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 65, 50, 30)];
             danweiLabel.tag = markDanweiLabel;
             [markCell.contentView addSubview:danweiLabel];
-            [danweiLabel release];
             
             //右侧的确认按钮
             UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -231,8 +223,7 @@
         UITextField *tempField = (UITextField *)[markCell.contentView viewWithTag:markCountField];
         [tempField setBackgroundColor:[UIColor whiteColor]];
         tempField.layer.cornerRadius = 10.0f;
-       self.field = [tempField retain];
-        [tempField release];
+       self.field = tempField;
         self.field.placeholder = @"输入用药量";
         [self.field setText:@""];
         self.field.returnKeyType = UIReturnKeyDone;
@@ -261,31 +252,27 @@
         static NSString *CellID = @"CELL";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
             
             //药名
             UILabel *medNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, -6, 150, 36)];
             medNameLabel.tag = MedNameLabelTag;
             [cell.contentView addSubview:medNameLabel];
-            [medNameLabel release];
             
             //产地
             UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17, 150, 20)];
             countLabel.tag = CountLabelTag;
             [cell.contentView addSubview:countLabel];
-            [countLabel release];
             
             //拼音码
             UILabel *pymlabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 17, 150, 20)];
             pymlabel.tag = PymLabelTag;
             [cell.contentView addSubview:pymlabel];
-            [pymlabel release];
             
             //规格
             UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 34, 150, 20)];
             unitLabel.tag = UnitLabelTag;
             [cell.contentView addSubview:unitLabel];
-            [unitLabel release];
         }
         
         UILabel *_medNameLabel = (UILabel *)[cell.contentView viewWithTag:MedNameLabelTag];
@@ -320,7 +307,6 @@
                 }
             }
         }
-        [contentlabel release];
         
         if ([self.indexArray containsObject:indexPath]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -351,7 +337,6 @@
             NSIndexPath *tempIndexPath = [self.selectIndex copy];
             self.selectIndex = nil;
             [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:tempIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];//合上上一次的行
-            [tempIndexPath release];
             self.selectIndex = indexPath;
             [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectIndex] withRowAnimation:UITableViewRowAnimationAutomatic];//展开新点击的行
         } else {
@@ -432,7 +417,6 @@
                     if ([__objDic isEqualToDictionary:_dic]) {
                         [tempArray addObject:objDic];
                     }
-                    [__objDic release];
                 }
                 
                 [self.contentArray removeObjectsInArray:tempArray];
@@ -568,16 +552,7 @@
 }
 
 - (void) dealloc {
-    [super dealloc];
-    [medArray release];
-    [_searchIndexArray release];
-    [contentArray release];
-    [table release];
-    [_search release];
-    [field release];
-    [_selectIndex release];
     
-    [_searchArray release];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
 }
 @end

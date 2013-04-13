@@ -12,8 +12,8 @@
     UITableView *table;
 }
 
-@property (nonatomic, retain) UISearchBar *search;
-@property (nonatomic, retain) UITableView *table;
-@property (nonatomic, retain) UITextField *field;
-@property (nonatomic, retain) NSMutableArray *contentArray;//存放所选药量和index
+@property (nonatomic, strong) UISearchBar *search;
+@property (nonatomic, strong) UITableView *table;
+@property (nonatomic, strong) UITextField *field;
+@property (nonatomic, strong) NSMutableArray *contentArray;//存放所选药量和index
 @end

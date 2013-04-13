@@ -14,8 +14,8 @@
 #define markPymLabelTag 3
 #define markSpeciLabelTag 4
 @interface ScanAllMedInfo ()
-@property (nonatomic, retain) NSArray *dataArray;
-@property (nonatomic, retain) NSArray *searchResultArray;
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSArray *searchResultArray;
 @property (assign) BOOL isChinese;
 @end
 
@@ -93,25 +93,22 @@
     cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID] autorelease];        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];        
         //药名
         UILabel *medNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 16, 150, 40)];
         medNameLabel.tag = markMedNameLabelTag;
         [cell.contentView addSubview:medNameLabel];
-        [medNameLabel release];
         
         
         //拼音码
         UILabel *pymlabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 17, 150, 20)];
         pymlabel.tag = markPymLabelTag;
         [cell.contentView addSubview:pymlabel];
-        [pymlabel release];
         
         //含量
         UILabel *specilabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 17, 150, 20)];
         specilabel.tag = markSpeciLabelTag;
         [cell.contentView addSubview:specilabel];
-        [specilabel release];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -183,7 +180,6 @@
         NSMutableArray *tempArray = [self.searchResultArray mutableCopy];
         [tempArray removeObjectAtIndex:[indexPath row]];
         self.searchResultArray = tempArray;
-        [tempArray release];
         [self.searchDisplayController.searchResultsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         self.dataArray = [Medicine findAllMedicineToArray];
         [self.table reloadData];
@@ -197,7 +193,6 @@
         NSMutableArray *tempArray = [self.dataArray mutableCopy];
         [tempArray removeObjectAtIndex:[indexPath row]];
         self.dataArray = tempArray;
-        [tempArray release];
         [self.table deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
@@ -240,11 +235,6 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)dealloc {
-    [_searchResultArray release];
-    [_dataArray release];
-    [super dealloc];
-}
 - (void)viewDidUnload {
     [super viewDidUnload];
     [self setNavBar:nil];
@@ -282,7 +272,6 @@
         
     }];
     [csvWriter closeFile];
-    [csvWriter release];
     NSString *msg  = @"亲,全部药品已导入到'药品.csv'文件中了^_^";
     [Help ShowGCDMessage:msg andView:self.view andDelayTime:2.2f];
 }

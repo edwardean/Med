@@ -13,7 +13,7 @@
 
 + (void)ShowGCDMessage:(NSString *)msg andView:(UIView *)view andDelayTime:(float)delay {
 
-    GCDiscreetNotificationView *gcdNotification = [[[GCDiscreetNotificationView alloc] initWithText:msg showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:view] autorelease];
+    GCDiscreetNotificationView *gcdNotification = [[GCDiscreetNotificationView alloc] initWithText:msg showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:view];
     [gcdNotification show:YES];
     [gcdNotification hideAnimatedAfter:delay];
 }

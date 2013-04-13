@@ -10,9 +10,9 @@
 #import "BingQu.h"
 @interface SelectBQ ()
 
-@property (nonatomic, retain) NSArray *array;
-@property (nonatomic, retain) NSArray *searchArray;
-@property (nonatomic, retain) NSIndexPath *lastPath;
+@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSArray *searchArray;
+@property (nonatomic, strong) NSIndexPath *lastPath;
 @end
 
 @implementation SelectBQ
@@ -79,7 +79,7 @@
    static NSString *CellID = @"Cell";
     UITableViewCell *cell = nil;
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID]autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
     }
     
     
@@ -215,12 +215,4 @@
     self.lastPath = nil;
 }
 
-- (void) dealloc {
-    [table release];
-    [BQStr release];
-    [array release];
-    [_searchArray release];
-    [_lastPath release];
-    [super dealloc];
-}
 @end

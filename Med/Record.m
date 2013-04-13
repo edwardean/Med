@@ -13,29 +13,20 @@
 + (NSArray *)findAllRecordsInRecordTableToArray {
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     NSMutableArray *mutableArray = [NSMutableArray array];
-    @autoreleasepool {
     FMResultSet *resultSet,*resultSet1;
     if ([dataBase open]) {
-        //FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
         resultSet = [dataBase executeQuery:@"SELECT * FROM Record"];
-        NSDictionary *recordDic = [NSDictionary dictionary];
-        //NSString *Name,*Count,*PYM;
-        
         while ([resultSet next]) {
             NSString *ID = [resultSet stringForColumn:@"id"];//第一张表的id主键
             NSString *PatientName = [resultSet stringForColumn:@"PatientName"];//第一张表的PatientName
-            NSString *Office = [resultSet stringForColumn:@"Office"];//第一张表的Office
-            //FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
+            NSString *Office = [resultSet  stringForColumn:@"Office"];//第一张表的Office
             resultSet1 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
-            NSMutableArray *detailArray = [NSMutableArray array];
+            NSMutableArray *detailArray = [NSMutableArray arrayWithCapacity:0];
             while ([resultSet1 next]) {
-//                Name = [resultSet1 stringForColumn:@"Name"];
-//                Count = [resultSet1 stringForColumn:@"Count"];
-//                PYM  = [resultSet1 stringForColumn:@"PYM"];
                NSDictionary *detailDic = [NSDictionary dictionaryWithObjectsAndKeys:[resultSet1 stringForColumn:@"Name"],@"Name",[resultSet1 stringForColumn:@"Count"],@"Count",[resultSet1 stringForColumn:@"PYM"],@"PYM",nil];
                 [detailArray addObject:detailDic];
             }
-            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",
+            NSDictionary *recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",
                          detailArray,@"Detail",nil];
             [mutableArray addObject:recordDic];
             debugLog(@"detailArray = %@",[recordDic objectForKey:@"Detail"]);
@@ -43,15 +34,9 @@
         
         [dataBase close];
     }
-    
-    }
-   // NSArray *resultArray = mutableArray;
     NSSortDescriptor *soter = [[NSSortDescriptor alloc] initWithKey:@"Office" ascending:YES];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&soter count:1];
     NSArray *array = [mutableArray sortedArrayUsingDescriptors:sortDescriptors];
-    [soter release];
-    //[resultArray release];
-    [sortDescriptors release];
     return array;
 }
 
@@ -245,7 +230,7 @@
 + (NSArray *)findPatientIDInDetailTable:(NSString *)_pym {
     debugMethod();
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
-    __block NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:0];
+    __weak NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:0];
     __block NSDictionary *dic = [NSDictionary dictionary];
     __block NSDictionary *recordDic = [NSDictionary dictionary];
     FMDatabase *dataBase = [dataBaseManager createDataBase];
@@ -301,9 +286,6 @@
     NSSortDescriptor *sotre = [[NSSortDescriptor alloc] initWithKey:@"Office" ascending:YES];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sotre count:1];
     NSArray *array = [resultArray sortedArrayUsingDescriptors:sortDescriptors];
-    [sotre release];
-    [resultArray release];
-    [sortDescriptors release];
     return array;
 }
 @end

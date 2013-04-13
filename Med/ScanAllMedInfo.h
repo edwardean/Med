@@ -11,10 +11,10 @@
 @interface ScanAllMedInfo : UIViewController <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate> {
     IBOutlet UITableView *_table;
 }
-@property (retain, nonatomic) IBOutlet UISearchBar *search;
+@property (strong, nonatomic) IBOutlet UISearchBar *search;
 
-@property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
-@property (nonatomic, retain) UITableView *table;
+@property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (nonatomic, strong) UITableView *table;
 - (IBAction)deleteRow:(id)sender;
 //@property (retain, nonatomic) IBOutlet UIBarButtonItem *deleteBtn;
 - (IBAction)exportMedTable:(id)sender;

@@ -15,10 +15,10 @@
     IBOutlet UILabel *PYMLabel;
 }
 
-@property (nonatomic, retain) UILabel *NameLabel;
-@property (nonatomic, retain) UILabel *SpecifiLabel;
-@property (nonatomic, retain) UILabel *CountLabel;
-@property (nonatomic, retain) UILabel *PYMLabel;
+@property (nonatomic, strong) UILabel *NameLabel;
+@property (nonatomic, strong) UILabel *SpecifiLabel;
+@property (nonatomic, strong) UILabel *CountLabel;
+@property (nonatomic, strong) UILabel *PYMLabel;
 @property (copy, nonatomic) NSString *NameStr;
 @property (copy, nonatomic) NSString *SpecifiStr;
 @property (copy, nonatomic) NSString *CountStr;

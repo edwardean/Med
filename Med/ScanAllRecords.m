@@ -15,9 +15,9 @@
 #import "Medicine.h"
 @interface ScanAllRecords ()
 
-@property (atomic, retain) NSArray *patientAndBQArray;
-@property (nonatomic, retain) NSArray *searchArray;
-@property (nonatomic, retain) NSArray *medArray;
+@property (atomic, strong) NSArray *patientAndBQArray;
+@property (nonatomic, strong) NSArray *searchArray;
+@property (nonatomic, strong) NSArray *medArray;
 @property (assign) BOOL isOpen;
 @property (nonatomic, strong) UISearchDisplayController *searchController;
 @property (assign) NSInteger segmentIndex;
@@ -133,18 +133,16 @@
    
     cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
         if (tableView == self.searchDisplayController.searchResultsTableView) {
             if (segmentIndex==0) {
                 UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 150, 20)];
                 nameLabel.tag = 1;
                 [cell.contentView addSubview:nameLabel];
-                [nameLabel release];
                 
                 UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 20, 150, 20)];
                 countLabel.tag = 2;
                 [cell.contentView addSubview:countLabel];
-                [countLabel release];
             }
         }
     }
@@ -195,7 +193,6 @@
         patientName = [detailDic objectForKey:@"PatientName"];
         RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientName];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
-        [detail release];
         }else {
             return;
         }
@@ -208,7 +205,6 @@
         patientName = [detailDic objectForKey:@"PatientName"];
         RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientName];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
-        [detail release];
     }
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -249,7 +245,6 @@
         NSMutableArray *temArray = [_searchArray mutableCopy];
         [temArray removeObjectAtIndex:[indexPath row]];
         self.searchArray = [temArray copy];
-        [temArray release];
         [self.searchDisplayController.searchResultsTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         self.patientAndBQArray = [Record findAllRecordsInRecordTableToArray];
         [self.table reloadData];
@@ -257,7 +252,6 @@
         NSMutableArray *temyArray = [self.patientAndBQArray mutableCopy];
         [temyArray removeObjectAtIndex:[indexPath row]];
         self.patientAndBQArray = [temyArray copy];
-        [temyArray release];
         [self.table deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
@@ -372,15 +366,6 @@
     
 }
 
-- (void)dealloc {
-    [_patientAndBQArray release];
-    [_searchArray release];
-    [_medArray release];
-    [_searchController release];
-    [_search release];
-    [_searchName release];
-    [super dealloc];
-}
 - (void)viewDidUnload {
     [super viewDidUnload];
     self.table = nil;
@@ -412,12 +397,10 @@
     }
     NSString *_fileName = [_searchName stringByAppendingString:@".csv"];
     NSString *fileName = [NSString stringWithFormat:@"检索结果'%@'已存到'每种药品的筛选记录'文件夹中",_fileName];
-    [export release];
     NSString *resultStr = isOK ? fileName:@"抱歉,导入出了点问题,请重试";
     [Help ShowGCDMessage:resultStr andView:self.view andDelayTime:2.2f];
     if (!self.isOpen) {
         self.searchArray = nil;
-        [_searchArray release];
     }
     }
 }

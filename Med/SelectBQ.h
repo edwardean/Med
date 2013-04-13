@@ -18,8 +18,8 @@
     id <PassSelectedBQDelegete> delegete;
     
 }
-@property (retain, nonatomic) IBOutlet UISearchBar *search;
+@property (strong, nonatomic) IBOutlet UISearchBar *search;
 @property (nonatomic, copy) NSString *BQStr;
-@property (nonatomic, retain) UITableView *table;
-@property (nonatomic, assign) id <PassSelectedBQDelegete> delegate;
+@property (nonatomic, strong) UITableView *table;
+@property (nonatomic, weak) id <PassSelectedBQDelegete> delegate;
 @end

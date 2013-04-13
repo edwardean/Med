@@ -17,11 +17,11 @@
     IBOutlet UINavigationBar *navBar;
 }
 
-@property (nonatomic, retain) UITableView *specifiTable;
-@property (nonatomic, retain) UITextField *nameTextField;
-@property (nonatomic, retain) UITextField *specifiTextField;
-@property (nonatomic, retain) UITextField *countTextField;
-@property (nonatomic, retain) UITextField *pymTextField;
-- (IBAction)hide:(id)sender;
+@property (nonatomic, strong) UITableView *specifiTable;
+@property (nonatomic, strong) UITextField *nameTextField;
+@property (nonatomic, strong) UITextField *specifiTextField;
+@property (nonatomic, strong) UITextField *countTextField;
+@property (nonatomic, strong) UITextField *pymTextField;
+- (IBAction)Hide:(id)sender;
 - (IBAction)Save:(id)sender;
 @end

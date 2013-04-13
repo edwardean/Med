@@ -12,7 +12,7 @@
     UITableView *_table;
 }
 
-@property (nonatomic, retain) UITableView *table;
+@property (nonatomic, strong) UITableView *table;
 @property (nonatomic, copy) NSString *patient;
 - (id) initWithFrame:(CGRect)frame andArray:(NSArray *)array andPatientName:(NSString *)patientname;
 @end

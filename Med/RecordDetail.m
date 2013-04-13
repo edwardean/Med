@@ -13,8 +13,8 @@
 #define medNameLabelTag 1
 #define medContLabelTag 2
 @interface RecordDetail ()
-@property (nonatomic, retain) NSArray *detailArray;
-@property (nonatomic, retain) UINavigationBar *navbar;
+@property (nonatomic, strong) NSArray *detailArray;
+@property (nonatomic, strong) UINavigationBar *navbar;
 
 @end
 
@@ -48,14 +48,12 @@
     //_table.contentSize = CGSizeMake(370, [_table numberOfRowsInSection:0]*44*1.5);
     UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     _table.tableFooterView = footerView;
-    [footerView release];
     [_table setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     
     [self.view addSubview:_table];
     UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 468, 40)];
     [bar setBackImage];
     self.navbar = bar;
-    [bar release];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     titleLabel.text = patient;
@@ -64,7 +62,6 @@
     [titleLabel setCenter:_navbar.center];
     titleLabel.center = _navbar.center;
     [_navbar addSubview:titleLabel];
-    [titleLabel release];
     [self.view addSubview:_navbar];
     
     UIButton *btn  =[UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -110,17 +107,15 @@
     cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
         
         UILabel *medLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 50)];
         medLabel.tag = medNameLabelTag;
         [cell.contentView addSubview:medLabel];
-        [medLabel release];
         
         UILabel *medContLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 6, 150, 50)];
         medContLabel.tag = medContLabelTag;
         [cell.contentView addSubview:medContLabel];
-        [medContLabel release];
     }
     
     UILabel *_medNameLabel = (UILabel *)[cell.contentView viewWithTag:medNameLabelTag];
@@ -147,9 +142,4 @@
     [super viewDidUnload];
 }
 
-- (void) dealloc {
-    [_table release];
-    [patient release];
-    [super dealloc];
-}
 @end

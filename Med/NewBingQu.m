@@ -49,7 +49,6 @@
             NSString *str = [NSString stringWithFormat:@"%@已经录入过了",[inputTextField.text uppercaseString]];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告" message:str delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles:nil, nil];
             [alert show];
-            [alert release];
         } else {
             
             if ([BingQu createNewBingQu:[inputTextField.text uppercaseString]]) {
@@ -97,9 +96,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) dealloc {
-    
-    [inputTextField release];
-    [super dealloc];
-}
 @end

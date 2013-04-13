@@ -15,5 +15,5 @@
 + (CHCSVWriter *)sharedWriter;
 - (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex inMainDir:(NSInteger)mainDir;
 - (void)myProgressTask;
-@property (retain, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
 @end

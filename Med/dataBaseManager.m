@@ -21,7 +21,7 @@ static FMDatabase *shareDataBase = nil;
     @synchronized (self) {
         if (shareDataBase == nil) {
             
-            shareDataBase = [[FMDatabase databaseWithPath:dataBasePath] retain];
+            shareDataBase = [FMDatabase databaseWithPath:dataBasePath];
         }
         return shareDataBase;
     }

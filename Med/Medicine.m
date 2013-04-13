@@ -46,15 +46,11 @@
      NSSortDescriptor *soter = [[NSSortDescriptor alloc] initWithKey:@"PYM" ascending:YES];
      NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&soter count:1];
      NSArray *array = [resultArray sortedArrayUsingDescriptors:sortDescriptors];
-    [resultArray release];
-    [sortDescriptors release];
-    [soter release];
     return array;
 }
 
 
 + (int)countSomeMedicineByName:(NSString *)_name {
-    debugMethod();
     int count = 0;
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     if ([dataBase open]) {
@@ -229,9 +225,5 @@
     }
     
     return isOK;
-}
-- (void) dealloc {
-    [stringID release];
-    [super dealloc];
 }
 @end
