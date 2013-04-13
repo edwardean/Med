@@ -143,8 +143,21 @@
                 UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 20, 150, 20)];
                 countLabel.tag = 2;
                 [cell.contentView addSubview:countLabel];
+            } else {
+            
+                UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 38, 60, 20)];
+                [dateLabel setAdjustsFontSizeToFitWidth:YES];
+                [dateLabel setTextColor:[UIColor cyanColor]];
+                [dateLabel setTag:4];
+                [cell.contentView addSubview:dateLabel];
             }
-        }
+        } else {
+        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 38, 60, 20)];
+        [dateLabel setAdjustsFontSizeToFitWidth:YES];
+        [dateLabel setTextColor:[UIColor cyanColor]];
+        [dateLabel setTag:3];
+        [cell.contentView addSubview:dateLabel];
+    }
     }
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         NSDictionary *searchDic = [_searchArray objectAtIndex:[indexPath row]];
@@ -163,11 +176,15 @@
         } else {
             cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
             cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
+            UILabel *_dateLabel = (UILabel *)[cell.contentView viewWithTag:4];
+            [_dateLabel setText:[searchDic objectForKey:@"Date"]];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     } else {
         if (_patientAndBQArray) {
          NSDictionary *mainDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
+            UILabel *_dateLabel = (UILabel *)[cell.contentView viewWithTag:3];
+            [_dateLabel setText:[mainDic objectForKey:@"Date"]];
         cell.textLabel.text = [mainDic objectForKey:@"PatientName"];
         cell.detailTextLabel.text = [mainDic objectForKey:@"Office"];
         }

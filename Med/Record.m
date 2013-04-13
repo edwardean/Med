@@ -20,6 +20,7 @@
             NSString *ID = [resultSet stringForColumn:@"id"];//第一张表的id主键
             NSString *PatientName = [resultSet stringForColumn:@"PatientName"];//第一张表的PatientName
             NSString *Office = [resultSet  stringForColumn:@"Office"];//第一张表的Office
+            NSString *Date = [resultSet stringForColumn:@"Date"];
             resultSet1 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
             NSMutableArray *detailArray = [NSMutableArray arrayWithCapacity:0];
             while ([resultSet1 next]) {
@@ -27,7 +28,7 @@
                 [detailArray addObject:detailDic];
             }
             NSDictionary *recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",
-                         detailArray,@"Detail",nil];
+                         Date,@"Date",detailArray,@"Detail",nil];
             [mutableArray addObject:recordDic];
             debugLog(@"detailArray = %@",[recordDic objectForKey:@"Detail"]);
         }
@@ -52,7 +53,7 @@
             NSString *ID = [resultSet1 stringForColumn:@"id"];
             NSString *PatientName = [resultSet1 stringForColumn:@"PatientName"];
             NSString *Office = [resultSet1 stringForColumn:@"Office"];
-            
+            NSString *Date = [resultSet1 stringForColumn:@"Date"];
             FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE id = ?",ID];
             while ([resultSet2 next]) {
                 NSString *Name = [resultSet2 stringForColumn:@"Name"];
@@ -60,7 +61,7 @@
                 detailDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count", nil];
                 [detailArray addObject:detailDic];
             }
-        recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
+        recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",Date,@"Date",detailArray,@"Detail", nil];
         }
         [mutableArray addObject:recordDic];
         [dataBase close];
@@ -81,7 +82,7 @@
             NSString *ID = [resultSet1 stringForColumn:@"id"];
             NSString *PatientName = [resultSet1 stringForColumn:@"PatientName"];
             NSString *Office = [resultSet1 stringForColumn:@"Office"];
-            
+            NSString *Date = [resultSet1 stringForColumn:@"Date"];
             FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE id = ?",ID];
             while ([resultSet2 next]) {
                 NSString *Name = [resultSet2 stringForColumn:@"Name"];
@@ -89,7 +90,7 @@
                 detailDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count", nil];
                 [detailArray addObject:detailDic];
             }
-            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
+            recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",Date,@"Date",detailArray,@"Detail", nil];
         }
         [mutableArray addObject:recordDic];
         [dataBase close];
@@ -116,7 +117,7 @@
     return isOK;
 }
 
-+ (BOOL)insertNewRecordIntoRecordTable:(NSString *)patientName Office:(NSString *)office {
++ (BOOL)insertNewRecordIntoRecordTable:(NSString *)patientName Office:(NSString *)office Date:(NSString *)date{
     
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     BOOL isOK = NO;
@@ -125,7 +126,7 @@
             debugLog(@"Record 不存在");
             return isOK;
         }
-               isOK = [dataBase executeUpdate:@"INSERT INTO Record (PatientName,Office) VALUES (?,?)",patientName,office];
+               isOK = [dataBase executeUpdate:@"INSERT INTO Record (PatientName,Office,Date) VALUES (?,?,?)",patientName,office,date];
         
     [dataBase close];
     }
@@ -248,6 +249,7 @@
                 NSString *ID = [NSString stringWithFormat:@"%d",ind];
                 NSString *PatientName = [rs2 stringForColumn:@"PatientName"];
                 NSString *Office = [rs2 stringForColumn:@"Office"];
+                NSString *Date = [rs2 stringForColumn:@"Date"];
                 FMResultSet *resultSet2 = [dataBase executeQuery:@"SELECT * FROM Detail WHERE Number = ?",ID];
                 NSMutableArray *detailArray = [NSMutableArray array];
                 while ([resultSet2 next]) {
@@ -257,7 +259,7 @@
                     dic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count",PYM,@"PYM", nil];
                     [detailArray addObject:dic];
                 }
-                recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
+                recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",Date,@"Date",detailArray,@"Detail", nil];
                 [resultArray addObject:recordDic];
             }
         }];
@@ -270,13 +272,14 @@
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
     if ([dataBase open]) {
-        FMResultSet *rs = [dataBase executeQuery:@"SELECT Record.PatientName,Record.Office,Detail.Name,Detail.Count FROM Record,Detail WHERE Record.id = Detail.Number AND Detail.PYM = ?",[pym uppercaseString]];
+        FMResultSet *rs = [dataBase executeQuery:@"SELECT Record.PatientName,Record.Office,Record.Date,Detail.Name,Detail.Count FROM Record,Detail WHERE Record.id = Detail.Number AND Detail.PYM = ?",[pym uppercaseString]];
         while ([rs next]) {
             NSString *PatientName = [rs stringForColumn:@"PatientName"];
             NSString *Office = [rs stringForColumn:@"Office"];
+            NSString *Date = [rs stringForColumn:@"Date"];
             NSString *Name = [rs stringForColumn:@"Name"];
             NSString *Count = [rs stringForColumn:@"Count"];
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:PatientName,@"PatientName",Office,@"Office",Name,@"Name",Count,@"Count", nil];
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:PatientName,@"PatientName",Office,@"Office",Date,@"Date",Name,@"Name",Count,@"Count", nil];
             [mutableArray addObject:dic];
         }
         [dataBase close];

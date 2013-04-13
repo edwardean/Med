@@ -124,7 +124,10 @@
 
 - (BOOL)saveToRecordTablePatientName:(NSString *)patientName Office:(NSString *)office {
     BOOL isOK = NO;
-    isOK = [Record insertNewRecordIntoRecordTable:patientName Office:office];
+    NSDateFormatter *formater = [[NSDateFormatter alloc]init];
+    [formater setDateFormat:@"MM月dd日"];
+    NSString *dateStr = [formater stringFromDate:[NSDate date]];
+    isOK = [Record insertNewRecordIntoRecordTable:patientName Office:office Date:dateStr];
     return isOK;
 }
 #pragma mark -

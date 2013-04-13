@@ -29,7 +29,7 @@
  **/
 
 
-+ (BOOL)insertNewRecordIntoRecordTable:(NSString *)patientName Office:(NSString *)office;//
++ (BOOL)insertNewRecordIntoRecordTable:(NSString *)patientName Office:(NSString *)office Date:(NSString *)date;
 + (NSInteger)findDetailIDByPatientName:(NSString *)patientName Office:(NSString *)office;
 + (BOOL)insertNewDetailsIntoDetailTable:(int)_id Name:(NSString *)name PYM:(NSString *)pym Count:(NSString *)count;//
 

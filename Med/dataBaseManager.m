@@ -71,7 +71,7 @@ static FMDatabase *shareDataBase = nil;
             
             
             
-            NSString *sql4 = @"CREATE TABLE Record (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,PatientName text, Office text)";
+            NSString *sql4 = @"CREATE TABLE Record (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,PatientName text, Office text,Date, text)";
             //Record表:
             //id(主键)  PatientName病人姓名  Office所属病区
             
