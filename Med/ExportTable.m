@@ -126,8 +126,6 @@ static CHCSVWriter *sharedWriter = nil;
         }
         [dataBase close];
     }
-    
-    
         [mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary *dic = [mutableArray objectAtIndex:idx];
         NSString *PYM = [dic objectForKey:@"PYM"];
@@ -154,6 +152,7 @@ static CHCSVWriter *sharedWriter = nil;
     [self showHUD];
     CHCSVWriter *csvWriter = [ExportTable sharedWriter];
     FMDatabase *dataBase = [dataBaseManager createDataBase];
+    [csvWriter writeField:@"日期"];
     [csvWriter writeField:@"病区"];
     [csvWriter writeField:@"姓名"];
     NSArray *medArray = [self countAllMed];
@@ -167,6 +166,8 @@ static CHCSVWriter *sharedWriter = nil;
         NSDictionary *dictionary = [resultArray objectAtIndex:idx];
         NSString *PatientName = [dictionary objectForKey:@"PatientName"];
         NSString *Office = [dictionary objectForKey:@"Office"];
+        NSString *Date = [dictionary objectForKey:@"Date"];
+        [csvWriter writeField:Date];
         [csvWriter writeField:Office];
         [csvWriter writeField:PatientName];
         NSMutableArray *_mutableArray = [NSMutableArray arrayWithCapacity:0];
@@ -215,8 +216,10 @@ static CHCSVWriter *sharedWriter = nil;
         csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:file] atomic:NO];
        [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary *dic = [array objectAtIndex:idx];
+        NSString *Date = [dic objectForKey:@"Date"];
         NSString *PatientName = [dic objectForKey:@"PatientName"];
         NSString *Office = [dic objectForKey:@"Office"];
+        [csvWriter writeField:Date];
         [csvWriter writeField:PatientName];
         [csvWriter writeField:Office];
         NSArray *detailArray = [dic objectForKey:@"Detail"];
@@ -235,7 +238,13 @@ static CHCSVWriter *sharedWriter = nil;
             NSFileManager *manager = [NSFileManager defaultManager];
             NSString *home = DOCUMENT;
             NSString *name = DirectoryName;
-            NSString *path = [home stringByAppendingPathComponent:name];
+            NSString *path;// = [home stringByAppendingPathComponent:name];
+            if (mainDir == 2) {
+                path = DOCUMENT;
+            } else {
+                path = [home stringByAppendingPathComponent:name];
+            }
+            
             if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
                 csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[path stringByAppendingPathComponent:file] atomic:NO];
             } else {
@@ -244,6 +253,7 @@ static CHCSVWriter *sharedWriter = nil;
             
             [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSDictionary *dic = [array objectAtIndex:idx];
+                [csvWriter writeField:[dic objectForKey:@"Date"]];
                 [csvWriter writeField:[dic objectForKey:@"Office"]];
                 [csvWriter writeField:[dic objectForKey:@"PatientName"]];
                 [csvWriter writeField:[dic objectForKey:@"Name"]];

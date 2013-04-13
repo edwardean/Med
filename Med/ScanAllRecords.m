@@ -410,10 +410,10 @@
     if (segmentIndex == 1) {
     isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:1 inMainDir:2];
     } else if(segmentIndex==0) {
-        isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:0 inMainDir:1];
+        isOK = [export exportSearchResult:_searchArray andFileName:_searchName andseg:0 inMainDir:2];
     }
     NSString *_fileName = [_searchName stringByAppendingString:@".csv"];
-    NSString *fileName = [NSString stringWithFormat:@"检索结果'%@'已存到'每种药品的筛选记录'文件夹中",_fileName];
+    NSString *fileName = [NSString stringWithFormat:@"检索结果已存至'%@'文件中^_^",_fileName];
     NSString *resultStr = isOK ? fileName:@"抱歉,导入出了点问题,请重试";
     [Help ShowGCDMessage:resultStr andView:self.view andDelayTime:2.2f];
     if (!self.isOpen) {
