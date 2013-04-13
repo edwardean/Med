@@ -17,8 +17,9 @@
     BOOL isOK = NO;
     if ([dataBase open]) {
         isOK = [dataBase executeUpdate:@"INSERT INTO Office (Name) VALUES (?)",office];
+        [dataBase close];
     }
-    [dataBase close];
+    
     return isOK;
 }
 
@@ -35,8 +36,9 @@
                 isOK = YES;
             }
         }
-    }
     [dataBase close];
+    }
+    
     return isOK;
 }
 + (int)countAllOffcie {
@@ -44,12 +46,13 @@
     int count = 0;
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     if ([dataBase open]) {
-        FMResultSet *rs = [dataBase executeQuery:@"SELECT * FROM Office"];
-        while ([rs next]) {
-            count++;
+        FMResultSet *rs = [dataBase executeQuery:@"SELECT COUNT(*) FROM Office"];
+        if ([rs next]) {
+            count = [rs intForColumnIndex:0];
         }
+        [dataBase close];
     }
-    [dataBase close];
+    
     return count;
 }
 
@@ -64,8 +67,9 @@
             NSString *str = [rs stringForColumn:@"Name"];
             [arry addObject:str];
         }
+        [dataBase close];
     }
-    [dataBase close];
+    
     return arry;
 }
 @end

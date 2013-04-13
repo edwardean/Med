@@ -19,7 +19,7 @@
         //FMResultSet *resultSet1 = [dataBase executeQuery:@"SELECT * FROM Record"];
         resultSet = [dataBase executeQuery:@"SELECT * FROM Record"];
         NSDictionary *recordDic = [NSDictionary dictionary];
-        NSString *Name,*Count,*PYM;
+        //NSString *Name,*Count,*PYM;
         
         while ([resultSet next]) {
             NSString *ID = [resultSet stringForColumn:@"id"];//第一张表的id主键
@@ -78,8 +78,9 @@
         recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
         }
         [mutableArray addObject:recordDic];
+        [dataBase close];
     }
-    [dataBase close];
+    
     return mutableArray;
 }
 
@@ -106,8 +107,8 @@
             recordDic = [NSDictionary dictionaryWithObjectsAndKeys:ID,@"ID",PatientName,@"PatientName",Office,@"Office",detailArray,@"Detail", nil];
         }
         [mutableArray addObject:recordDic];
+        [dataBase close];
     }
-    [dataBase close];
     return mutableArray;
 
 }
@@ -125,9 +126,8 @@
                 return isOK;
             }
         }
-        
+     [dataBase close];   
     }
-    [dataBase close];
     return isOK;
 }
 
@@ -142,12 +142,11 @@
         }
                isOK = [dataBase executeUpdate:@"INSERT INTO Record (PatientName,Office) VALUES (?,?)",patientName,office];
         
-    }
     [dataBase close];
+    }
     return isOK;
 }
 + (BOOL)insertNewDetailsIntoDetailTable:(NSInteger)_id Name:(NSString *)name PYM:(NSString *)pym Count:(NSString *)count {
-    debugMethod();
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     BOOL isOK = NO;
     if ([dataBase open]) {
@@ -157,8 +156,9 @@
         }
         debugLog(@"inserting........");
         isOK = [dataBase executeUpdate:@"INSERT INTO Detail (Number,Name,PYM,Count) VALUES(?,?,?,?)",[NSNumber numberWithInteger:_id],name,pym,count];
+        [dataBase close];
     }
-    [dataBase close];
+    
     if (isOK) {
         debugLog(@"insert OK");
     }
@@ -176,8 +176,9 @@
                 return ID;
             }
         }
+        [dataBase close];
     }
-    [dataBase close];
+    
     return ID;
 }
 + (BOOL)deleteSomeRecordByIDInTable:(NSString *)patientName andOffice:(NSString *)office {
@@ -190,8 +191,8 @@
            num  = [rs intForColumn:@"id"];
         }
         isOK = [dataBase executeUpdate:@"DELETE FROM Record WHERE Patientname = ? AND Office = ?",patientName,office] && [dataBase executeUpdate:@"DELETE FROM Detail WHERE id = ?",[NSNumber numberWithInt:num]];
+        [dataBase close];
     }
-    [dataBase close];
     return isOK;
 }
 + (BOOL)deleteDetailByPatientID:(NSInteger)ID {
@@ -218,7 +219,6 @@
         isOK = [dataBase executeUpdate:@"DELETE FROM Detail WHERE id = ? AND Number = ?",index,[NSNumber numberWithInt:ID]];
         [dataBase close];
     }
-    
     return isOK;
 }
 + (BOOL)updateInfoInRecordTablePatientName:(NSString *)patientName Office:(NSString *)office Detail:(NSArray *)nameAndCountArry {
@@ -237,8 +237,8 @@
             NSString *Count = [detailDic objectForKey:@"Count"];
             isOK = [dataBase executeUpdate:@"UPDATE Detail SET Name = ? AND Count = ? WHERE id = ? AND Number = ?",Name,Count,index,[NSNumber numberWithInt:i]];
         }
-    }
     [dataBase close];
+    }
     return isOK;
 }
 
@@ -278,7 +278,6 @@
         }];
         [dataBase close];
     }
-    
     return resultArray;
 }
 

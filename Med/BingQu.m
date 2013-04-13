@@ -17,8 +17,8 @@
     BOOL isOK = NO;
     if ([dataBase open]) {
             isOK = [dataBase executeUpdate:@"INSERT INTO BingQu (Name) VALUES (?)",bingqu];
+        [dataBase close];
     }
-    [dataBase close];
     return isOK;
 
 }
@@ -36,10 +36,9 @@
                 isOK = YES;
             }
         }
-    }
     [dataBase close];
+    }
     return isOK;
-
 }
 
 + (int)countAllBingQu {
@@ -48,14 +47,13 @@
     int count = 0;
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     if ([dataBase open]) {
-        FMResultSet *rs = [dataBase executeQuery:@"SELECT * FROM BingQu"];
-        while ([rs next]) {
-            count++;
+        FMResultSet *rs = [dataBase executeQuery:@"SELECT COUNT(*) FROM BingQu"];
+        if ([rs next]) {
+            count = [rs intForColumnIndex:0];
         }
+        [dataBase close];
     }
-    [dataBase close];
     return count;
-
 }
 
 + (NSMutableArray *)findAllBingQuIntoArray {
@@ -69,8 +67,8 @@
             NSString *str = [rs stringForColumn:@"Name"];
             [arry addObject:str];
         }
-    }
-    [dataBase close];
+        [dataBase close];
+    }    
     return arry;
 }
 @end

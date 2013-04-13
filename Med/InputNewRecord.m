@@ -81,15 +81,7 @@
     self.searchSelectIndex = nil;////////////
     self.contentArray = [NSMutableArray arrayWithCapacity:0];
     self.contentSizeForViewInPopover = CGSizeMake(375, 650);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.medArray = [Medicine findAllMedicineToArray];///获取数据源
-        if ([self.medArray count]==[Medicine countAllMedicine]) {
-            debugLog(@"药品获取完毕");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.table reloadData];
-            });
-        }
-    });
+   
     self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, 380, 600) style:UITableViewStylePlain];
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 45)];
 	footer.backgroundColor = [UIColor clearColor];
@@ -103,8 +95,16 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil]; 
 }
 - (void) viewDidAppear:(BOOL)animated {
-    debugMethod();
     [super viewDidAppear:animated];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.medArray = [Medicine findAllMedicineToArray];///获取数据源
+        if ([self.medArray count]==[Medicine countAllMedicine]) {
+            debugLog(@"药品获取完毕");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.table reloadData];
+            });
+        }
+    });
 }
 
 - (void)didReceiveMemoryWarning

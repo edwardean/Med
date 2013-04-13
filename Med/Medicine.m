@@ -12,16 +12,16 @@
 @synthesize stringID;
 
 + (int)countAllMedicine {
-    debugMethod();
     int count = 0;
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     if ([dataBase open]) {
-    FMResultSet *resultSet = [dataBase executeQuery:@"SELECT * FROM Medicine"];
-    while ([resultSet next]) {
-        count ++;
+    FMResultSet *rs = [dataBase executeQuery:@"SELECT COUNT(*) FROM Medicine"];
+        if ([rs next]) {
+            count = [rs intForColumnIndex:0];
+        }
+        [dataBase close];
     }
-    }
-    [dataBase close];
+    debugLog(@"总共:%d",count);
     return count;
 }
 
@@ -58,12 +58,12 @@
     int count = 0;
     FMDatabase *dataBase = [dataBaseManager createDataBase];
     if ([dataBase open]) {
-    FMResultSet *resultSet = [dataBase executeQuery:@"SELECT * FROM Medicine WHERE Name = ?",_name];
-    while ([resultSet next]) {
-        count ++;
+    FMResultSet *resultSet = [dataBase executeQuery:@"SELECT COUNT(*) FROM Medicine WHERE Name = ?",_name];
+    if ([resultSet next]) {
+        count = [resultSet intForColumnIndex:0];
     }
+        [dataBase close];
     }
-    [dataBase close];
     return count;
 }
 
@@ -83,8 +83,9 @@
                                    [rs stringForColumn:@"PYM"],@"PYM",nil];
         [mutableArry addObject:recordDic];
         }
+        [dataBase close];
     }
-    [dataBase close];
+    
     return mutableArry;
     
 }
@@ -101,8 +102,9 @@
                [rs stringForColumn:@"Unit"],@"Unit",
                [rs stringForColumn:@"Content"],@"Content",
                [rs stringForColumn:@"PYM"],@"PYM",nil];
+        [dataBase close];
     }
-    [dataBase close];
+    
     return dic;
 }
 + (NSMutableArray *)findSomeMedicineBySpecifi:(NSString *)_specifi {
@@ -123,8 +125,9 @@
                                    contentStr,@"Content",
                                    pym,@"PYM",nil];
         [mutableArry addObject:recordDic];
+        [dataBase close];
     }
-    [dataBase close];
+    
     return mutableArry;
 }
 + (BOOL)createNewMedicine:(NSString *)_name andSpecifi:(NSString *)_specifi andUnit:(NSString *)_unit andContent:(NSString *)_content PYM:(NSString *)_pym{
@@ -138,8 +141,9 @@
                          _unit,
                          _content,
                          _pym];
-    }
     [dataBase close];
+    }
+    
     return isOK;
 }
 
@@ -164,8 +168,9 @@
         }
         
     }
+        [dataBase close];
     }
-    [dataBase close];
+    
     return isOK;
 }
 
@@ -180,8 +185,8 @@
                 isOK = YES;
             }
         }
+        [dataBase close];
     }
-    [dataBase close];
     return isOK;
 }
 - (BOOL) updateMedicine:(NSString *)_name andSpecifi:(NSString *)_specifi andUnit:(NSString *)_unit andContent:(NSString *)_content andPYM:(NSString *)_pym {
@@ -192,8 +197,9 @@
             NSInteger idNumber = [self.stringID integerValue];
         isOK = [dataBase executeUpdate:@"UPDATE Medicine SET Name = ?, Specifi = ?, Unit = ?,Content = ?, PYM = ?,WHERE id = ?",_name,_specifi,_unit,_content,idNumber,_pym];
         
+        [dataBase close];
         }
-    [dataBase close];
+    
     return isOK;
 }
 /**
@@ -219,8 +225,9 @@
     BOOL isOK = NO;
     if ([dataBase open]) {
         isOK = [dataBase executeUpdate:@"DELETE FROM Medicine WHERE PYM = ?",_pym];
-    }
     [dataBase close];
+    }
+    
     return isOK;
 }
 - (void) dealloc {
