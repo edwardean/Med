@@ -125,7 +125,46 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
+         timestampString = "387514718.217445"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
+         landmarkName = "-createTable"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Med/dataBaseManager.m"
+         timestampString = "387514718.217445"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "-createTable"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Med/dataBaseManager.m"
+         timestampString = "387514718.217445"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "106"
+         endingLineNumber = "106"
+         landmarkName = "-createTable"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Med/dataBaseManager.m"
+         timestampString = "387514718.217445"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "111"
@@ -138,7 +177,20 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
+         timestampString = "387514718.217445"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
+         landmarkName = "-createTable"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Med/dataBaseManager.m"
+         timestampString = "387514718.217445"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "115"
@@ -151,63 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
+         timestampString = "387514718.217445"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "114"
          endingLineNumber = "114"
-         landmarkName = "-createTable"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "119"
-         endingLineNumber = "119"
-         landmarkName = "-createTable"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "124"
-         endingLineNumber = "124"
-         landmarkName = "-createTable"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "123"
-         endingLineNumber = "123"
-         landmarkName = "-createTable"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Med/dataBaseManager.m"
-         timestampString = "386237763.660104"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122"
          landmarkName = "-createTable"
          landmarkType = "5">
       </FileBreakpoint>
@@ -411,11 +411,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/AppDelegate.m"
-         timestampString = "385539581.388387"
+         timestampString = "387514684.453152"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "40"
-         endingLineNumber = "40"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
          landmarkName = "-application:didFinishLaunchingWithOptions:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -424,24 +424,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/AppDelegate.m"
-         timestampString = "385539581.828343"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "42"
-         endingLineNumber = "42"
-         landmarkName = "-application:didFinishLaunchingWithOptions:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Med/AppDelegate.m"
-         timestampString = "385539582.9239"
+         timestampString = "387514684.453152"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "41"
          endingLineNumber = "41"
+         landmarkName = "-application:didFinishLaunchingWithOptions:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Med/AppDelegate.m"
+         timestampString = "387514684.453152"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "40"
+         endingLineNumber = "40"
          landmarkName = "-application:didFinishLaunchingWithOptions:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -650,8 +650,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -663,8 +663,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -676,8 +676,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -689,8 +689,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -702,8 +702,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -715,8 +715,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -728,8 +728,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -741,8 +741,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -754,8 +754,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -767,8 +767,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -780,8 +780,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -793,8 +793,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -806,8 +806,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1144,8 +1144,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1157,8 +1157,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1178,26 +1178,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/InputNewRecord.m"
-         timestampString = "387512092.824517"
+         timestampString = "387515818.21615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "46"
-         endingLineNumber = "46"
-         landmarkName = "-clearMark"
-         landmarkType = "5">
+         startingLineNumber = "45"
+         endingLineNumber = "45"
+         landmarkName = "medArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Med/InputNewRecord.m"
-         timestampString = "387512092.824517"
+         timestampString = "387515818.21615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "46"
-         endingLineNumber = "46"
-         landmarkName = "-clearMark"
-         landmarkType = "5">
+         startingLineNumber = "45"
+         endingLineNumber = "45"
+         landmarkName = "medArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1209,8 +1209,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1222,8 +1222,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1235,8 +1235,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1248,8 +1248,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1261,8 +1261,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1274,8 +1274,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1287,8 +1287,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1300,8 +1300,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -1313,8 +1313,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "17"
          endingLineNumber = "17"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
+         landmarkName = "dataArray"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"

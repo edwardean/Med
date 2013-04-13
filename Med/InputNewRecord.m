@@ -9,7 +9,6 @@
 #import "InputNewRecord.h"
 #import "dataBaseManager.h"
 #import "Medicine.h"
-#import "Office.h"
 #import "BingQu.h"
 #import "Record.h"
 #import "MedInfoCell.h"
@@ -153,7 +152,6 @@
             UILabel *medNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, -6, 150, 36)];
             medNameLabel.tag = markMedNameLabelTag;
             [markCell.contentView addSubview:medNameLabel];
-            
             //产地
             UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17, 150, 20)];
             countLabel.tag = markCountLabelTag;

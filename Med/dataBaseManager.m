@@ -21,7 +21,7 @@ static FMDatabase *shareDataBase = nil;
     @synchronized (self) {
         if (shareDataBase == nil) {
             
-            shareDataBase = [FMDatabase databaseWithPath:dataBasePath];
+            shareDataBase = [[FMDatabase databaseWithPath:dataBasePath] retain];
         }
         return shareDataBase;
     }
@@ -64,10 +64,6 @@ static FMDatabase *shareDataBase = nil;
             //Medicine药品表:
             //id 编号，主键，不为空;  name 药品名称  specifi 规格;  Content 含量 Unit单位(mg/ml)
             
-            NSString *sql2 = @"CREATE TABLE Office (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,Name text)";
-            //Office表:
-            //id(主键) Name科室名称
-            
             NSString *sql3 = @"CREATE TABLE BingQu (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,Name text)";
             //BingQu表:
             //id(主键) Name病区名称
@@ -92,10 +88,6 @@ static FMDatabase *shareDataBase = nil;
                 debugLog(@"no Medicine ");
                 [shareDataBase executeUpdate:sql];
             }
-            if (![dataBaseManager isTableExist:@"Office"]) {
-                debugLog(@"no Office ");
-                [shareDataBase executeUpdate:sql2];
-            }
             if (![dataBaseManager isTableExist:@"BingQu"]) {
                 debugLog(@"no BingQu ");
                 [shareDataBase executeUpdate:sql3];
@@ -108,7 +100,7 @@ static FMDatabase *shareDataBase = nil;
                 debugLog(@"no Detail ");
                 [shareDataBase executeUpdate:sql5];
             }
-            if (!([dataBaseManager isTableExist:@"Medicine"]&&[dataBaseManager isTableExist:@"Office"]&&[dataBaseManager isTableExist:@"BingQu"]&&[dataBaseManager isTableExist:@"Record"]&&[dataBaseManager isTableExist:@"Detail"])) {
+            if (!([dataBaseManager isTableExist:@"Medicine"]&&[dataBaseManager isTableExist:@"BingQu"]&&[dataBaseManager isTableExist:@"Record"]&&[dataBaseManager isTableExist:@"Detail"])) {
                 debugLog(@"创建表失败");
                 return NO;
             } else {

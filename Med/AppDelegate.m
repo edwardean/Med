@@ -37,7 +37,6 @@
         if ([manager createTable]) {
             debugLog(@"Create DataBase Success!");
         }
-        [manager release];
         dispatch_async(dispatch_get_main_queue(), ^{
             
         });
@@ -80,12 +79,5 @@
     /*
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
-}
-
-
-- (void)dealloc {
-    [rootViewController release];
-    [window release];
-    [super dealloc];
 }
 @end
