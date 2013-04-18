@@ -113,30 +113,6 @@ static CHCSVWriter *sharedWriter = nil;
     }
 }
 
-- (void)ExportAllRecordsByMed {
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
-    FMDatabase *dataBase = [dataBaseManager createDataBase];
-    if ([dataBase open]) {
-        FMResultSet *rs = [dataBase executeQuery:@"SELECT * FROM Medicine"];
-        while ([rs next]) {
-            NSString *pym = [rs stringForColumn:@"PYM"];
-            NSString *name = [rs stringForColumn:@"Name"];
-            //NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:pym,@"PYM",name,@"Name", nil];
-            NSDictionary *dic = @{@"PYM":pym,@"Name":name};
-            [mutableArray addObject:dic];
-            
-        }
-        [dataBase close];
-    }
-        [mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSDictionary *dic = [mutableArray objectAtIndex:idx];
-        NSString *PYM = [dic objectForKey:@"PYM"];
-        NSString *Name = [dic objectForKey:@"Name"];
-        NSArray *array = [Record searchAllRecordsByPYM:PYM];
-        [self exportSearchResult:array andFileName:Name andseg:0 inMainDir:0];
-    }];
-}
-
 - (void)showHUD {
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
@@ -145,7 +121,7 @@ static CHCSVWriter *sharedWriter = nil;
     HUD.mode = MBProgressHUDModeDeterminate;
     
 	HUD.delegate = self;
-    HUD.labelText = @"正在努力导出呢。。";
+    HUD.labelText = @"正在努力导出呢...";
 	
 	// myProgressTask uses the HUD instance to update progress
     [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
@@ -207,9 +183,31 @@ static CHCSVWriter *sharedWriter = nil;
     [dataBase close];
     [csvWriter closeFile];
     sharedWriter = nil;
-    [self performSelector:@selector(ExportAllRecordsByMed)];
+    
+    [Help doSomething:^{
+        NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
+        FMDatabase *dataBase = [dataBaseManager createDataBase];
+        if ([dataBase open]) {
+            FMResultSet *rs = [dataBase executeQuery:@"SELECT * FROM Medicine"];
+            while ([rs next]) {
+                NSString *pym = [rs stringForColumn:@"PYM"];
+                NSString *name = [rs stringForColumn:@"Name"];
+                //NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:pym,@"PYM",name,@"Name", nil];
+                NSDictionary *dic = @{@"PYM":pym,@"Name":name};
+                [mutableArray addObject:dic];
+                
+            }
+            [dataBase close];
+        }
+        [mutableArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary *dic = [mutableArray objectAtIndex:idx];
+            NSString *PYM = [dic objectForKey:@"PYM"];
+            NSString *Name = [dic objectForKey:@"Name"];
+            NSArray *array = [Record searchAllRecordsByPYM:PYM];
+            [self exportSearchResult:array andFileName:Name andseg:0 inMainDir:0];
+        }];
+    } afterDelay:0.5f];
 }
-
 - (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex inMainDir:(NSInteger)mainDir{
     BOOL isOK = NO;
     NSString *file = [fileName stringByAppendingString:@".csv"];

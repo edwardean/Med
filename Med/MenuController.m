@@ -23,6 +23,7 @@
 #import "dataBaseManager.h"
 #import "CMActionSheet.h"
 #import "WCAlertView.h"
+#import "MNMToast.h"
 @interface MenuController ()
 @property (assign) BOOL isOpen;
 @property (nonatomic, retain) NSIndexPath *selectIndex;
@@ -199,6 +200,19 @@
                     NSString *sql4 = @"DELETE FROM Detail";
                     isOK = [dataBase executeUpdate:sql3]&&[dataBase executeUpdate:sql4];
                     [dataBase close];
+                }
+                if (isOK) {
+                    [Help doSomething:^{
+                        [MNMToast showWithText:@"记录已清除" autoHidding:YES priority:MNMToastPriorityNormal completionHandler:^(MNMToastValue *toast) {
+                            
+                        } tapHandler:nil];
+                    } afterDelay:0.0f];
+                } else {
+                    [Help doSomething:^{
+                        [MNMToast showWithText:@"不好意思，出错了!" autoHidding:YES priority:MNMToastPriorityNormal completionHandler:^(MNMToastValue *toast) {
+                            
+                        } tapHandler:nil];
+                    } afterDelay:0.0f];
                 }
             }];
             [alert addToDisplayQueue];

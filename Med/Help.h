@@ -13,4 +13,5 @@
 
 
 + (void)ShowGCDMessage:(NSString *)msg andView:(UIView *)view andDelayTime:(float)delay;
++(void)doSomething:(id)block afterDelay:(float)delay;
 @end

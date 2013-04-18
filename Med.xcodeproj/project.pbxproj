@@ -16,6 +16,10 @@
 		CA44943F1708196800A05F8D /* excel.png in Resources */ = {isa = PBXBuildFile; fileRef = CA44943E1708196800A05F8D /* excel.png */; };
 		CA44944117081A5600A05F8D /* export.png in Resources */ = {isa = PBXBuildFile; fileRef = CA44944017081A5600A05F8D /* export.png */; };
 		CA4494451708243A00A05F8D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4494441708243A00A05F8D /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = " -fno-objc-arc"; }; };
+		CA4DE64E17203167005F7A01 /* MNMToast.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64717203167005F7A01 /* MNMToast.m */; };
+		CA4DE64F17203167005F7A01 /* MNMToastConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64917203167005F7A01 /* MNMToastConstants.m */; };
+		CA4DE65017203167005F7A01 /* MNMToastValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64B17203167005F7A01 /* MNMToastValue.m */; };
+		CA4DE65117203167005F7A01 /* MNMToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64D17203167005F7A01 /* MNMToastView.m */; };
 		CA878D62171FA582001E0AE0 /* NSString+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D4D171FA582001E0AE0 /* NSString+Trim.m */; };
 		CA878D63171FA582001E0AE0 /* UIFont+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D4F171FA582001E0AE0 /* UIFont+Alert.m */; };
 		CA878D64171FA582001E0AE0 /* UIView+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D51171FA582001E0AE0 /* UIView+Animations.m */; };
@@ -170,6 +174,14 @@
 		CA44944017081A5600A05F8D /* export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export.png; sourceTree = "<group>"; };
 		CA4494431708243A00A05F8D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		CA4494441708243A00A05F8D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		CA4DE64617203167005F7A01 /* MNMToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMToast.h; sourceTree = "<group>"; };
+		CA4DE64717203167005F7A01 /* MNMToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToast.m; sourceTree = "<group>"; };
+		CA4DE64817203167005F7A01 /* MNMToastConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMToastConstants.h; sourceTree = "<group>"; };
+		CA4DE64917203167005F7A01 /* MNMToastConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastConstants.m; sourceTree = "<group>"; };
+		CA4DE64A17203167005F7A01 /* MNMToastValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMToastValue.h; sourceTree = "<group>"; };
+		CA4DE64B17203167005F7A01 /* MNMToastValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastValue.m; sourceTree = "<group>"; };
+		CA4DE64C17203167005F7A01 /* MNMToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMToastView.h; sourceTree = "<group>"; };
+		CA4DE64D17203167005F7A01 /* MNMToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastView.m; sourceTree = "<group>"; };
 		CA878D4C171FA582001E0AE0 /* NSString+Trim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trim.h"; sourceTree = "<group>"; };
 		CA878D4D171FA582001E0AE0 /* NSString+Trim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trim.m"; sourceTree = "<group>"; };
 		CA878D4E171FA582001E0AE0 /* UIFont+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Alert.h"; sourceTree = "<group>"; };
@@ -383,6 +395,21 @@
 				CA4494441708243A00A05F8D /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		CA4DE64517203167005F7A01 /* MNMToast */ = {
+			isa = PBXGroup;
+			children = (
+				CA4DE64617203167005F7A01 /* MNMToast.h */,
+				CA4DE64717203167005F7A01 /* MNMToast.m */,
+				CA4DE64817203167005F7A01 /* MNMToastConstants.h */,
+				CA4DE64917203167005F7A01 /* MNMToastConstants.m */,
+				CA4DE64A17203167005F7A01 /* MNMToastValue.h */,
+				CA4DE64B17203167005F7A01 /* MNMToastValue.m */,
+				CA4DE64C17203167005F7A01 /* MNMToastView.h */,
+				CA4DE64D17203167005F7A01 /* MNMToastView.m */,
+			);
+			path = MNMToast;
 			sourceTree = "<group>";
 		};
 		CA878D4A171FA582001E0AE0 /* MBAlertView */ = {
@@ -658,6 +685,7 @@
 		CA981A0216FAB06D0031FD44 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				CA4DE64517203167005F7A01 /* MNMToast */,
 				CA878D4A171FA582001E0AE0 /* MBAlertView */,
 				CAA752441715941A00EF9B56 /* WCAlertView */,
 				CA90FA4517144139003F34E8 /* CMActionSheet */,
@@ -1026,6 +1054,10 @@
 				CA878D68171FA582001E0AE0 /* MBAlertViewButton.m in Sources */,
 				CA878D69171FA582001E0AE0 /* MBCheckMarkView.m in Sources */,
 				CA878D6A171FA582001E0AE0 /* MBSpinningCircle.m in Sources */,
+				CA4DE64E17203167005F7A01 /* MNMToast.m in Sources */,
+				CA4DE64F17203167005F7A01 /* MNMToastConstants.m in Sources */,
+				CA4DE65017203167005F7A01 /* MNMToastValue.m in Sources */,
+				CA4DE65117203167005F7A01 /* MNMToastView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
