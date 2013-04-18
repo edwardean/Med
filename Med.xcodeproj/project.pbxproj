@@ -16,6 +16,15 @@
 		CA44943F1708196800A05F8D /* excel.png in Resources */ = {isa = PBXBuildFile; fileRef = CA44943E1708196800A05F8D /* excel.png */; };
 		CA44944117081A5600A05F8D /* export.png in Resources */ = {isa = PBXBuildFile; fileRef = CA44944017081A5600A05F8D /* export.png */; };
 		CA4494451708243A00A05F8D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4494441708243A00A05F8D /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = " -fno-objc-arc"; }; };
+		CA878D62171FA582001E0AE0 /* NSString+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D4D171FA582001E0AE0 /* NSString+Trim.m */; };
+		CA878D63171FA582001E0AE0 /* UIFont+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D4F171FA582001E0AE0 /* UIFont+Alert.m */; };
+		CA878D64171FA582001E0AE0 /* UIView+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D51171FA582001E0AE0 /* UIView+Animations.m */; };
+		CA878D65171FA582001E0AE0 /* MBAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D53171FA582001E0AE0 /* MBAlertView.m */; };
+		CA878D66171FA582001E0AE0 /* MBHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D55171FA582001E0AE0 /* MBHUDView.m */; };
+		CA878D67171FA582001E0AE0 /* MBAlertViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D58171FA582001E0AE0 /* MBAlertViewItem.m */; };
+		CA878D68171FA582001E0AE0 /* MBAlertViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D5D171FA582001E0AE0 /* MBAlertViewButton.m */; };
+		CA878D69171FA582001E0AE0 /* MBCheckMarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D5F171FA582001E0AE0 /* MBCheckMarkView.m */; };
+		CA878D6A171FA582001E0AE0 /* MBSpinningCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D61171FA582001E0AE0 /* MBSpinningCircle.m */; };
 		CA90F9D417141DB4003F34E8 /* btn_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = CA90F9D217141DB4003F34E8 /* btn_normal.png */; };
 		CA90F9D517141DB4003F34E8 /* btn_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CA90F9D317141DB4003F34E8 /* btn_down.png */; };
 		CA90FA5B17144139003F34E8 /* CMActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CA90FA4717144139003F34E8 /* CMActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -161,6 +170,26 @@
 		CA44944017081A5600A05F8D /* export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export.png; sourceTree = "<group>"; };
 		CA4494431708243A00A05F8D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		CA4494441708243A00A05F8D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		CA878D4C171FA582001E0AE0 /* NSString+Trim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trim.h"; sourceTree = "<group>"; };
+		CA878D4D171FA582001E0AE0 /* NSString+Trim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trim.m"; sourceTree = "<group>"; };
+		CA878D4E171FA582001E0AE0 /* UIFont+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Alert.h"; sourceTree = "<group>"; };
+		CA878D4F171FA582001E0AE0 /* UIFont+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Alert.m"; sourceTree = "<group>"; };
+		CA878D50171FA582001E0AE0 /* UIView+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animations.h"; sourceTree = "<group>"; };
+		CA878D51171FA582001E0AE0 /* UIView+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animations.m"; sourceTree = "<group>"; };
+		CA878D52171FA582001E0AE0 /* MBAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAlertView.h; sourceTree = "<group>"; };
+		CA878D53171FA582001E0AE0 /* MBAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBAlertView.m; sourceTree = "<group>"; };
+		CA878D54171FA582001E0AE0 /* MBHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHUDView.h; sourceTree = "<group>"; };
+		CA878D55171FA582001E0AE0 /* MBHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBHUDView.m; sourceTree = "<group>"; };
+		CA878D57171FA582001E0AE0 /* MBAlertViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAlertViewItem.h; sourceTree = "<group>"; };
+		CA878D58171FA582001E0AE0 /* MBAlertViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBAlertViewItem.m; sourceTree = "<group>"; };
+		CA878D59171FA582001E0AE0 /* MBAlertViewSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAlertViewSubclass.h; sourceTree = "<group>"; };
+		CA878D5B171FA582001E0AE0 /* AlertViewUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewUI.h; sourceTree = "<group>"; };
+		CA878D5C171FA582001E0AE0 /* MBAlertViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAlertViewButton.h; sourceTree = "<group>"; };
+		CA878D5D171FA582001E0AE0 /* MBAlertViewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBAlertViewButton.m; sourceTree = "<group>"; };
+		CA878D5E171FA582001E0AE0 /* MBCheckMarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBCheckMarkView.h; sourceTree = "<group>"; };
+		CA878D5F171FA582001E0AE0 /* MBCheckMarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCheckMarkView.m; sourceTree = "<group>"; };
+		CA878D60171FA582001E0AE0 /* MBSpinningCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBSpinningCircle.h; sourceTree = "<group>"; };
+		CA878D61171FA582001E0AE0 /* MBSpinningCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBSpinningCircle.m; sourceTree = "<group>"; };
 		CA90F9D217141DB4003F34E8 /* btn_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_normal.png; sourceTree = "<group>"; };
 		CA90F9D317141DB4003F34E8 /* btn_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_down.png; sourceTree = "<group>"; };
 		CA90FA4617144139003F34E8 /* CMActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMActionSheet.h; sourceTree = "<group>"; };
@@ -354,6 +383,57 @@
 				CA4494441708243A00A05F8D /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		CA878D4A171FA582001E0AE0 /* MBAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				CA878D4B171FA582001E0AE0 /* Categories */,
+				CA878D52171FA582001E0AE0 /* MBAlertView.h */,
+				CA878D53171FA582001E0AE0 /* MBAlertView.m */,
+				CA878D54171FA582001E0AE0 /* MBHUDView.h */,
+				CA878D55171FA582001E0AE0 /* MBHUDView.m */,
+				CA878D56171FA582001E0AE0 /* Protected */,
+				CA878D5A171FA582001E0AE0 /* Views */,
+			);
+			path = MBAlertView;
+			sourceTree = "<group>";
+		};
+		CA878D4B171FA582001E0AE0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				CA878D4C171FA582001E0AE0 /* NSString+Trim.h */,
+				CA878D4D171FA582001E0AE0 /* NSString+Trim.m */,
+				CA878D4E171FA582001E0AE0 /* UIFont+Alert.h */,
+				CA878D4F171FA582001E0AE0 /* UIFont+Alert.m */,
+				CA878D50171FA582001E0AE0 /* UIView+Animations.h */,
+				CA878D51171FA582001E0AE0 /* UIView+Animations.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		CA878D56171FA582001E0AE0 /* Protected */ = {
+			isa = PBXGroup;
+			children = (
+				CA878D57171FA582001E0AE0 /* MBAlertViewItem.h */,
+				CA878D58171FA582001E0AE0 /* MBAlertViewItem.m */,
+				CA878D59171FA582001E0AE0 /* MBAlertViewSubclass.h */,
+			);
+			path = Protected;
+			sourceTree = "<group>";
+		};
+		CA878D5A171FA582001E0AE0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CA878D5B171FA582001E0AE0 /* AlertViewUI.h */,
+				CA878D5C171FA582001E0AE0 /* MBAlertViewButton.h */,
+				CA878D5D171FA582001E0AE0 /* MBAlertViewButton.m */,
+				CA878D5E171FA582001E0AE0 /* MBCheckMarkView.h */,
+				CA878D5F171FA582001E0AE0 /* MBCheckMarkView.m */,
+				CA878D60171FA582001E0AE0 /* MBSpinningCircle.h */,
+				CA878D61171FA582001E0AE0 /* MBSpinningCircle.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CA90F9D617143891003F34E8 /* CHCSVWriter */ = {
@@ -578,6 +658,7 @@
 		CA981A0216FAB06D0031FD44 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				CA878D4A171FA582001E0AE0 /* MBAlertView */,
 				CAA752441715941A00EF9B56 /* WCAlertView */,
 				CA90FA4517144139003F34E8 /* CMActionSheet */,
 				CA90F9D617143891003F34E8 /* CHCSVWriter */,
@@ -936,6 +1017,15 @@
 				CA90FA5B17144139003F34E8 /* CMActionSheet.m in Sources */,
 				CA90FA5C17144139003F34E8 /* CMRotatableModalViewController.m in Sources */,
 				CAA752471715941A00EF9B56 /* WCAlertView.m in Sources */,
+				CA878D62171FA582001E0AE0 /* NSString+Trim.m in Sources */,
+				CA878D63171FA582001E0AE0 /* UIFont+Alert.m in Sources */,
+				CA878D64171FA582001E0AE0 /* UIView+Animations.m in Sources */,
+				CA878D65171FA582001E0AE0 /* MBAlertView.m in Sources */,
+				CA878D66171FA582001E0AE0 /* MBHUDView.m in Sources */,
+				CA878D67171FA582001E0AE0 /* MBAlertViewItem.m in Sources */,
+				CA878D68171FA582001E0AE0 /* MBAlertViewButton.m in Sources */,
+				CA878D69171FA582001E0AE0 /* MBCheckMarkView.m in Sources */,
+				CA878D6A171FA582001E0AE0 /* MBSpinningCircle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

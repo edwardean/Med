@@ -154,8 +154,8 @@
     debugMethod();
     if ([Medicine createNewMedicine:nameTextField.text andSpecifi:specifiTextField.text andUnit:self.unitStr andContent:countTextField.text PYM:[pymTextField.text uppercaseString]]) {
         NSString *str = [NSString stringWithFormat:@"药品%@创建完毕",nameTextField.text];
-        [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];
-        [self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0f];
+        [Help ShowGCDMessage:str andView:self.view andDelayTime:2.0f];
+        //[self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0f];
         [self performSelector:@selector(Hide:)];
     }  else {
           NSString *str = @"创建失败";
