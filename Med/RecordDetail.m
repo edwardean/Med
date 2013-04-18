@@ -64,8 +64,9 @@
     [_navbar addSubview:titleLabel];
     [self.view addSubview:_navbar];
     
-    UIButton *btn  =[UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *btn  =[UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(5, 3, 40, 40);
+    btn.backgroundColor = [UIColor clearColor];
     [btn setBackgroundImage:[UIImage imageNamed:@"button_icon_close"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(dismissSelfView) forControlEvents:UIControlEventTouchUpInside];
     [_navbar addSubview:btn];

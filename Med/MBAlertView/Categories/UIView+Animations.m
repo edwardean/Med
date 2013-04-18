@@ -26,13 +26,17 @@
                             [NSValue valueWithCATransform3D:scale4],
                             nil];
     [animation setValues:frameValues];
-    
-    NSArray *frameTimes = [NSArray arrayWithObjects:
-                           [NSNumber numberWithFloat:0.0],
-                           [NSNumber numberWithFloat:0.5],
-                           [NSNumber numberWithFloat:0.9],
-                           [NSNumber numberWithFloat:1.0],
-                           nil];
+    NSNumber *number1 = @0.0f;
+    NSNumber *number2 = @0.5f;
+    NSNumber *number3 = @0.9f;
+    NSNumber *number4 = @1.0f;
+    NSArray *frameTimes = @[number1,number2,number3,number4];
+//    NSArray *frameTimes = [NSArray arrayWithObjects:
+//                           [NSNumber numberWithFloat:0.0],
+//                           [NSNumber numberWithFloat:0.5],
+//                           [NSNumber numberWithFloat:0.9],
+//                           [NSNumber numberWithFloat:1.0],
+//                           nil];
     [animation setKeyTimes:frameTimes];
     
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];

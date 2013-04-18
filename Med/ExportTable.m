@@ -66,10 +66,11 @@ static CHCSVWriter *sharedWriter = nil;
     if ([dataBase open]) {
         FMResultSet *medSet = [dataBase executeQuery:@"SELECT * FROM Medicine"];
         while ([medSet next]) {
-            NSDictionary *recordDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       [medSet stringForColumn:@"Name"],@"Name",
-                                       [medSet stringForColumn:@"PYM"],@"PYM",nil];
-            [array addObject:recordDic];
+//            NSDictionary *recordDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                       [medSet stringForColumn:@"Name"],@"Name",
+//                                       [medSet stringForColumn:@"PYM"],@"PYM",nil];
+            NSDictionary *dic = @{@"Name": [medSet stringForColumn:@"Name"],@"PYM": [medSet stringForColumn:@"PYM"]};
+            [array addObject:dic];
         }
         [dataBase close];
     }
@@ -120,7 +121,8 @@ static CHCSVWriter *sharedWriter = nil;
         while ([rs next]) {
             NSString *pym = [rs stringForColumn:@"PYM"];
             NSString *name = [rs stringForColumn:@"Name"];
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:pym,@"PYM",name,@"Name", nil];
+            //NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:pym,@"PYM",name,@"Name", nil];
+            NSDictionary *dic = @{@"PYM":pym,@"Name":name};
             [mutableArray addObject:dic];
             
         }
@@ -177,7 +179,8 @@ static CHCSVWriter *sharedWriter = nil;
             NSString *Name = [retailDic objectForKey:@"Name"];
             NSString *Count = [retailDic objectForKey:@"Count"];
             NSString *Pym = [retailDic objectForKey:@"PYM"];
-            NSDictionary *medDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count",Pym,@"PYM", nil];
+            //NSDictionary *medDic = [NSDictionary dictionaryWithObjectsAndKeys:Name,@"Name",Count,@"Count",Pym,@"PYM", nil];
+            NSDictionary *medDic = @{@"Name": Name,@"Count":Count,@"PYM":Pym};
             [_mutableArray addObject:medDic];
         }];
         __block BOOL flag = NO;

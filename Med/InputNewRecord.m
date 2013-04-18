@@ -519,8 +519,8 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"Name contains[cd]%@",searchText];
     NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"PYM contains[cd]%@",searchText];
     NSPredicate *_predicate,*_predicate1;
-    _predicate = [predicate predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:[NSArray arrayWithObject:@"Name"]]];
-    _predicate1 = [predicate1 predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:[NSArray arrayWithObject:@"PYM"]]];
+    _predicate = [predicate predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:@[@"Name"]/*[NSArray arrayWithObject:@"Name"]*/]];
+    _predicate1 = [predicate1 predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:@[@"PYM"]/*[NSArray arrayWithObject:@"PYM"]*/]];
     if ([[medArray filteredArrayUsingPredicate:_predicate] count] > 0) {
         self.searchArray = [medArray filteredArrayUsingPredicate:_predicate];
     } else {

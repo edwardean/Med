@@ -32,13 +32,19 @@
     if ([dataBase open]) {
         FMResultSet *rs = [dataBase executeQuery:@"SELECT * FROM Medicine"];
         while ([rs next]) {
-            NSDictionary *recordDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       [rs stringForColumn:@"Name"],@"Name",
-                                       [rs stringForColumn:@"Specifi"],@"Specifi",
-                                       [rs stringForColumn:@"Unit"],@"Unit",
-                                       [rs stringForColumn:@"Content"],@"Content",
-                                       [rs stringForColumn:@"PYM"],@"PYM",nil];
-            [mutableArray addObject:recordDic];
+//            NSDictionary *recordDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                       [rs stringForColumn:@"Name"],@"Name",
+//                                       [rs stringForColumn:@"Specifi"],@"Specifi",
+//                                       [rs stringForColumn:@"Unit"],@"Unit",
+//                                       [rs stringForColumn:@"Content"],@"Content",
+//                                       [rs stringForColumn:@"PYM"],@"PYM",nil];
+           
+            NSDictionary *dic = @{@"Name": [rs stringForColumn:@"Name"],
+                                  @"Specifi":[rs stringForColumn:@"Specifi"],
+                                  @"Unit":[rs stringForColumn:@"Unit"],
+                                  @"Content":[rs stringForColumn:@"Content"],
+                                  @"PYM":[rs stringForColumn:@"PYM"]};
+            [mutableArray addObject:dic];
         }
         [dataBase close];
     }

@@ -348,7 +348,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 							for (UIView* tableView in [[[slideViews subviews] objectAtIndex:0] subviews]) {
 								if([tableView isKindOfClass:[UITableView class]]){
 									NSIndexPath* selectedRow =  [(UITableView*)tableView indexPathForSelectedRow];
-									NSArray *indexPaths = [NSArray arrayWithObjects:selectedRow, nil];
+									NSArray *indexPaths = @[selectedRow];//[NSArray arrayWithObjects:selectedRow, nil];
 									[(UITableView*)tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:NO];
 								}
 							}

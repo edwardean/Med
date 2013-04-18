@@ -57,7 +57,7 @@
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.delegate = self;
-    [self.searchController.searchBar setScopeButtonTitles:[NSArray arrayWithObjects:@"按药品拼音码检索",@"按病区或病人检索", nil]];
+    [self.searchController.searchBar setScopeButtonTitles:@[@"按药品拼音码检索",@"按病区或病人检索"]];
     self.search.showsScopeBar = YES;
     self.table.tableHeaderView = self.searchDisplayController.searchBar;
     self.table.contentOffset = CGPointMake(0, CGRectGetHeight(self.search.bounds));
@@ -282,8 +282,8 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"PatientName contains[cd]%@",searchText];
     NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"Office contains[cd]%@",searchText];
     NSPredicate *_predicate,*_predicate1;
-    _predicate = [predicate predicateWithSubstitutionVariables:[self.patientAndBQArray dictionaryWithValuesForKeys:[NSArray arrayWithObject:@"PatientName"]]];
-    _predicate1 = [predicate1 predicateWithSubstitutionVariables:[self.patientAndBQArray dictionaryWithValuesForKeys:[NSArray arrayWithObject:@"Office"]]];
+    _predicate = [predicate predicateWithSubstitutionVariables:[self.patientAndBQArray dictionaryWithValuesForKeys:@[@"PatientName"]/*[NSArray arrayWithObject:@"PatientName"]*/]];
+    _predicate1 = [predicate1 predicateWithSubstitutionVariables:[self.patientAndBQArray dictionaryWithValuesForKeys:@[@"Office"]/*[NSArray arrayWithObject:@"Office"]*/]];
     if ([[Record findPatientIDInDetailTable:[searchText uppercaseString]] count]>0) {
         self.searchArray = [Record findPatientIDInDetailTable:[searchText uppercaseString]];
     } else {

@@ -42,10 +42,6 @@
         });
         
     });
-    
-//    NSDictionary *defaultValues = [NSDictionary dictionaryWithObjectsAndKeys: @"", @"BQ",nil];
-//    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-    
 	return YES;
 }
 
