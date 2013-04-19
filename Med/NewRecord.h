@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "SelectBQ.h"
+//#import "QBFlatButton.h"
 @class InputNewRecord;
-
+@class QBFlatButton;
 @interface NewRecord : UIViewController <UIPopoverControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,PassSelectedBQDelegete>
 
 {

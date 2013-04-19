@@ -36,4 +36,18 @@
     [animation setType:@"rippleEffect"];
     [view.layer addAnimation:animation forKey:NULL];
 }
+
++ (QBFlatButton *)QBButton {
+    QBFlatButton *btn = [QBFlatButton buttonWithType:UIButtonTypeCustom];
+    btn.faceColor = [UIColor colorWithRed:86.0/255.0 green:161.0/255.0 blue:217.0/255.0 alpha:1.0];
+    btn.sideColor = [UIColor colorWithRed:79.0/255.0 green:127.0/255.0 blue:179.0/255.0 alpha:1.0];
+    btn.radius = 8.0;
+    btn.margin = 4.0;
+    btn.depth = 3.0;
+    
+    btn.titleLabel.font = [UIFont fontWithName:@"Nokia Font YanTi" size:16];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    return btn;
+}
 @end

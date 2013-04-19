@@ -55,6 +55,20 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
+    
+    
+    
+    QBFlatButton *btn = [Help QBButton];
+    btn.frame = CGRectMake(24, 210, 70, 44);
+    [btn setTitle:@"病区" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(showBQ:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+    
+    QBFlatButton *medbtn = [Help QBButton];
+    medbtn.frame = CGRectMake(24, 347, 70, 44);
+    [medbtn setTitle:@"药品" forState:UIControlStateNormal];
+    [medbtn addTarget:self action:@selector(showPopover:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:medbtn];
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)sender {

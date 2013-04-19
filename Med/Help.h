@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "GCDiscreetNotificationView.h"
+#import "QBFlatButton.h"
 @interface Help : NSObject
 
 
@@ -16,4 +17,6 @@
 +(void)doSomething:(id)block afterDelay:(float)delay;
 
 + (void)CustomAnimationForView:(UIView *)view;
+
++ (QBFlatButton *)QBButton;
 @end
