@@ -24,4 +24,16 @@
         ((void (^)())block)();
     });
 }
+
++ (void)CustomAnimationForView:(UIView *)view {
+    
+    CATransition *animation = [CATransition animation];
+    [animation setDelegate:self];
+    [animation setDuration:0.75f];
+    
+    CAMediaTimingFunction *tf = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    [animation setTimingFunction:tf];
+    [animation setType:@"rippleEffect"];
+    [view.layer addAnimation:animation forKey:NULL];
+}
 @end
