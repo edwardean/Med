@@ -16,15 +16,24 @@ static FMDatabase *shareDataBase = nil;
  创建数据库类的单例对象
  
  **/
+//+ (FMDatabase *)createDataBase {
+//    //debugMethod();
+//    @synchronized (self) {
+//        if (shareDataBase == nil) {
+//            
+//            shareDataBase = [[FMDatabase databaseWithPath:dataBasePath] retain];
+//        }
+//        return shareDataBase;
+//    }
+//}
+
 + (FMDatabase *)createDataBase {
-    //debugMethod();
-    @synchronized (self) {
-        if (shareDataBase == nil) {
-            
-            shareDataBase = [[FMDatabase databaseWithPath:dataBasePath] retain];
-        }
-        return shareDataBase;
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shareDataBase = [[FMDatabase databaseWithPath:dataBasePath] retain];
+    });
+    
+    return shareDataBase;
 }
 /**
  判断数据库中表是否存在

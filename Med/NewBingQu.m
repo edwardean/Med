@@ -33,6 +33,14 @@
     inputTextField.keyboardType = UIKeyboardTypeDefault;
     inputTextField.delegate = self;
     [navBar setBackImage];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+}
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if ([inputTextField isFirstResponder]) {
+        [inputTextField resignFirstResponder];
+    }
 }
 - (IBAction)hide:(id)sender {
     debugMethod();

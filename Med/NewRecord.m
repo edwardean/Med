@@ -52,6 +52,15 @@
     if (OS_VERSION >= 6.0) {
         self.selectedBQLabel.adjustsLetterSpacingToFitWidth = YES;
     }
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if ([field isFirstResponder]) {
+        [field resignFirstResponder];
+    }
 }
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

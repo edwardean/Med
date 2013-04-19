@@ -65,7 +65,19 @@
     countTextField.keyboardType = UIKeyboardTypeDefault;
     countTextField.delegate = self;
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
     
+    
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    for (UITextField *field  in [self.view subviews]) {
+        if ([field isFirstResponder]) {
+            [field resignFirstResponder];
+        }
+    }
 }
 #pragma mark UITextField委托
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
