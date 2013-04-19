@@ -11,6 +11,7 @@
 @interface ExportTable : UIViewController <MBProgressHUDDelegate> {
     MBProgressHUD *HUD;
 }
+@property (strong, nonatomic) IBOutlet UITextView *textView;
 
 + (CHCSVWriter *)sharedWriter;
 - (BOOL)exportSearchResult:(NSArray *)array andFileName:(NSString *)fileName andseg:(NSInteger)segIndex inMainDir:(NSInteger)mainDir;

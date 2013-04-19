@@ -37,7 +37,7 @@ static CHCSVWriter *sharedWriter = nil;
     [btn setBackgroundImage:ImageNamed(@"btn_down") forState:UIControlStateHighlighted];
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(Export) forControlEvents:UIControlEventTouchUpInside];
-    
+    _textView.font = MyFont(14.0f);
 }
 - (void)Export {
     [self performSelector:@selector(ExportTable) withObject:nil afterDelay:0.005f];
@@ -268,6 +268,7 @@ static CHCSVWriter *sharedWriter = nil;
     return isOK;
 }
 - (void)viewDidUnload {
+    [self setTextView:nil];
     [super viewDidUnload];
     [self setNavBar:nil];
 }

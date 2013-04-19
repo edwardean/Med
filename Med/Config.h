@@ -54,3 +54,5 @@
 #define MainBackgroundColor [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bg%d",arc4random()%19]]]
 
 #define DirectoryName @"每种药品的筛选记录"
+
+#define MyFont(fontSize) [UIFont fontWithName:@"Nokia Font YanTi" size:fontSize]

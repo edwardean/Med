@@ -114,6 +114,7 @@
         }
         NSArray *list = [[_dataList objectAtIndex:self.selectIndex.section] objectForKey:@"list"];
         cell.titleLabel.text = [list objectAtIndex:indexPath.row-1];
+        cell.titleLabel.font = MyFont(16.0f);
         return cell;
     }else
     {
@@ -125,6 +126,7 @@
         NSString *name = [[_dataList objectAtIndex:indexPath.section] objectForKey:@"name"];
         //cell.titleLabel.text = name;
         cell.textLabel.text = name;
+        cell.textLabel.font = MyFont(19.5f);
         cell.imageView.image = [UIImage imageNamed:[_menuIconList objectAtIndex:[indexPath section]]];
         [cell changeArrowWithUp:([self.selectIndex isEqual:indexPath]?YES:NO)];
         return cell;
