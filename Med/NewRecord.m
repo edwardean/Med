@@ -47,7 +47,7 @@
     [addBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     [_navBar setBackImage];
-    [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];
+    [self.selectedBQLabel setFont:MyFont(15.0f)];
     self.selectedBQLabel.adjustsFontSizeToFitWidth = YES;
     if (OS_VERSION >= 6.0) {
         self.selectedBQLabel.adjustsLetterSpacingToFitWidth = YES;
@@ -79,10 +79,23 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     selectBQ.delegate = self;
+    if ([US objectForKey:@"BQ"]) {
+        [self.selectedBQLabel setText:[US objectForKey:@"BQ"]];
+        [selectedBQLabel setTextColor:[UIColor blackColor]];
+    } else {
+        [self.selectedBQLabel setText:@"请选择病区"];
+        [selectedBQLabel setTextColor:[UIColor redColor]];
+    }
     
 }
 - (void)passSelectedBQ:(NSString *)BQ {
+    if ([Help isEmptyString:BQ]) {
+        [self.selectedBQLabel setText:@"请选择病区"];
+        [selectedBQLabel setTextColor:[UIColor redColor]];
+    }else {
     self.selectedBQLabel.text = BQ;
+    [selectedBQLabel setTextColor:[UIColor blackColor]];
+    }
 }
 - (void)didReceiveMemoryWarning
 {
