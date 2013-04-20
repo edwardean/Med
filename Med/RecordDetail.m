@@ -58,7 +58,7 @@
     [titleLabel setBackgroundColor:[UIColor clearColor]];
     titleLabel.text = patient;
     [titleLabel setTextColor:[UIColor whiteColor]];
-    [titleLabel setFont:[UIFont fontWithName:@"Arial" size:20.0]];
+    [titleLabel setFont:MyFont(20.0)];
     [titleLabel setCenter:_navbar.center];
     titleLabel.center = _navbar.center;
     [_navbar addSubview:titleLabel];

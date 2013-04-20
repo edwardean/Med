@@ -163,7 +163,9 @@
         NSDictionary *searchDic = [_searchArray objectAtIndex:[indexPath row]];
         if (segmentIndex == 0) {
             cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
+            cell.textLabel.font = MyFont(19.0);
             cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
+            cell.detailTextLabel.font = MyFont(14.0);
             
             UILabel *_nameLabel = (UILabel *)[cell.contentView viewWithTag:1];
             [_nameLabel setBackgroundColor:[UIColor clearColor]];
@@ -175,7 +177,9 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         } else {
             cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
+            cell.textLabel.font = MyFont(19.0);
             cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
+            cell.detailTextLabel.font = MyFont(14.0);
             UILabel *_dateLabel = (UILabel *)[cell.contentView viewWithTag:4];
             [_dateLabel setText:[searchDic objectForKey:@"Date"]];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -186,7 +190,9 @@
             UILabel *_dateLabel = (UILabel *)[cell.contentView viewWithTag:3];
             [_dateLabel setText:[mainDic objectForKey:@"Date"]];
         cell.textLabel.text = [mainDic objectForKey:@"PatientName"];
+        cell.textLabel.font = MyFont(19.0);
         cell.detailTextLabel.text = [mainDic objectForKey:@"Office"];
+        cell.detailTextLabel.font = MyFont(14.0);
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
