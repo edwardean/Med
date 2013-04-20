@@ -129,7 +129,7 @@
     
     BOOL isOK = NO;
     
-    if ([self.field.text length]!=0&&[US objectForKey:@"BQ"]!=nil&&[self.data count]>0) {
+    if (![Help isEmptyString:self.field.text]&&[US objectForKey:@"BQ"]!=nil&&[self.data count]>0) {
         
         isOK = [Record checkisExistSameRecordByOffice:[US objectForKey:@"BQ"] andPatientName:self.field.text];
         if (isOK) {
@@ -169,7 +169,7 @@
                 }
                 NSString *msg = isInsertIntoDetailOK ? @"记录创建完毕" : @"录入失败";
                 [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0f];
-                [self performSelector:@selector(Hide:)];
+                [self Hide:nil];
             }
             
         }

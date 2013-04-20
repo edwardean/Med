@@ -143,7 +143,7 @@
 
 - (IBAction)Save:(id)sender {
     debugMethod();
-    if ([nameTextField.text length]==0 || [specifiTextField.text length] == 0 || [countTextField.text length]==0 || [pymTextField.text length] == 0) {
+    if ([Help isEmptyString:nameTextField.text]||[Help isEmptyString:specifiTextField.text]||[Help isEmptyString:countTextField.text]||[Help isEmptyString:pymTextField.text]) {
         UIAlertView *alert1 = [[UIAlertView alloc]initWithTitle:@"警告" message:@"信息不完整" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
         [alert1 show];
 
@@ -159,16 +159,13 @@
         }
     }
 }
-- (void) dismiss {
-    [self dismissModalViewControllerAnimated:YES];
-}
+
 - (void) saveDataIntoTable {
     debugMethod();
     if ([Medicine createNewMedicine:nameTextField.text andSpecifi:specifiTextField.text andUnit:self.unitStr andContent:countTextField.text PYM:[pymTextField.text uppercaseString]]) {
         NSString *str = [NSString stringWithFormat:@"药品%@创建完毕",nameTextField.text];
         [Help ShowGCDMessage:str andView:self.view andDelayTime:2.0f];
-        //[self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0f];
-        [self performSelector:@selector(Hide:)];
+        [self Hide:nil];
     }  else {
           NSString *str = @"创建失败";
           [Help ShowGCDMessage:str andView:self.view andDelayTime:1.0f];

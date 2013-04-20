@@ -50,4 +50,19 @@
     
     return btn;
 }
+
++ (BOOL)isEmptyString:(NSString *)str {
+    if (!str) {
+        return YES;
+    } else {
+        NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        NSString *trimedString = [str stringByTrimmingCharactersInSet:set];
+        if ([trimedString length]==0) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+    return NO;
+}
 @end

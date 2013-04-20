@@ -385,7 +385,7 @@
         NSIndexPath *indexPath = [self.table indexPathForCell:cell];
         NSDictionary *Meddic = [medArray objectAtIndex:indexPath.row];
         UITextField *textField = (UITextField *)[cell.contentView viewWithTag:markCountField];
-        if ([textField.text length]!=0 && [textField.text intValue]>0) {
+        if (![Help isEmptyString:textField.text] && [textField.text intValue]>0) {
             [textField resignFirstResponder];
             
             if (![self.indexArray containsObject:indexPath]&&indexPath!=nil) {

@@ -42,15 +42,10 @@
         [inputTextField resignFirstResponder];
     }
 }
-- (IBAction)hide:(id)sender {
-    debugMethod();
-    [self dismissModalViewControllerAnimated:YES];
-}
-
 - (IBAction)Save:(id)sender {
     
     debugMethod();
-    if ([inputTextField.text isEqualToString:@""]) {
+    if ([Help isEmptyString:inputTextField.text]){
         return;
     } else {
         if ([BingQu findTheSameBingQu:[inputTextField.text uppercaseString]]) {

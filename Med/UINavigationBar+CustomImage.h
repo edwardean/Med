@@ -10,4 +10,5 @@
 
 @interface UINavigationBar (CustomImage)
 -(void)setBackImage;
+- (void)drawRect:(CGRect)rect;
 @end

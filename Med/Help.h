@@ -19,4 +19,8 @@
 + (void)CustomAnimationForView:(UIView *)view;
 
 + (QBFlatButton *)QBButton;
+
+
+//做空串判断
++ (BOOL)isEmptyString:(NSString *)str;
 @end
