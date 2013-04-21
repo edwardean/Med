@@ -13,6 +13,6 @@
     IBOutlet UINavigationBar *navBar;
 }
 @property (nonatomic, strong) UITextField *inputTextField;
-- (IBAction)hide:(id)sender;
+//- (IBAction)hide:(id)sender;
 - (IBAction)Save:(id)sender;
 @end

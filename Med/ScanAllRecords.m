@@ -23,6 +23,7 @@
 @property (assign) NSInteger segmentIndex;
 @property (nonatomic,copy) NSString *searchBarPlaceholder;
 @property (nonatomic,copy) NSString *searchName;
+@property (nonatomic,strong) RecordDetail *tmp;
 @end
 
 @implementation ScanAllRecords
@@ -127,10 +128,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString *CellID = @"LiHang";
     UITableViewCell *cell = nil;
-    
-   
     cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
@@ -143,8 +143,7 @@
                 UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 20, 150, 20)];
                 countLabel.tag = 2;
                 [cell.contentView addSubview:countLabel];
-            } else {
-            
+            } if (segmentIndex == 1) {
                 UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 38, 60, 20)];
                 [dateLabel setAdjustsFontSizeToFitWidth:YES];
                 [dateLabel setTextColor:[UIColor cyanColor]];
@@ -162,6 +161,19 @@
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         NSDictionary *searchDic = [_searchArray objectAtIndex:[indexPath row]];
         if (segmentIndex == 0) {
+            if ([cell.contentView viewWithTag:4]) {
+                [[cell.contentView viewWithTag:4]removeFromSuperview];
+            }
+            
+            if (![cell.contentView viewWithTag:1] || ![cell.contentView viewWithTag:2]) {
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 150, 20)];
+                nameLabel.tag = 1;
+                [cell.contentView addSubview:nameLabel];
+                
+                UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 20, 150, 20)];
+                countLabel.tag = 2;
+                [cell.contentView addSubview:countLabel];
+            }
             cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
             cell.textLabel.font = MyFont(19.0);
             cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
@@ -175,7 +187,21 @@
             [_countLabel setBackgroundColor:[UIColor clearColor]];
             [_countLabel setText:[searchDic objectForKey:@"Count"]];
             cell.accessoryType = UITableViewCellAccessoryNone;
-        } else {
+        } if(segmentIndex == 1) {
+            if ([cell.contentView viewWithTag:1]) {
+                [[cell.contentView viewWithTag:1] removeFromSuperview];
+            }
+            if ([cell.contentView viewWithTag:2]) {
+                [[cell.contentView viewWithTag:2] removeFromSuperview];
+            }
+            
+            if (![cell.contentView viewWithTag:4]) {
+                UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 38, 60, 20)];
+                [dateLabel setAdjustsFontSizeToFitWidth:YES];
+                [dateLabel setTextColor:[UIColor cyanColor]];
+                [dateLabel setTag:4];
+                [cell.contentView addSubview:dateLabel];
+            }
             cell.textLabel.text = [searchDic objectForKey:@"PatientName"];
             cell.textLabel.font = MyFont(19.0);
             cell.detailTextLabel.text = [searchDic objectForKey:@"Office"];
@@ -211,15 +237,22 @@
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         debugLog(@"SearchResultTableView");
         if (segmentIndex==1) {
+            if (_tmp) {
+                [_tmp.view removeFromSuperview];
+                _tmp = nil;
+            }
+            
         NSDictionary *detailDic = [_searchArray objectAtIndex:[indexPath row]];
         NSArray *detailArray = [detailDic objectForKey:@"Detail"];
         patientName = [detailDic objectForKey:@"PatientName"];
         RecordDetail *detail = [[RecordDetail alloc] initWithFrame:rect andArray:detailArray andPatientName:patientName];
         [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:detail invokeByController:self isStackStartView:FALSE];
-        }else {
+        
+        self.tmp = detail;
+        }
+        if (segmentIndex == 0) {
             return;
         }
-        
     } else {
         
         NSDictionary *detailDic = [_patientAndBQArray objectAtIndex:[indexPath row]];
@@ -300,6 +333,9 @@
      }
     }
 }
+    if ([_searchArray count]>0) {
+        [self.searchDisplayController.searchResultsTableView reloadData];
+    }
     debugLog(@"SearchArray:%@",_searchArray);
 }
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -347,30 +383,20 @@
             }
     }
     if ([searchText length]>0) {
-        if (OS_VERSION < 6.0) {
-          searchBar.showsScopeBar = NO;  
-        }
-        else {
         scopeBar.userInteractionEnabled = NO;
         scopeBar.tintColor = EnableColor;
-        }
-        
     } else{
-        if (OS_VERSION < 6.0) {
-            searchBar.showsScopeBar = YES;
-        } else {
        scopeBar.userInteractionEnabled = YES;
        scopeBar.tintColor = AbleBackgroundColor;
-        }
-        
     }
     self.isOpen = YES;
     
     self.searchName = searchText;
+    
+    
 }
 
 - (BOOL) searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles]objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
 
@@ -378,9 +404,8 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     if (OS_VERSION < 6.0) {
-       searchBar.showsScopeBar = YES; 
+        searchBar.showsScopeBar = YES;
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
