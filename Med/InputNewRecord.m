@@ -49,6 +49,7 @@
 @property (nonatomic, strong) NSMutableArray *indexArray;//保存已经选择过的indexPath
 @property (nonatomic, strong) NSMutableArray *searchIndexArray;/////////
 
+@property (nonatomic, strong) NSArray *sections;//索引节
 @end
 
 @implementation InputNewRecord
@@ -81,7 +82,7 @@
     self.contentArray = [NSMutableArray arrayWithCapacity:0];
     self.contentSizeForViewInPopover = CGSizeMake(375, 650);
    
-    self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, 380, 600) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, 380, 630) style:UITableViewStylePlain];
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 45)];
 	footer.backgroundColor = [UIColor clearColor];
     self.table.tableFooterView = footer;
@@ -90,15 +91,39 @@
     [self.view addSubview:table];
     
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil]; 
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.medArray = [Medicine findAllMedicineToArray];///获取数据源
         if ([self.medArray count]==[Medicine countAllMedicine]) {
-            debugLog(@"药品获取完毕");
+            //NSLog(@"所有药品:%@",self.medArray);
             dispatch_async(dispatch_get_main_queue(), ^{
+                UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
+                NSMutableArray *unsortedSections = [[NSMutableArray alloc] initWithCapacity:[[collation sectionTitles] count]];
+                for (NSUInteger i=0; i < [[collation sectionTitles] count]; i++) {
+                    [unsortedSections addObject:[NSMutableArray array]];
+                }
+                
+                for (NSDictionary *dic in self.medArray) {
+                    NSString *medPYM = [dic objectForKey:@"PYM"];
+                    NSInteger index = [collation sectionForObject:medPYM collationStringSelector:@selector(description)];
+                    [[unsortedSections objectAtIndex:index] addObject:dic];
+                }
+                
+                NSMutableArray *sortedSections = [[NSMutableArray alloc] initWithCapacity:unsortedSections.count];
+                
+                for (NSMutableArray *section in unsortedSections) {
+                    [sortedSections addObject:[collation sortedArrayFromArray:section collationStringSelector:@selector(description)]];
+                }
+                self.sections = sortedSections;
+                NSLog(@"sortedSections:%@",sortedSections);
+                if (animated) {
+                    [self.table flashScrollIndicators];
+                }
                 [self.table reloadData];
             });
         }
@@ -109,8 +134,38 @@
 {
     [super didReceiveMemoryWarning];
 }
+#pragma mark - IndexedTableView
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    //return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:[[UILocalizedIndexedCollation currentCollation] sectionIndexTitles]];
+    return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+}
 
-
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    if ([title isEqualToString:UITableViewIndexSearch]) {
+        //[self scrollTableViewToSearchBarAnimated:NO];
+        return NSNotFound;
+    } else {
+        return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index]; //- 1; // -1 because we add the search symbol
+    }
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (tableView == self.table) {
+        return self.sections.count;
+    } else {
+        return 1;
+    }
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (tableView == self.table) {
+        if ([[self.sections objectAtIndex:section] count]>0) {
+            return [[[UILocalizedIndexedCollation currentCollation] sectionTitles] objectAtIndex:section];
+        } else {
+            return nil;
+        }
+    } else {
+        return nil;
+    }
+}
 #pragma mark ClearCellMark Delegete
 - (void)clearMark {
     [self.indexArray removeAllObjects];
@@ -121,17 +176,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     //因为cell有两种状态，选中时展开输入药量，未选中时关闭显示正常状态
-    if (indexPath.row == self.selectIndex.row && self.selectIndex != nil) {
+    if (indexPath.row == self.selectIndex.row &&indexPath.section == self.selectIndex.section &&self.selectIndex != nil) {
         return 105;
     } else
+    {
         return 60;
-}
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    }
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [medArray count];
+    if (tableView == self.table) {
+        return [[self.sections objectAtIndex:section] count];
+    } else {
+        return self.medArray.count;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UIFont *font = [UIFont fontWithName:@"Arial" size:13.0f];
@@ -141,9 +200,9 @@
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         dic = [_searchArray objectAtIndex:[indexPath row]];
     } else {
-        dic = [medArray objectAtIndex:[indexPath row]];
+        dic = [[self.sections objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];//[medArray objectAtIndex:[indexPath row]];
     }
-    if (indexPath.row == self.selectIndex.row && self.selectIndex != nil) {
+    if (indexPath.row == self.selectIndex.row &&indexPath.section == self.selectIndex.section&& self.selectIndex != nil) {
         static NSString *markCellID = @"MARKED";
         UITableViewCell *markCell = [tableView dequeueReusableCellWithIdentifier:markCellID];
         if (!markCell) {
@@ -317,19 +376,21 @@
     
     return nil;
 }
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //[self.table scrollToRowAtIndexPath:<#(NSIndexPath *)#> atScrollPosition:<#(UITableViewScrollPosition)#> animated:<#(BOOL)#>];
+}
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         
     }
+    debugLog(@"Index:%@ SecondIndex:%@",indexPath,self.selectIndex);
     if (!self.selectIndex) {
         self.selectIndex = indexPath;
-        debugLog(@"selectIndex:%@",self.selectIndex);
         [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
     } else {
-        BOOL selectTheSameRow = indexPath.row == self.selectIndex.row ? YES : NO;
+        BOOL selectTheSameRow = (indexPath.row == self.selectIndex.row)&&(indexPath.section == self.selectIndex.section) ? YES : NO;
         
         if (!selectTheSameRow) {//两次点的行不同
             NSIndexPath *tempIndexPath = [self.selectIndex copy];
@@ -343,7 +404,7 @@
         }
         }
     
-    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
 - (void)cancelBtnClicked:(UIButton *)button {/////点击左边删除按钮的方法
@@ -383,7 +444,8 @@
     if ([button.superview.superview isKindOfClass:[UITableViewCell class]]) {
         UITableViewCell *cell = (UITableViewCell *)button.superview.superview;
         NSIndexPath *indexPath = [self.table indexPathForCell:cell];
-        NSDictionary *Meddic = [medArray objectAtIndex:indexPath.row];
+        debugLog(@"OKIndexPath:%@",indexPath);
+        NSDictionary *Meddic = [[self.sections objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         UITextField *textField = (UITextField *)[cell.contentView viewWithTag:markCountField];
         if (![Help isEmptyString:textField.text] && [textField.text intValue]>0) {
             [textField resignFirstResponder];
@@ -443,12 +505,13 @@
     self.field = (UITextField *)sender;
     [self.field resignFirstResponder];
     [sender resignFirstResponder];
-    [self.table scrollRectToVisible:self.field.frame animated:YES];
+    
 }
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
 
     debugMethod();
-    [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
+    [self.table scrollRectToVisible:textField.frame animated:YES];
+    //[self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
     return YES;
 }
 - (void) textFieldDidBeginEditing:(UITextField *)textField {
@@ -459,7 +522,7 @@
        NSIndexPath * indexPath = [self.table indexPathForCell:cell];
         debugLog(@"indexPath = %@",indexPath);
         [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
+        //[self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
     }
 }
 
@@ -475,7 +538,7 @@
         //indexPath = [table indexPathForCell:cell];
        // UITextField *textfield = (UITextField *)[cell.contentView viewWithTag:markCountField];
         [textField resignFirstResponder];
-        [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
+        //[self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*60*2)];
     }
     return YES;
 }
@@ -497,8 +560,9 @@
 - (void)keyboardWillHide:(NSNotification *)notification {
     
     NSDictionary* userInfo = [notification userInfo];
-    
-    
+    debugLog(@"Hidden:%@",userInfo);
+    NSValue *value=[userInfo objectForKey:UIKeyboardBoundsUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
@@ -506,7 +570,26 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:animationDuration];
     
-    [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*65*1.5)];
+   // [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*65*1.5)];
+    //防止键盘弹出后遮盖TableView
+    [UIView commitAnimations];
+}
+
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    debugLog(@"Show:%@",userInfo);
+    NSValue *value=[userInfo objectForKey:UIKeyboardBoundsUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    // [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*65*1.5)];
     //防止键盘弹出后遮盖TableView
     [UIView commitAnimations];
 }

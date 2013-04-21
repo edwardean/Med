@@ -28,7 +28,7 @@
     if (self = [super init]) {
         [self.view setFrame:frame];
         self.detailArray = array;
-        self.table = [[UITableView alloc] initWithFrame:CGRectMake(0,40,frame.size.width, frame.size.height) style:UITableViewStylePlain];
+        self.table = [[UITableView alloc] initWithFrame:CGRectMake(0,40,frame.size.width, frame.size.height-40) style:UITableViewStylePlain];
         self.patient = patientname;
     }
     
@@ -45,7 +45,6 @@
     [super viewDidAppear:animated];
     [_table setDataSource:self];
     [_table setDelegate:self];
-    //_table.contentSize = CGSizeMake(370, [_table numberOfRowsInSection:0]*44*1.5);
     UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     _table.tableFooterView = footerView;
     [_table setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
