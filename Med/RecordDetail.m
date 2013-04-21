@@ -51,7 +51,7 @@
     [_table setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     
     [self.view addSubview:_table];
-    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 468, 40)];
+    UINavigationBar *bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 468, 44)];
     [bar setBackImage];
     self.navbar = bar;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
