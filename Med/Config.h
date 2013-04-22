@@ -11,7 +11,7 @@
  在debug阶段输出调试信息，
  在release阶段时可关闭调试信息
  **/
-#import "UINavigationBar+CustomImage.h"
+#import "UIView+customBackground.h"
 #import "Help.h"
 #import "MBProgressHUD.h"
 #define ALPHA	@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "

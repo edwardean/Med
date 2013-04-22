@@ -10,7 +10,7 @@
 #import "QuartzCore/QuartzCore.h"
 #import "dataBaseManager.h"
 #import "Medicine.h"
-#import "UIView+clearBackground.h"
+#import "UIView+customBackground.h"
 @interface NewMedicine ()
 @property (nonatomic, strong) NSIndexPath *lastIndex;
 @property (nonatomic, copy) NSString *specifiStr;
@@ -35,8 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view clear];
-    [navBar setBackImage];
+    [self.view custom:navBar];
     self.specifiStr = @"";
     self.unitStr = @"";
     self.specifiTable.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];

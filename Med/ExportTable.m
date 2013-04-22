@@ -10,7 +10,6 @@
 #import "dataBaseManager.h"
 #import "Medicine.h"
 #import "Record.h"
-#import "UIView+clearBackground.h"
 static CHCSVWriter *sharedWriter = nil;
 @interface ExportTable ()
 
@@ -30,8 +29,7 @@ static CHCSVWriter *sharedWriter = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [_navBar setBackImage];
-    [self.view clear];
+    [self.view custom:_navBar];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btn setFrame:CGRectMake(0, 0, 198, 60)];
     [btn setCenter:self.view.center];

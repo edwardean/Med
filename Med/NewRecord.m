@@ -10,7 +10,6 @@
 #import "Record.h"
 #import "InputNewRecord.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UIView+clearBackground.h"
 #define medNameLabelTag 1
 #define pymLabeltag 2
 #define selectContLabelTag 3
@@ -47,8 +46,7 @@
     [addBtn setBackgroundImage:[UIImage imageNamed:@"button_icon_close"] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
-    [self.view clear];
-    [_navBar setBackImage];
+    [self.view custom:_navBar];
     [self.selectedBQLabel setFont:MyFont(15.0f)];
     self.selectedBQLabel.adjustsFontSizeToFitWidth = YES;
     if (OS_VERSION >= 6.0) {

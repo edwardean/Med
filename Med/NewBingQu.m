@@ -8,7 +8,6 @@
 
 #import "NewBingQu.h"
 #import "BingQu.h"
-#import "UIView+clearBackground.h"
 @interface NewBingQu ()
 
 @end
@@ -33,8 +32,7 @@
     inputTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     inputTextField.keyboardType = UIKeyboardTypeDefault;
     inputTextField.delegate = self;
-    [self.view clear];
-    [navBar setBackImage];
+    [self.view custom:navBar];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];

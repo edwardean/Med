@@ -7,7 +7,6 @@
 //
 
 #import "ScanAllMedInfo.h"
-#import "UINavigationBar+CustomImage.h"
 #import "Medicine.h"
 #import "CHCSVWriter.h"
 #define markMedNameLabelTag 1
@@ -16,7 +15,6 @@
 @interface ScanAllMedInfo ()
 @property (nonatomic, strong) NSArray *dataArray;
 @property (nonatomic, strong) NSArray *searchResultArray;
-@property (assign) BOOL isChinese;
 @end
 
 @implementation ScanAllMedInfo
@@ -54,11 +52,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
-    [navBar setBackImage];
+    [self.view custom:navBar];
     self.searchResultArray = nil;
-    self.isChinese = NO;
 }
 #pragma mark -
 #pragma mark - UITableViewDelegete

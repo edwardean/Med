@@ -47,7 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [_navBar setBackImage];
+    [self.view custom:_navBar];
     self.isOpen = NO;
     self.search = [[UISearchBar alloc] initWithFrame:CGRectZero];
     self.search.placeholder = @"搜索";
