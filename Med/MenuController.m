@@ -69,7 +69,7 @@
     [super viewDidLoad];
 	NSString *path  = [[NSBundle mainBundle] pathForResource:@"menu" ofType:@"plist"];
     _dataList = [[NSMutableArray alloc] initWithContentsOfFile:path];
-    _menuIconList = @[@"add",@"scan",@"setting"];//[NSArray arrayWithObjects:@"add",@"scan",@"setting",nil];
+    _menuIconList = @[@"addinfo",@"search",@"setting"];//[NSArray arrayWithObjects:@"add",@"scan",@"setting",nil];
     self.table.sectionFooterHeight = 0;
     self.table.sectionHeaderHeight = 0;
     self.isOpen = NO;
