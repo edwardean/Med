@@ -120,7 +120,7 @@
                     [sortedSections addObject:[collation sortedArrayFromArray:section collationStringSelector:@selector(description)]];
                 }
                 self.sections = sortedSections;
-                NSLog(@"sortedSections:%@",sortedSections);
+                debugLog(@"sortedSections:%@",sortedSections);
                 if (animated) {
                     [self.table flashScrollIndicators];
                 }
@@ -582,6 +582,13 @@
     debugLog(@"Show:%@",userInfo);
     NSValue *value=[userInfo objectForKey:UIKeyboardBoundsUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
+    float keyboardHeight = keyboardSize.height;
+    
+    [self.table setContentSize:CGSizeMake(self.table.frame.size.width, self.sections.count*70*2)];
+    if (self.selectIndex) {
+       [self.table scrollToRowAtIndexPath:self.selectIndex atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
@@ -589,7 +596,6 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:animationDuration];
     
-    // [self.table setContentSize:CGSizeMake(380, [self.table numberOfRowsInSection:0]*65*1.5)];
     //防止键盘弹出后遮盖TableView
     [UIView commitAnimations];
 }
@@ -602,8 +608,8 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"Name contains[cd]%@",searchText];
     NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"PYM contains[cd]%@",searchText];
     NSPredicate *_predicate,*_predicate1;
-    _predicate = [predicate predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:@[@"Name"]/*[NSArray arrayWithObject:@"Name"]*/]];
-    _predicate1 = [predicate1 predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:@[@"PYM"]/*[NSArray arrayWithObject:@"PYM"]*/]];
+    _predicate = [predicate predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:@[@"Name"]]];
+    _predicate1 = [predicate1 predicateWithSubstitutionVariables:[self.medArray dictionaryWithValuesForKeys:@[@"PYM"]]];
     if ([[medArray filteredArrayUsingPredicate:_predicate] count] > 0) {
         self.searchArray = [medArray filteredArrayUsingPredicate:_predicate];
     } else {

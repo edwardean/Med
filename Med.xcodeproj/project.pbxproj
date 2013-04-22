@@ -134,7 +134,6 @@
 		CA981A6A16FAE3DC0031FD44 /* ipad_top_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = CA981A6616FAE3DC0031FD44 /* ipad_top_bg.png */; };
 		CA981A6B16FAE3DC0031FD44 /* ipad_top_bg2_noshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA981A6716FAE3DC0031FD44 /* ipad_top_bg2_noshadow.png */; };
 		CA981A6C16FAE3DC0031FD44 /* ipad_top_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CA981A6816FAE3DC0031FD44 /* ipad_top_bg2.png */; };
-		CA981A6F16FAE4410031FD44 /* UINavigationBar+CustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A6E16FAE4410031FD44 /* UINavigationBar+CustomImage.m */; settings = {COMPILER_FLAGS = " -fno-objc-arc"; }; };
 		CAA627FD1720E8AD00D4FEA3 /* QBFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA627FC1720E8AD00D4FEA3 /* QBFlatButton.m */; };
 		CAA627FF1720E95F00D4FEA3 /* font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAA627FE1720E95F00D4FEA3 /* font.ttf */; };
 		CAA752471715941A00EF9B56 /* WCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA752461715941A00EF9B56 /* WCAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -143,6 +142,7 @@
 		CAB9B605172268E60032D1C5 /* Title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB9B603172268E60032D1C5 /* Title@2x.png */; };
 		CABBA80717018338009BFB35 /* ExportTable.m in Sources */ = {isa = PBXBuildFile; fileRef = CABBA80517018338009BFB35 /* ExportTable.m */; settings = {COMPILER_FLAGS = " "; }; };
 		CABBA80817018338009BFB35 /* ExportTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CABBA80617018338009BFB35 /* ExportTable.xib */; };
+		CAD38C121724DBB60052324F /* UIView+customBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = CAD38C111724DBB60052324F /* UIView+customBackground.m */; };
 		CAE68246171664D20059B9F5 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE68245171664D20059B9F5 /* bg2.png */; };
 		CAE6825C171666EA0059B9F5 /* bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE68248171666EA0059B9F5 /* bg1.png */; };
 		CAE6825F171666EA0059B9F5 /* bg12.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE6824B171666EA0059B9F5 /* bg12.png */; };
@@ -343,8 +343,6 @@
 		CA981A6616FAE3DC0031FD44 /* ipad_top_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_top_bg.png; sourceTree = "<group>"; };
 		CA981A6716FAE3DC0031FD44 /* ipad_top_bg2_noshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_top_bg2_noshadow.png; sourceTree = "<group>"; };
 		CA981A6816FAE3DC0031FD44 /* ipad_top_bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_top_bg2.png; sourceTree = "<group>"; };
-		CA981A6D16FAE4410031FD44 /* UINavigationBar+CustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+CustomImage.h"; sourceTree = "<group>"; };
-		CA981A6E16FAE4410031FD44 /* UINavigationBar+CustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+CustomImage.m"; sourceTree = "<group>"; };
 		CAA627FB1720E8AD00D4FEA3 /* QBFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFlatButton.h; sourceTree = "<group>"; };
 		CAA627FC1720E8AD00D4FEA3 /* QBFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFlatButton.m; sourceTree = "<group>"; };
 		CAA627FE1720E95F00D4FEA3 /* font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttf; sourceTree = "<group>"; };
@@ -357,6 +355,8 @@
 		CABBA80417018338009BFB35 /* ExportTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportTable.h; sourceTree = "<group>"; };
 		CABBA80517018338009BFB35 /* ExportTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportTable.m; sourceTree = "<group>"; };
 		CABBA80617018338009BFB35 /* ExportTable.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExportTable.xib; sourceTree = "<group>"; };
+		CAD38C101724DBB60052324F /* UIView+customBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+customBackground.h"; sourceTree = "<group>"; };
+		CAD38C111724DBB60052324F /* UIView+customBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+customBackground.m"; sourceTree = "<group>"; };
 		CAE68245171664D20059B9F5 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
 		CAE68248171666EA0059B9F5 /* bg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg1.png; sourceTree = "<group>"; };
 		CAE6824B171666EA0059B9F5 /* bg12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg12.png; sourceTree = "<group>"; };
@@ -707,8 +707,8 @@
 				CA981A0616FAB0990031FD44 /* CustomCell */,
 				CA981A0316FAB0930031FD44 /* UIViewWithShadow.h */,
 				CA981A0416FAB0930031FD44 /* UIViewWithShadow.m */,
-				CA981A6D16FAE4410031FD44 /* UINavigationBar+CustomImage.h */,
-				CA981A6E16FAE4410031FD44 /* UINavigationBar+CustomImage.m */,
+				CAD38C101724DBB60052324F /* UIView+customBackground.h */,
+				CAD38C111724DBB60052324F /* UIView+customBackground.m */,
 			);
 			name = Extention;
 			sourceTree = "<group>";
@@ -1060,7 +1060,6 @@
 				CA981A4616FAB1710031FD44 /* MedInfoCell.m in Sources */,
 				CA981A5316FACEA70031FD44 /* NewBingQu.m in Sources */,
 				CA981A5916FAE28D0031FD44 /* ScanAllMedInfo.m in Sources */,
-				CA981A6F16FAE4410031FD44 /* UINavigationBar+CustomImage.m in Sources */,
 				CA93F95916FD81D700A1BA03 /* ScanAllRecords.m in Sources */,
 				CAB8F54516FEC83C0004FB04 /* RecordDetail.m in Sources */,
 				CABBA80717018338009BFB35 /* ExportTable.m in Sources */,
@@ -1084,6 +1083,7 @@
 				CA4DE65017203167005F7A01 /* MNMToastValue.m in Sources */,
 				CA4DE65117203167005F7A01 /* MNMToastView.m in Sources */,
 				CAA627FD1720E8AD00D4FEA3 /* QBFlatButton.m in Sources */,
+				CAD38C121724DBB60052324F /* UIView+customBackground.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
