@@ -10,6 +10,7 @@
 #import "Record.h"
 #import "InputNewRecord.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIButton+corner.h"
 #define medNameLabelTag 1
 #define pymLabeltag 2
 #define selectContLabelTag 3
@@ -44,7 +45,6 @@
     self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addBtn setFrame:CGRectMake(450, 65, 44, 44)];
     [addBtn setBackgroundImage:[UIImage imageNamed:@"button_icon_close"] forState:UIControlStateNormal];
-    //addBtn.layer.cornerRadius = 0;
     [addBtn addTarget:self action:@selector(deleteRow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
     
@@ -60,12 +60,14 @@
     QBFlatButton *btn = [Help QBButton];
     btn.frame = CGRectMake(24, 210, 70, 44);
     [btn setTitle:@"病区" forState:UIControlStateNormal];
+    [btn corner];
     [btn addTarget:self action:@selector(showBQ:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
     QBFlatButton *medbtn = [Help QBButton];
     medbtn.frame = CGRectMake(24, 347, 70, 44);
     [medbtn setTitle:@"药品" forState:UIControlStateNormal];
+    [medbtn corner];
     [medbtn addTarget:self action:@selector(showPopover:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:medbtn];
     [self.view custom:_navBar];

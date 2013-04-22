@@ -100,7 +100,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.medArray = [Medicine findAllMedicineToArray];///获取数据源
         if ([self.medArray count]==[Medicine countAllMedicine]) {
-            //NSLog(@"所有药品:%@",self.medArray);
             dispatch_async(dispatch_get_main_queue(), ^{
                 UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
                 NSMutableArray *unsortedSections = [[NSMutableArray alloc] initWithCapacity:[[collation sectionTitles] count]];
