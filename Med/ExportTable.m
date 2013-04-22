@@ -10,6 +10,7 @@
 #import "dataBaseManager.h"
 #import "Medicine.h"
 #import "Record.h"
+#import "UIButton+corner.h"
 static CHCSVWriter *sharedWriter = nil;
 @interface ExportTable ()
 
@@ -35,6 +36,7 @@ static CHCSVWriter *sharedWriter = nil;
     [btn setCenter:self.view.center];
     [btn setBackgroundImage:ImageNamed(@"btn_normal") forState:UIControlStateNormal];
     [btn setBackgroundImage:ImageNamed(@"btn_down") forState:UIControlStateHighlighted];
+    [btn corner];
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(Export) forControlEvents:UIControlEventTouchUpInside];
     _textView.font = MyFont(14.0f);
