@@ -16,6 +16,7 @@
     GCDiscreetNotificationView *gcdNotification = [[GCDiscreetNotificationView alloc] initWithText:msg showActivity:NO inPresentationMode:GCDiscreetNotificationViewPresentationModeTop inView:view];
     [gcdNotification show:YES];
     [gcdNotification hideAnimatedAfter:delay];
+    [gcdNotification release];
 }
 +(void)doSomething:(id)block afterDelay:(float)delay
 {

@@ -32,7 +32,7 @@ static CHCSVWriter *sharedWriter = nil;
     [super viewDidLoad];
     [self.view custom:_navBar];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btn setFrame:CGRectMake(0, 0, 198, 60)];
+    [btn setFrame:CGRectMake(0, 0, 100, 40)];
     [btn setCenter:self.view.center];
     [btn setBackgroundImage:ImageNamed(@"btn_normal") forState:UIControlStateNormal];
     [btn setBackgroundImage:ImageNamed(@"btn_down") forState:UIControlStateHighlighted];

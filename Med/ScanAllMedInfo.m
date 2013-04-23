@@ -255,6 +255,7 @@
     CHCSVWriter *csvWriter = [[CHCSVWriter alloc] initWithCSVFile:[[(NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)) lastObject]stringByAppendingPathComponent:@"药品.csv"] atomic:YES];
     [_dataArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary *medDic = [_dataArray objectAtIndex:idx];
+        NSLog(@"Med:%@",medDic);
         [csvWriter writeField:[medDic objectForKey:@"Name"]];
         NSString *spe = [NSString stringWithFormat:@"%@%@",[medDic objectForKey:@"Specifi"],[medDic objectForKey:@"Unit"]];
         [csvWriter writeField:spe];

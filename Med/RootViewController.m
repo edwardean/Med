@@ -138,9 +138,11 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Overriden to allow any orientation.
-    return YES;
+    
+    //return YES;
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	//[menuViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];

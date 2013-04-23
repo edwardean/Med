@@ -296,7 +296,7 @@
         UIButton *_okbtn = (UIButton *)[markCell.contentView viewWithTag:markOKBtnTag];
         NSString *Imgstr = [self.indexArray containsObject:indexPath] ? @"refresh" : @"checkBtn_normal";
         //[_okbtn setBackgroundImage:ImageNamed(Imgstr) forState:UIControlStateNormal];
-        [_okbtn setBackgroundImage:[UIImage imageNamed:Imgstr] forState:UIControlStateNormal];
+        [_okbtn setBackgroundImage:[UIImage imageNamed:Imgstr      ] forState:UIControlStateNormal];
         if (![self.indexArray containsObject:indexPath]) {
             [_okbtn setBackgroundImage:ImageNamed(@"checkBtn") forState:UIControlStateHighlighted];
         }
