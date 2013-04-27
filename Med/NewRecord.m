@@ -57,12 +57,12 @@
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     
-    QBFlatButton *btn = [Help QBButton];
-    btn.frame = CGRectMake(24, 210, 70, 44);
-    [btn setTitle:@"病区" forState:UIControlStateNormal];
-    [btn corner];
-    [btn addTarget:self action:@selector(showBQ:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+    QBFlatButton *button1 = [Help QBButton];
+    button1.frame = CGRectMake(24, 210, 70, 44);
+    [button1 setTitle:@"病区" forState:UIControlStateNormal];
+    [button1 corner];
+    [button1 addTarget:self action:@selector(showBQ:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button1];
     
     QBFlatButton *medbtn = [Help QBButton];
     medbtn.frame = CGRectMake(24, 347, 70, 44);
