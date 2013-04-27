@@ -20,7 +20,6 @@
 		CA4DE64F17203167005F7A01 /* MNMToastConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64917203167005F7A01 /* MNMToastConstants.m */; };
 		CA4DE65017203167005F7A01 /* MNMToastValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64B17203167005F7A01 /* MNMToastValue.m */; };
 		CA4DE65117203167005F7A01 /* MNMToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4DE64D17203167005F7A01 /* MNMToastView.m */; };
-		CA537DB91725106D00B989F2 /* UIButton+corner.m in Sources */ = {isa = PBXBuildFile; fileRef = CA537DB81725106D00B989F2 /* UIButton+corner.m */; };
 		CA675912172691D200863E3C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = CA675911172691D100863E3C /* Default-Landscape.png */; };
 		CA878D62171FA582001E0AE0 /* NSString+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D4D171FA582001E0AE0 /* NSString+Trim.m */; };
 		CA878D63171FA582001E0AE0 /* UIFont+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = CA878D4F171FA582001E0AE0 /* UIFont+Alert.m */; };
@@ -124,7 +123,8 @@
 		CA981A5416FACEA70031FD44 /* NewBingQu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA981A5216FACEA70031FD44 /* NewBingQu.xib */; };
 		CA981A5916FAE28D0031FD44 /* ScanAllMedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CA981A5716FAE28D0031FD44 /* ScanAllMedInfo.m */; settings = {COMPILER_FLAGS = " "; }; };
 		CA981A5A16FAE28D0031FD44 /* ScanAllMedInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA981A5816FAE28D0031FD44 /* ScanAllMedInfo.xib */; };
-		CAA627FD1720E8AD00D4FEA3 /* QBFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA627FC1720E8AD00D4FEA3 /* QBFlatButton.m */; };
+		CA9FD02E172B5B9F0061E995 /* QBFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FD02B172B5B9F0061E995 /* QBFlatButton.m */; };
+		CA9FD02F172B5B9F0061E995 /* UIButton+corner.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FD02D172B5B9F0061E995 /* UIButton+corner.m */; };
 		CAA627FF1720E95F00D4FEA3 /* font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAA627FE1720E95F00D4FEA3 /* font.ttf */; };
 		CAA752471715941A00EF9B56 /* WCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA752461715941A00EF9B56 /* WCAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CAB3AFDF172532D200A396BB /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB3AFDD172532D200A396BB /* search.png */; };
@@ -184,8 +184,6 @@
 		CA4DE64B17203167005F7A01 /* MNMToastValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastValue.m; sourceTree = "<group>"; };
 		CA4DE64C17203167005F7A01 /* MNMToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMToastView.h; sourceTree = "<group>"; };
 		CA4DE64D17203167005F7A01 /* MNMToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastView.m; sourceTree = "<group>"; };
-		CA537DB71725106D00B989F2 /* UIButton+corner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+corner.h"; sourceTree = "<group>"; };
-		CA537DB81725106D00B989F2 /* UIButton+corner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+corner.m"; sourceTree = "<group>"; };
 		CA675911172691D100863E3C /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
 		CA878D4C171FA582001E0AE0 /* NSString+Trim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trim.h"; sourceTree = "<group>"; };
 		CA878D4D171FA582001E0AE0 /* NSString+Trim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trim.m"; sourceTree = "<group>"; };
@@ -332,8 +330,10 @@
 		CA981A5616FAE28D0031FD44 /* ScanAllMedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanAllMedInfo.h; sourceTree = "<group>"; };
 		CA981A5716FAE28D0031FD44 /* ScanAllMedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanAllMedInfo.m; sourceTree = "<group>"; };
 		CA981A5816FAE28D0031FD44 /* ScanAllMedInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanAllMedInfo.xib; sourceTree = "<group>"; };
-		CAA627FB1720E8AD00D4FEA3 /* QBFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFlatButton.h; sourceTree = "<group>"; };
-		CAA627FC1720E8AD00D4FEA3 /* QBFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFlatButton.m; sourceTree = "<group>"; };
+		CA9FD02A172B5B9F0061E995 /* QBFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFlatButton.h; sourceTree = "<group>"; };
+		CA9FD02B172B5B9F0061E995 /* QBFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFlatButton.m; sourceTree = "<group>"; };
+		CA9FD02C172B5B9F0061E995 /* UIButton+corner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+corner.h"; sourceTree = "<group>"; };
+		CA9FD02D172B5B9F0061E995 /* UIButton+corner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+corner.m"; sourceTree = "<group>"; };
 		CAA627FE1720E95F00D4FEA3 /* font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttf; sourceTree = "<group>"; };
 		CAA752451715941A00EF9B56 /* WCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCAlertView.h; sourceTree = "<group>"; };
 		CAA752461715941A00EF9B56 /* WCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCAlertView.m; sourceTree = "<group>"; };
@@ -699,7 +699,7 @@
 		CA981A0216FAB06D0031FD44 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
-				CAA627FA1720E8AD00D4FEA3 /* QBFlatButton */,
+				CA9FD029172B5B9F0061E995 /* QBFlatButton */,
 				CA4DE64517203167005F7A01 /* MNMToast */,
 				CA878D4A171FA582001E0AE0 /* MBAlertView */,
 				CAA752441715941A00EF9B56 /* WCAlertView */,
@@ -819,16 +819,15 @@
 			name = ScanInfo;
 			sourceTree = "<group>";
 		};
-		CAA627FA1720E8AD00D4FEA3 /* QBFlatButton */ = {
+		CA9FD029172B5B9F0061E995 /* QBFlatButton */ = {
 			isa = PBXGroup;
 			children = (
-				CAA627FB1720E8AD00D4FEA3 /* QBFlatButton.h */,
-				CAA627FC1720E8AD00D4FEA3 /* QBFlatButton.m */,
-				CA537DB71725106D00B989F2 /* UIButton+corner.h */,
-				CA537DB81725106D00B989F2 /* UIButton+corner.m */,
+				CA9FD02A172B5B9F0061E995 /* QBFlatButton.h */,
+				CA9FD02B172B5B9F0061E995 /* QBFlatButton.m */,
+				CA9FD02C172B5B9F0061E995 /* UIButton+corner.h */,
+				CA9FD02D172B5B9F0061E995 /* UIButton+corner.m */,
 			);
-			name = QBFlatButton;
-			path = Classes;
+			path = QBFlatButton;
 			sourceTree = "<group>";
 		};
 		CAA752441715941A00EF9B56 /* WCAlertView */ = {
@@ -1084,9 +1083,9 @@
 				CA4DE64F17203167005F7A01 /* MNMToastConstants.m in Sources */,
 				CA4DE65017203167005F7A01 /* MNMToastValue.m in Sources */,
 				CA4DE65117203167005F7A01 /* MNMToastView.m in Sources */,
-				CAA627FD1720E8AD00D4FEA3 /* QBFlatButton.m in Sources */,
 				CAD38C121724DBB60052324F /* UIView+customBackground.m in Sources */,
-				CA537DB91725106D00B989F2 /* UIButton+corner.m in Sources */,
+				CA9FD02E172B5B9F0061E995 /* QBFlatButton.m in Sources */,
+				CA9FD02F172B5B9F0061E995 /* UIButton+corner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
