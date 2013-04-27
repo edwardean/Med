@@ -25,7 +25,6 @@
 - (void)drawRoundedRect:(CGRect)rect radius:(CGFloat)radius context:(CGContextRef)context;
 
 @end
-
 @implementation QBFlatButton
 
 - (void)setFrame:(CGRect)frame
