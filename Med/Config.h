@@ -22,9 +22,9 @@
 
 #ifdef DEBUG
 #define debugLog(...) NSLog(__VA_ARGS__)
-#define debugMethod() NSLog(@"%s",__func__)
+#define debugMethod(...) NSLog((@"In %s file,%s [Line %d] "), __FILE__,__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__)
 
-
+//#define debugMethod() NSLog(@"%s",__func__)
 #else
 #define debugLog(...)
 #define debugMethod()
