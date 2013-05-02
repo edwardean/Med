@@ -38,12 +38,6 @@ static FMDatabase *shareDataBase = nil;
     return shareDataBase;
 }
 
-- (id)init {
-    NSAssert(NO, @"Can Not call init method,invoke createDataBase instead.");
-    
-    return nil;
-}
-
 /**
  判断数据库中表是否存在
  **/
