@@ -26,15 +26,24 @@ static FMDatabase *shareDataBase = nil;
 //        return shareDataBase;
 //    }
 //}
+//这种方法可以达到线程安全，但多次调用时会导致性能显著下降
+
+
 
 + (FMDatabase *)createDataBase {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shareDataBase = [[FMDatabase databaseWithPath:dataBasePath] retain];
     });
-    
     return shareDataBase;
 }
+
+- (id)init {
+    NSAssert(NO, @"Can Not call init method,invoke createDataBase instead.");
+    
+    return nil;
+}
+
 /**
  判断数据库中表是否存在
  **/

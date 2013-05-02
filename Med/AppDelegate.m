@@ -15,7 +15,9 @@
 @synthesize window;
 @synthesize rootViewController;
 
-
+#if !__has_feature(objc_arc)
+#error This project is ARC only.
+#endif
 
 + (StackScrollViewAppDelegate *) instance {
 	return (StackScrollViewAppDelegate *) [[UIApplication sharedApplication] delegate];
@@ -42,6 +44,7 @@
         });
         
     });
+    
 	return YES;
 }
 
