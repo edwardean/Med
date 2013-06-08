@@ -16,6 +16,7 @@
 
 ### 运行须知
 * iOS version iOS4.3 and later And ARC <br />
+* iOS Device:iPad2 and later,No iPhone and iTouch
 * XCode4.6 ,Mac OS 10.7.4 and later
 
 ### 应用截图
