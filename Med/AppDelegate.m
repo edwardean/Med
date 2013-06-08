@@ -44,6 +44,7 @@
         });
         
     });
+    
 	return YES;
 }
 
@@ -69,7 +70,6 @@
      See also applicationDidEnterBackground:.
      */
 }
-
 #pragma mark -
 #pragma mark Memory management
 

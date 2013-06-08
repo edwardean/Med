@@ -131,10 +131,10 @@
 	[rootView addSubview:rightSlideView];
     [self.view setBackgroundColor:MainBackgroundColor];
 	[self.view addSubview:rootView];
-    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 677, 130, 67)];
-    logoView.image = [UIImage imageNamed:@"logo"];
-    [self.view addSubview:logoView];
-    [logoView release];
+//    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 677, 130, 67)];
+//    logoView.image = [UIImage imageNamed:@"logo"];
+//    [self.view addSubview:logoView];
+//    [logoView release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

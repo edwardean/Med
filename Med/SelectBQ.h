@@ -15,11 +15,11 @@
     
     IBOutlet UITableView *table;
     NSString *BQStr;
-    id <PassSelectedBQDelegete> delegete;
+    __zwrc_weak  id <PassSelectedBQDelegete> delegete;
     
 }
 @property (strong, nonatomic) IBOutlet UISearchBar *search;
 @property (nonatomic, copy) NSString *BQStr;
 @property (nonatomic, strong) UITableView *table;
-@property (nonatomic, weak) id <PassSelectedBQDelegete> delegate;
+@property (nonatomic, assign) id <PassSelectedBQDelegete> delegate;
 @end

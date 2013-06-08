@@ -72,12 +72,12 @@
     [self.view addSubview:medbtn];
     [self.view custom:_navBar];
 }
-
 - (void)handleTap:(UITapGestureRecognizer *)sender {
     if ([field isFirstResponder]) {
         [field resignFirstResponder];
     }
 }
+
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     selectBQ.delegate = self;

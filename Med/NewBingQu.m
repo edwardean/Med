@@ -73,8 +73,7 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
