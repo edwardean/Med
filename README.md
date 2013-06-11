@@ -25,3 +25,4 @@
 
 ### 郑重声明
 * 该应用已经在AppStore上线，除学习与分享外请勿用于其它用途
+* iTunes Link：https://itunes.apple.com/cn/app/yi-sheng-de-yao-xia-zi/id657397611?mt=8
