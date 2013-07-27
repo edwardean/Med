@@ -11,7 +11,6 @@
 * Author:Edward  
 * Email:lihangqw@126.com <br />
 * [我的微博](http://weibo.com/u/2715944641?wvr=5&)<br />
-* <单身求勾搭>
 
 ###	测试提示
 * 测试时，为了免去输入测试数据的麻烦请将App在模拟器路径下Documents文件夹中的dataBase.sqlite替换为db文件夹下的文件。<br />
