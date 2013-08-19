@@ -38,6 +38,12 @@ static FMDatabase *shareDataBase = nil;
     return shareDataBase;
 }
 
++ (FMDatabaseQueue *)queue
+{
+  FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:dataBasePath];
+  return queue;
+}
+
 /**
  判断数据库中表是否存在
  **/

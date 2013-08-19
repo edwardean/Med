@@ -11,6 +11,7 @@
 #import "dataBaseManager.h"
 #import "Medicine.h"
 #import "UIView+customBackground.h"
+
 @interface NewMedicine ()
 @property (nonatomic, strong) NSIndexPath *lastIndex;
 @property (nonatomic, copy) NSString *specifiStr;

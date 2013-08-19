@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "FMDatabase.h"
+#import "FMDatabaseQueue.h"
 #import "Config.h"
+
 @interface dataBaseManager : NSObject
 
 /**数据库对象单例方法**/
 + (FMDatabase *)createDataBase;
+
+/**数据库Queue方法**/
++ (FMDatabaseQueue *)queue;
 
 /**关闭数据库**/
 + (void)closeDataBase;

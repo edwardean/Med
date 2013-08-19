@@ -175,24 +175,6 @@
         } else if ([item isEqualToString:@"导出数据"]) {
             [[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:_exp invokeByController:self isStackStartView:TRUE];
         } else if ([item isEqualToString:@"清空所有"]) {
-//            [WCAlertView showAlertWithTitle:@"确认信息" message:@"真的要清除所有记录吗??" customizationBlock:^(WCAlertView *alertView) {
-//                alertView.style = WCAlertViewStyleVioletHatched;
-//            } completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
-//                if (buttonIndex == 1) {
-//                    BOOL isOK = NO;
-//                    FMDatabase *dataBase = [dataBaseManager createDataBase];
-//                    if ([dataBase open]) {
-//                        NSString *sql3 = @"DELETE FROM Record";
-//                        NSString *sql4 = @"DELETE FROM Detail";
-//                        isOK = [dataBase executeUpdate:sql3]&&[dataBase executeUpdate:sql4];
-//                        [dataBase close];
-//                    }
-//                    NSString *msg = isOK ? @"已删除所有记录" : @"出现错误";
-//                    [Help ShowGCDMessage:msg andView:self.view andDelayTime:1.0];
-//                } else {
-//                    debugLog(@"取消");
-//                }
-//            } cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             MBAlertView *alert = [MBAlertView alertWithBody:@"清空所有记录,但会保留药品和病区信息" cancelTitle:@"取消" cancelBlock:nil];
             [alert addButtonWithText:@"确定" type:MBAlertViewItemTypePositive block:^{
                 BOOL isOK = NO;
